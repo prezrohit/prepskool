@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/pdf_img_view"
+                android:layout_margin="14dp"
+                android:src="@mipmap/ic_pdf"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
+
+            <TextView
+                android:id="@+id/item_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/pdf_img_view"
+                android:layout_marginTop="14dp"
+                android:hint="Maths Sample Paper 1 "/>
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/item_view"
+                android:layout_width="130dp"
+                android:layout_height="30dp"
+                android:text="View PDF"
+                android:textSize="10dp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/pdf_img_view"
+                android:layout_below="@id/item_label"
+                app:cornerRadius="22dp"
+                style="@style/AppTheme.RoundedCornerMaterialButton" />
+
+            <android.support.design.button.MaterialButton
+                android:id="@+id/item_down"
+                android:layout_width="130dp"
+                android:layout_height="30dp"
+                android:text="Download PDF"
+                android:textSize="10sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/item_view"
+                android:layout_below="@id/item_label"
+                app:cornerRadius="22dp"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="#5acad6"
+                style="@style/AppTheme.RoundedCornerMaterialButton" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

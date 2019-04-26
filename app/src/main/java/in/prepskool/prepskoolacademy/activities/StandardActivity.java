@@ -1,0 +1,195 @@
+package in.prepskool.prepskoolacademy.activities;
+
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import in.prepskool.prepskoolacademy.IntentData;
+import in.prepskool.prepskoolacademy.R;
+import in.prepskool.prepskoolacademy.adapter.StandardAdapter;
+import in.prepskool.prepskoolacademy.model.Standard;
+
+public class StandardActivity extends AppCompatActivity {
+
+    private GridView gvStandard;
+    private ArrayList<Standard> list;
+    private StandardAdapter standardAdapter;
+    private Toolbar toolbar;
+    private HashMap<String, String> stdRomans;
+    private String CATEGORY_HOME;
+    private String SUBCATEGORY_HOME;
+    private String type;
+    private String STANDARD;
+    private TextView tvBreadCrumbStandard;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_standard);
+
+        CATEGORY_HOME = getIntent().getStringExtra("CATEGORY_HOME");
+        SUBCATEGORY_HOME = getIntent().getStringExtra("SUBCATEGORY_HOME");
+        type = getIntent().getStringExtra("type");
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_standard);
+
+        tvBreadCrumbStandard = (TextView) findViewById(R.id.breadCrumbStandard);
+        tvBreadCrumbStandard.setText(" /" + SUBCATEGORY_HOME);
+
+        gvStandard = (GridView) findViewById(R.id.grid_view_class);
+        stdRomans = new HashMap<>();
+        list = new ArrayList<>();
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        populateClasses();
+
+        standardAdapter = new StandardAdapter(list, this);
+
+        gvStandard.setAdapter(standardAdapter);
+
+        gvStandard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                STANDARD = list.get(i).getName();
+
+                switch (CATEGORY_HOME) {
+                    case "NCERT":
+
+                        if (STANDARD.equals("Class 11") || STANDARD.equals("Class 12")) {
+
+                            Intent intent = new Intent(getApplicationContext(), StreamActivity.class);
+                            intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
+                            intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
+                            intent.putExtra("STANDARD", STANDARD);
+                            startActivity(intent);
+
+                        } else {
+
+                            Intent intent = new Intent(getApplicationContext(), NonBoardActivity.class);
+                            intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
+                            intent.putExtra("STANDARD", STANDARD);
+                            intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
+                            startActivity(intent);
+                        }
+
+                        break;
+                    case "SCHOOL BOARDS":
+
+                        if (SUBCATEGORY_HOME.equals("ICSE Board")) {
+
+                            if (STANDARD.equals("Class 11") || STANDARD.equals("Class 12") || STANDARD.equals("Class 9")
+                                    || STANDARD.equals("Class 10")) {
+
+                                Intent intent = new Intent(getApplicationContext(), StreamActivity.class);
+                                intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
+                                intent.putExtra("STANDARD", STANDARD);
+                                intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
+                                startActivity(intent);
+
+                            } else {
+
+                                Intent intent = new Intent(getApplicationContext(), NonBoardActivity.class);
+                                intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
+                                intent.putExtra("STANDARD", STANDARD);
+                                intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
+                                startActivity(intent);
+                            }
+                        } else {
+
+                            if (STANDARD.equals("Class 11") || STANDARD.equals("Class 12")) {
+
+                                Intent intent = new Intent(getApplicationContext(), StreamActivity.class);
+                                intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
+                                intent.putExtra("STANDARD", STANDARD);
+                                intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
+                                startActivity(intent);
+
+                            } else {
+
+                                Intent intent = new Intent(getApplicationContext(), NonBoardActivity.class);
+                                intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
+                                intent.putExtra("STANDARD", STANDARD);
+                                intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
+                                startActivity(intent);
+                            }
+                        }
+                        break;
+
+                    case "PRACTICE PAPERS":
+
+                        Intent intent = new Intent(getApplicationContext(), PdfListActivity.class);
+                        intent.putExtra("SUBCATEGORY_HOME", "Books");
+                        intent.putExtra("SUBJECT", "English");
+                        intent.putExtra("STANDARD", STANDARD);
+                        intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
+                        startActivity(intent);
+                        break;
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        list.clear();
+        populateClasses();
+        standardAdapter = new StandardAdapter(list, this);
+
+        gvStandard.setAdapter(standardAdapter);
+    }
+
+    public void populateClasses() {
+
+        if (type.equals("0")) {
+            String s[] = {"XII", "XI", "X", "IX", "VIII", "VII", "VI"};
+            String s2[] = {"Class 12", "Class 11", "Class 10", "Class 9", "Class 8", "Class 7", "Class 6"};
+            int ind = 0;
+            for (int i = 12; i >= 6; i--) {
+                Standard c = new Standard();
+                c.setRom(s[ind]);
+                c.setName(s2[ind]);
+                ind++;
+                list.add(c);
+            }
+        } else if (type.equals("1")) {
+            String s[] = {"XII", "X"};
+            String s2[] = {"Class 12", "Class 10"};
+
+            Standard s1 = new Standard();
+            s1.setRom(s[0]);
+            s1.setName(s2[0]);
+            list.add(s1);
+
+            Standard s3 = new Standard();
+            s3.setRom(s[1]);
+            s3.setName(s2[1]);
+            list.add(s3);
+        }
+    }
+}

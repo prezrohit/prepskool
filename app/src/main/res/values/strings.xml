@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">PrepskoolAcademy</string>
+
+    <!-- Navigation Drawer menu labels -->
+    <string name="quiz">Quiz</string>
+    <string name="share_app">Share App</string>
+    <string name="invite">Invite</string>
+    <string name="my_bookmark">My Bookmarks</string>
+    <string name="rate_app">Rate App</string>
+    <string name="about_us">About Us</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="settings">Settings</string>
+    <string name="welcome_text">Welcome to your Online School</string>
+
+    <string-array name="nav_item_activity_titles">
+        <item>Quiz</item>
+        <item>Share App</item>
+        <item>Invite</item>
+        <item>My Bookmarks</item>
+        <item>Rate App</item>
+        <item>About Us</item>
+        <item>Privacy Policy</item>
+        <item>Settings</item>
+    </string-array>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="search">search</string>
+
+    <string name="toolbar_title">Contacts</string>
+    <string name="action_search">Search</string>
+    <string name="search_hint">Type name…</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ncert_book">NCERT Book</string>
+    <string name="title_standard">"Choose Your Class"</string>
+    <string name="title_subject">"Choose a Subject"</string>
+
+</resources>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="navigation_header_hight">160dp</dimen>
+    <dimen name="floating_button">20dp</dimen>
+    <dimen name="cardview_height">100dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="cardview_radius">10dp</dimen>
+
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="paddling_gridview">5dp</dimen>
+    <dimen name="margin_topnotification">56dp</dimen>
+    <dimen name="cv_top_notification">5dp</dimen>
+    <dimen name="cv_corner">10dp</dimen>
+    <dimen name="cv_margin">7dp</dimen>
+    <dimen name="margin_bottom">2dp</dimen>
+
+</resources>

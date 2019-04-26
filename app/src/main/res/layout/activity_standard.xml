@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.StandardActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/breadCrumbStandard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="regegrgrgre"/>
+
+        <GridView
+            android:id="@+id/grid_view_class"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/breadCrumbStandard"
+            android:clipToPadding="false"
+            android:horizontalSpacing="10dp"
+            android:numColumns="3"
+            android:padding="10dp"
+            android:verticalSpacing="10dp">
+
+        </GridView>
+
+
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/ncert_books"
+            android:icon="@mipmap/ic_ncert_books"
+            android:title="@string/ncert_book"/>
+
+        <item
+            android:id="@+id/bookmarks"
+            android:icon="@drawable/ic_bookmark_border_black_24dp"
+            android:title="@string/my_bookmark"/>
+
+    </group>
+
+    <group
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/rate_app"
+            android:icon="@drawable/ic_rate_review_black_24dp"
+            android:title="@string/rate_app"/>
+
+        <item
+            android:id="@+id/about_us"
+            android:icon="@drawable/about_us_423963"
+            android:title="@string/about_us"/>
+
+        <item
+            android:id="@+id/privacy_policy"
+            android:icon="@drawable/privacy_policy_63529"
+            android:title="@string/privacy_policy"/>
+
+    </group>
+
+</menu>
