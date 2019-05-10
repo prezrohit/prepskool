@@ -32,6 +32,7 @@ public class StandardActivity extends AppCompatActivity {
     private String SUBCATEGORY_HOME;
     private String type;
     private String STANDARD;
+    private String BOARD;
     private TextView tvBreadCrumbStandard;
 
     @Override
@@ -42,6 +43,7 @@ public class StandardActivity extends AppCompatActivity {
         CATEGORY_HOME = getIntent().getStringExtra("CATEGORY_HOME");
         SUBCATEGORY_HOME = getIntent().getStringExtra("SUBCATEGORY_HOME");
         type = getIntent().getStringExtra("type");
+        BOARD = getIntent().getStringExtra("BOARD");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_standard);
@@ -141,12 +143,26 @@ public class StandardActivity extends AppCompatActivity {
 
                     case "PRACTICE PAPERS":
 
-                        Intent intent = new Intent(getApplicationContext(), PdfListActivity.class);
-                        intent.putExtra("SUBCATEGORY_HOME", "Books");
-                        intent.putExtra("SUBJECT", "English");
-                        intent.putExtra("STANDARD", STANDARD);
-                        intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
-                        startActivity(intent);
+                        Intent intent;
+
+                        if(STANDARD.equals("Class 12")) {
+                            intent  = new Intent(getApplicationContext(), StreamActivity.class);
+                            intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
+                            intent.putExtra("STANDARD", STANDARD);
+                            intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
+                            intent.putExtra("BOARD", BOARD);
+                            startActivity(intent);
+                        }
+
+                        else if (STANDARD.equals("Class 10")) {
+                            intent = new Intent(getApplicationContext(), NonBoardActivity.class);
+                            intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
+                            intent.putExtra("STANDARD", STANDARD);
+                            intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
+                            intent.putExtra("BOARD", BOARD);
+                            startActivity(intent);
+                        }
+
                         break;
                 }
             }

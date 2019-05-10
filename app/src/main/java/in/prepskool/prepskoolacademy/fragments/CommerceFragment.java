@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -38,13 +39,15 @@ public class CommerceFragment extends Fragment {
 
     View vi;
     SubjectAdapter adapter;
-    RecyclerView recyclerView;
+    RecyclerView rvCommerce;
     StringRequest stringRequest;
     private ProgressDialog mProgressDialog;
     LinearLayoutManager linearLayoutManager;
     ArrayList<Subject> arrayList = new ArrayList<>();
-    String url = "https://newsapi.org/v2/sources?apiKey=47e4a195c2874d2ab508fdab9dafd266";
+    String url;
     private String SUBJECT;
+    private String BOARD;
+    private TextView tvNoData;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,17 +57,31 @@ public class CommerceFragment extends Fragment {
         mProgressDialog.setTitle("Loading");
         mProgressDialog.setMessage("Please wait...");
 
+        tvNoData = (TextView) vi.findViewById(R.id.tv_no_data_commerce);
+        tvNoData.setVisibility(View.GONE);
+
         linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         arrayList = new ArrayList<>();
-        recyclerView = vi.findViewById(R.id.rvComm);
+        rvCommerce = vi.findViewById(R.id.rvComm);
 
         IntentData.SUBCATEGORY_HOME = getArguments().getString("SUBCATEGORY_HOME");
         IntentData.CATEGORY_HOME = getArguments().getString("CATEGORY_HOME");
         IntentData.STANDARD = getArguments().getString("STANDARD");
+        BOARD = getArguments().getString("BOARD");
 
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(),
-                recyclerView, new RecyclerTouchListener.ClickListener() {
+        if (IntentData.CATEGORY_HOME.equals("PRACTICE PAPERS"))
+
+            url = Endpoints.PAPERS + IntentData.STANDARD
+                    .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
+                    .replace(" ", "%20") + "/Commerce";
+        else
+            url = Endpoints.SUBJECTS + "/" + IntentData.STANDARD
+                    .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
+                    .replace(" ", "%20") + "/Commerce";
+
+        rvCommerce.addOnItemTouchListener(new RecyclerTouchListener(getActivity(),
+                rvCommerce, new RecyclerTouchListener.ClickListener() {
 
             @Override
             public void onClick(View view, int position) {
@@ -84,7 +101,8 @@ public class CommerceFragment extends Fragment {
                     intent.putExtra("SUBJECT", SUBJECT);
                     intent.putExtra("STANDARD", IntentData.STANDARD);
                     intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
-                }
+                } else if (IntentData.CATEGORY_HOME.equals("PRACTICE PAPERS"))
+                    intent.putExtra("BOARD", BOARD);
 
                 startActivity(intent);
             }
@@ -95,40 +113,42 @@ public class CommerceFragment extends Fragment {
             }
         }));
 
-        //mProgressDialog.show();
-
-        stringRequest = new StringRequest(Request.Method.GET, Endpoints.SUBJECT
-                + "/" + IntentData.STANDARD.replace(" ","%20") + "/"
-                + IntentData.SUBCATEGORY_HOME.replace(" ","%20") + "/Commerce", new Response.Listener<String>() {
+        stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
 
-                try {
-                   /* JSONObject jsonObject = new JSONObject(response);
+                Log.v(CommerceFragment.class.getSimpleName(), response);
 
-                        JSONArray jsonArray = new JSONArray(jsonObject.getString("data"));*/
-                       // Log.v("#### arrayc", jsonArray.toString());
+                if (response.equals("{\"status\":\"no data\"}")) {
+                    tvNoData.setVisibility(View.VISIBLE);
+                    rvCommerce.setVisibility(View.GONE);
+                } else {
 
-                    JSONArray jsonArray = new JSONArray(response);
+                    try {
+
+                        JSONArray jsonArray = new JSONArray(response);
+                        Log.v(CommerceFragment.class.getSimpleName(), response + "       " + jsonArray.length());
 
                         for (int i = 0; i < jsonArray.length(); i++) {
-                            Subject news = new Subject();
-                            news.setName(jsonArray.getJSONObject(i).getString("name"));
-                            arrayList.add(news);
+
+                            Subject subject = new Subject();
+                            subject.setName(jsonArray.getJSONObject(i).getString("name"));
+                            arrayList.add(subject);
+                            Log.v(CommerceFragment.class.getSimpleName(), arrayList.get(i).getName());
                         }
 
-                        recyclerView.setHasFixedSize(true);
-                        recyclerView.setLayoutManager(linearLayoutManager);
+                        rvCommerce.setHasFixedSize(true);
+                        rvCommerce.setLayoutManager(linearLayoutManager);
                         adapter = new SubjectAdapter(getActivity(), arrayList);
-                        recyclerView.setAdapter(adapter);
+                        rvCommerce.setAdapter(adapter);
 
                         mProgressDialog.dismiss();
 
-
-                } catch (JSONException e) {
-                    Log.v("#####", "error occured");
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        Log.v("#####", "error occured");
+                        e.printStackTrace();
+                    }
                 }
             }
         }, new Response.ErrorListener() {

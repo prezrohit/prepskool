@@ -10,6 +10,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -29,19 +31,21 @@ public class NonBoardActivity extends AppCompatActivity {
 
     //region Variable Declaration
     private NonBoardAdapter adapter;
-    private RecyclerView recyclerView;
+    private RecyclerView rvNonBoard;
     private StringRequest stringRequest;
     private ProgressDialog mProgressDialog;
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<String> arrayListSubject = new ArrayList<>();
     private ArrayList<String> arrayListRemove;
     private Toolbar toolbar;
-    private TextView tvCvHeader;
     private String CATEGORY_HOME;
     private String SUBCATEGORY_HOME;
     private String STANDARD;
+    private String BOARD;
     private String SUBJECT;
     private TextView tvBreadCrumbNonBoard;
+    private TextView tvNoData;
+    private String url;
     //endregion
 
     @Override
@@ -52,6 +56,31 @@ public class NonBoardActivity extends AppCompatActivity {
         SUBCATEGORY_HOME = getIntent().getStringExtra("SUBCATEGORY_HOME");
         STANDARD = getIntent().getStringExtra("STANDARD");
         CATEGORY_HOME = getIntent().getStringExtra("CATEGORY_HOME");
+        BOARD = getIntent().getStringExtra("BOARD");
+
+        switch (CATEGORY_HOME) {
+
+            case "SCHOOL BOARDS":
+                url = Endpoints.SUBJECTS + "?id=" + STANDARD
+                        .replace(" ", "%20") + "&category=" + SUBCATEGORY_HOME
+                        .replace(" ", "%20");
+                break;
+
+            case "PRACTICE PAPERS":
+                url = Endpoints.PAPERS + STANDARD
+                        .replace(" ", "%20") + "/" + SUBCATEGORY_HOME
+                        .replace(" ", "%20");
+                break;
+
+            default:
+                url = Endpoints.SUBJECTS + "?id=" + STANDARD
+                        .replace(" ", "%20") + "&category=" + SUBCATEGORY_HOME
+                        .replace(" ", "%20");
+                break;
+        }
+
+        tvNoData = (TextView) findViewById(R.id.txt_no_data_non_board);
+        tvNoData.setVisibility(View.GONE);
 
         //region Setting Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -88,11 +117,11 @@ public class NonBoardActivity extends AppCompatActivity {
         arrayListRemove.add("Computer Science");
 
         arrayListSubject = new ArrayList<>();
-        recyclerView = findViewById(R.id.rvSci);
+        rvNonBoard = findViewById(R.id.rvSci);
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView,
+        rvNonBoard.addOnItemTouchListener(new RecyclerTouchListener(this, rvNonBoard,
                 new RecyclerTouchListener.ClickListener() {
 
             @Override
@@ -114,6 +143,8 @@ public class NonBoardActivity extends AppCompatActivity {
                     intent.putExtra("STANDARD", STANDARD);
                     intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
                 }
+                else if (IntentData.CATEGORY_HOME.equals("PRACTICE PAPERS"))
+                    intent.putExtra("BOARD", BOARD);
 
                 startActivity(intent);
             }
@@ -125,43 +156,46 @@ public class NonBoardActivity extends AppCompatActivity {
 
         mProgressDialog.show();
 
-        stringRequest = new StringRequest(Request.Method.GET, Endpoints.SUBJECTS, new Response.Listener<String>() {
+        stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
 
-                Log.v("####sci", response);
-                try {
+                mProgressDialog.dismiss();
 
-                    JSONObject jsonObject = new JSONObject(response);
+                if(response.equals("{\"status\":\"no data\"}")) {
+                    rvNonBoard.setVisibility(View.GONE);
+                    tvNoData.setVisibility(View.VISIBLE);
+                }
 
-                    JSONArray jsonArray = new JSONArray(jsonObject.getString("data"));
-                    Log.v("#### arrayss", jsonArray.toString());
+                else {
+                    try {
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONArray jsonArray = new JSONArray(response);
+                        Log.v("#### arrayss", jsonArray.toString());
 
-                        arrayListSubject.add(jsonArray.getJSONObject(i).getString("name"));
-                    }
+                        for (int i = 0; i < jsonArray.length(); i++) {
 
-                    if (SUBCATEGORY_HOME.equals("ICSE")) {
-                        if (!(STANDARD.equals("Class 12") || STANDARD.equals("Class 11") ||
-                                STANDARD.equals("Class 10") || STANDARD.equals("Class 9")))
+                            arrayListSubject.add(jsonArray.getJSONObject(i).getString("name"));
+                        }
+
+                        if (SUBCATEGORY_HOME.equals("ICSE")) {
+                            if (!(STANDARD.equals("Class 12") || STANDARD.equals("Class 11") ||
+                                    STANDARD.equals("Class 10") || STANDARD.equals("Class 9")))
+                                arrayListSubject.removeAll(arrayListRemove);
+                        } else if (!(STANDARD.equals("Class 12") || STANDARD.equals("Class 11")))
                             arrayListSubject.removeAll(arrayListRemove);
+
+                        rvNonBoard.setHasFixedSize(true);
+                        rvNonBoard.setLayoutManager(linearLayoutManager);
+                        adapter = new NonBoardAdapter(NonBoardActivity.this, arrayListSubject);
+                        rvNonBoard.setAdapter(adapter);
+
+                    } catch (JSONException e) {
+                        Log.v("#####", "error occured");
+                        e.printStackTrace();
                     }
-                    else
-                        if (!(STANDARD.equals("Class 12") || STANDARD.equals("Class 11")))
-                            arrayListSubject.removeAll(arrayListRemove);
-
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(linearLayoutManager);
-                    adapter = new NonBoardAdapter(NonBoardActivity.this, arrayListSubject);
-                    recyclerView.setAdapter(adapter);
-
-                    mProgressDialog.dismiss();
-
-                } catch (JSONException e) {
-                    Log.v("#####", "error occured");
-                    e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {

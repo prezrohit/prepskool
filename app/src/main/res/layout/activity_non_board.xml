@@ -13,10 +13,18 @@
         android:id="@+id/breadCrumbNonBoard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="66dp"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="regegrgrgre"/>
+        android:layout_marginTop="66dp"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/txt_no_data_non_board"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_below="@+id/breadCrumbNonBoard"
+        android:gravity="center"
+        android:text="No Data"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"

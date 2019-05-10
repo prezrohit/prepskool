@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -40,12 +41,17 @@ public class ArtFragment extends Fragment {
 
     View vi;
     SubjectAdapter adapter;
-    RecyclerView recyclerView;
+    RecyclerView rvArts;
     StringRequest stringRequest;
     private ProgressDialog mProgressDialog;
     LinearLayoutManager linearLayoutManager;
-    ArrayList<Subject> arrayList = new ArrayList<>( );
+    ArrayList<Subject> arrayList = new ArrayList<>();
     private String SUBJECT;
+    private String BOARD;
+    private String STANDARD;
+    private String SUBCATEGORY_HOME;
+    private String url;
+    private TextView tvNoData;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -56,73 +62,98 @@ public class ArtFragment extends Fragment {
         mProgressDialog.setTitle("Loading");
         mProgressDialog.setMessage("Please wait...");
 
+        tvNoData = (TextView) vi.findViewById(R.id.tv_no_data_arts);
+        tvNoData.setVisibility(View.GONE);
+
         linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         arrayList = new ArrayList<>();
-        recyclerView = vi.findViewById(R.id.rvArt);
+        rvArts = vi.findViewById(R.id.rvArt);
 
-        IntentData.SUBCATEGORY_HOME = getArguments().getString("SUBCATEGORY_HOME");
+        SUBCATEGORY_HOME = getArguments().getString("SUBCATEGORY_HOME");
         IntentData.CATEGORY_HOME = getArguments().getString("CATEGORY_HOME");
-        IntentData.STANDARD = getArguments().getString("STANDARD");
+        STANDARD = getArguments().getString("STANDARD");
+        BOARD = getArguments().getString("BOARD");
 
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView,
+        if (IntentData.CATEGORY_HOME.equals("PRACTICE PAPERS"))
+
+            url = Endpoints.PAPERS + IntentData.STANDARD
+                    .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
+                    .replace(" ", "%20") + "/Science";
+
+        else
+            url = Endpoints.SUBJECTS + "/" + IntentData.STANDARD
+                    .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
+                    .replace(" ", "%20") + "/Arts";
+
+        rvArts.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rvArts,
                 new RecyclerTouchListener.ClickListener() {
 
-            @Override
-            public void onClick(View view, int position) {
+                    @Override
+                    public void onClick(View view, int position) {
 
-                SUBJECT = arrayList.get(position).getName();
+                        SUBJECT = arrayList.get(position).getName();
 
-                Intent intent = new Intent(getActivity(), PdfListActivity.class);
-                intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
-                intent.putExtra("SUBJECT", SUBJECT);
-                intent.putExtra("STANDARD", IntentData.STANDARD);
-                intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
+                        Intent intent = new Intent(getActivity(), PdfListActivity.class);
+                        intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
+                        intent.putExtra("SUBJECT", SUBJECT);
+                        intent.putExtra("STANDARD", IntentData.STANDARD);
+                        intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
 
-                if (IntentData.CATEGORY_HOME.equals("SCHOOL BOARDS")) {
+                        if (IntentData.CATEGORY_HOME.equals("SCHOOL BOARDS")) {
 
-                    intent = new Intent(getActivity(), TypeActivity.class);
-                    intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
-                    intent.putExtra("SUBJECT", SUBJECT);
-                    intent.putExtra("STANDARD", IntentData.STANDARD);
-                    intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
-                }
+                            intent = new Intent(getActivity(), TypeActivity.class);
+                            intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
+                            intent.putExtra("SUBJECT", SUBJECT);
+                            intent.putExtra("STANDARD", IntentData.STANDARD);
+                            intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
+                        } else if (IntentData.CATEGORY_HOME.equals("PRACTICE PAPERS"))
+                            intent.putExtra("BOARD", BOARD);
 
-                startActivity(intent);
-            }
+                        startActivity(intent);
+                    }
 
-            @Override
-            public void onLongClick(View view, int position) {
+                    @Override
+                    public void onLongClick(View view, int position) {
 
-            }
-        }));
+                    }
+                }));
 
-        stringRequest = new StringRequest(Request.Method.GET, Endpoints.SUBJECT
-                + "/" + IntentData.STANDARD.replace(" ","%20") + "/"
-                + IntentData.SUBCATEGORY_HOME.replace(" ","%20") +"/Arts", new Response.Listener<String>() {
+        stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
 
-                try {
+                Log.v(ArtFragment.class.getSimpleName(), response);
 
-                    JSONArray jsonArray = new JSONArray(response);
+                if (response.equals("{\"status\":\"no data\"}")) {
+                    tvNoData.setVisibility(View.VISIBLE);
+                    rvArts.setVisibility(View.GONE);
+                } else {
+
+                    try {
+
+                        JSONArray jsonArray = new JSONArray(response);
+                        Log.v(ArtFragment.class.getSimpleName(), response + "       " + jsonArray.length());
+
                         for (int i = 0; i < jsonArray.length(); i++) {
                             Subject news = new Subject();
                             news.setName(jsonArray.getJSONObject(i).getString("name"));
                             arrayList.add(news);
+                            Log.v(ArtFragment.class.getSimpleName(), arrayList.get(i).getName());
                         }
 
-                        recyclerView.setHasFixedSize(true);
-                        recyclerView.setLayoutManager(linearLayoutManager);
+                        rvArts.setHasFixedSize(true);
+                        rvArts.setLayoutManager(linearLayoutManager);
                         adapter = new SubjectAdapter(getActivity(), arrayList);
-                        recyclerView.setAdapter(adapter);
+                        rvArts.setAdapter(adapter);
                         mProgressDialog.dismiss();
 
 
-                } catch (JSONException e) {
-                    Log.v("#####", "error occured");
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        Log.v("#####", "error occured");
+                        e.printStackTrace();
+                    }
                 }
             }
         }, new Response.ErrorListener() {

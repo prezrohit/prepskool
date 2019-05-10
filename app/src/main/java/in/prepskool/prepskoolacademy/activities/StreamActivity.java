@@ -16,11 +16,13 @@ import in.prepskool.prepskoolacademy.fragments.CommerceFragment;
 import in.prepskool.prepskoolacademy.fragments.ScienceFragment;
 
 public class StreamActivity extends AppCompatActivity {
+
     private Toolbar toolbar;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private ViewPagerAdapter viewPagerAdapter;
     private TextView tvCvHeader;
+    private String BOARD;
     private TextView tvBreadCrumbStream;
 
     @Override
@@ -31,16 +33,18 @@ public class StreamActivity extends AppCompatActivity {
         IntentData.SUBCATEGORY_HOME = getIntent().getStringExtra("SUBCATEGORY_HOME");
         IntentData.STANDARD = getIntent().getStringExtra("STANDARD");
         IntentData.CATEGORY_HOME = getIntent().getStringExtra("CATEGORY_HOME");
+        BOARD = getIntent().getStringExtra("BOARD");
 
         Bundle data = new Bundle();
         data.putString("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
         data.putString("CATEGORY_HOME", IntentData.CATEGORY_HOME);
         data.putString("STANDARD", IntentData.STANDARD);
+        data.putString("BOARD", BOARD);
 
         tvBreadCrumbStream = findViewById(R.id.breadCrumbStream);
         tvBreadCrumbStream.setText(" /" + IntentData.SUBCATEGORY_HOME + " /" + IntentData.STANDARD);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar_stream);
         toolbar.setTitle(R.string.title_subject);
         setSupportActionBar(toolbar);
 

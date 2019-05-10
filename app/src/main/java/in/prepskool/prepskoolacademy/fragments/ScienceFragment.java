@@ -11,13 +11,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+
 import org.json.JSONArray;
 import org.json.JSONException;
+
 import java.util.ArrayList;
+
 import in.prepskool.prepskoolacademy.AppController;
 import in.prepskool.prepskoolacademy.Endpoints;
 import in.prepskool.prepskoolacademy.IntentData;
@@ -32,106 +37,115 @@ public class ScienceFragment extends Fragment {
 
     View vi;
     SubjectAdapter adapter;
-    RecyclerView recyclerView;
+    RecyclerView rvScience;
     StringRequest stringRequest;
-    private ProgressDialog mProgressDialog;
     LinearLayoutManager linearLayoutManager;
     ArrayList<Subject> arrayList = new ArrayList<>();
-    private String SUB_CAT_NCERT_REF;
     private String SUBJECT;
+    private String BOARD;
+    private String url;
+    private TextView tvNoData;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         vi = inflater.inflate(R.layout.fragment_science, container, false);
-        mProgressDialog = new ProgressDialog(getContext());
-        mProgressDialog.setTitle("Loading");
-        mProgressDialog.setMessage("Please wait...");
 
         linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         arrayList = new ArrayList<>();
-        recyclerView = vi.findViewById(R.id.rvSci);
+        rvScience = vi.findViewById(R.id.rvSci);
+
+        tvNoData = (TextView) vi.findViewById(R.id.tv_no_data_science);
+        tvNoData.setVisibility(View.GONE);
 
         IntentData.SUBCATEGORY_HOME = getArguments().getString("SUBCATEGORY_HOME");
         IntentData.CATEGORY_HOME = getArguments().getString("CATEGORY_HOME");
         IntentData.STANDARD = getArguments().getString("STANDARD");
+        BOARD = getArguments().getString("BOARD");
 
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView,
+        if (IntentData.CATEGORY_HOME.equals("PRACTICE PAPERS"))
+
+            url = Endpoints.PAPERS + IntentData.STANDARD
+                    .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
+                    .replace(" ", "%20") + "/Science";
+
+        else
+            url = Endpoints.SUBJECTS + "/" + IntentData.STANDARD
+                    .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
+                    .replace(" ", "%20") + "/Science";
+
+        rvScience.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rvScience,
                 new RecyclerTouchListener.ClickListener() {
 
-            @Override
-            public void onClick(View view, int position) {
+                    @Override
+                    public void onClick(View view, int position) {
 
-                SUBJECT = arrayList.get(position).getName();
+                        SUBJECT = arrayList.get(position).getName();
 
-                Intent intent = new Intent(getActivity(), PdfListActivity.class);
-                intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
-                intent.putExtra("SUBJECT", SUBJECT);
-                intent.putExtra("STANDARD", IntentData.STANDARD);
-                intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
+                        Intent intent = new Intent(getActivity(), PdfListActivity.class);
+                        intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
+                        intent.putExtra("SUBJECT", SUBJECT);
+                        intent.putExtra("STANDARD", IntentData.STANDARD);
+                        intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
 
-                if (IntentData.CATEGORY_HOME.equals("SCHOOL BOARDS")) {
+                        if (IntentData.CATEGORY_HOME.equals("SCHOOL BOARDS")) {
 
-                    intent = new Intent(getActivity(), TypeActivity.class);
-                    intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
-                    intent.putExtra("SUBJECT", SUBJECT);
-                    intent.putExtra("STANDARD", IntentData.STANDARD);
-                    intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
-                }
+                            intent = new Intent(getActivity(), TypeActivity.class);
+                            intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
+                            intent.putExtra("SUBJECT", SUBJECT);
+                            intent.putExtra("STANDARD", IntentData.STANDARD);
+                            intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
+                        } else if (IntentData.CATEGORY_HOME.equals("PRACTICE PAPERS"))
+                            intent.putExtra("BOARD", BOARD);
 
-                startActivity(intent);
-            }
+                        startActivity(intent);
+                    }
 
-            @Override
-            public void onLongClick(View view, int position) {
+                    @Override
+                    public void onLongClick(View view, int position) {
 
-            }
-        }));
+                    }
+                }));
 
-        //mProgressDialog.show();
-
-        stringRequest = new StringRequest(Request.Method.GET, Endpoints.SUBJECT + "/"
-                + IntentData.STANDARD.replace(" ","%20") + "/"
-                + IntentData.SUBCATEGORY_HOME.replace(" ","%20")
-                + "/Science", new Response.Listener<String>() {
+        stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
 
-                //mProgressDialog.hide();
-                mProgressDialog.dismiss();
-                Log.v("####sci", response);
-                try {
+                Log.v(ScienceFragment.class.getSimpleName(), response);
 
-                    //JSONObject jsonObject = new JSONObject(response);
+                if (response.equals("{\"status\":\"no data\"}")) {
+                    tvNoData.setVisibility(View.VISIBLE);
+                    rvScience.setVisibility(View.GONE);
+                } else {
+                    try {
 
-                    //JSONArray jsonArray = new JSONArray(jsonObject.getString("data"));
-                    JSONArray jsonArray = new JSONArray(response);
-                    Log.v("#### arrayss", jsonArray.toString());
+                        JSONArray jsonArray = new JSONArray(response);
 
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        Subject news = new Subject();
-                        news.setName(jsonArray.getJSONObject(i).getString("name"));
-                        arrayList.add(news);
+                        Log.v(ScienceFragment.class.getSimpleName(), response + "       " + jsonArray.length());
+
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            Subject news = new Subject();
+                            news.setName(jsonArray.getJSONObject(i).getString("name"));
+                            arrayList.add(news);
+                            Log.v(ScienceFragment.class.getSimpleName(), arrayList.get(i).getName());
+                        }
+
+                        rvScience.setHasFixedSize(true);
+                        rvScience.setLayoutManager(linearLayoutManager);
+                        adapter = new SubjectAdapter(getActivity(), arrayList);
+                        rvScience.setAdapter(adapter);
+
+                    } catch (JSONException e) {
+                        Log.v("#####", "error occured");
+                        e.printStackTrace();
                     }
-
-                    recyclerView.setHasFixedSize(true);
-                    recyclerView.setLayoutManager(linearLayoutManager);
-                    adapter = new SubjectAdapter(getActivity(), arrayList);
-                    recyclerView.setAdapter(adapter);
-
-                    //mProgressDialog.dismiss();
-
-                } catch (JSONException e) {
-                    Log.v("#####", "error occured");
-                    e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                mProgressDialog.dismiss();
                 Log.v("VolleyError", "not working");
                 Log.v("VolleyError", error.toString());
             }

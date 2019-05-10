@@ -44,6 +44,7 @@ public class PdfListActivity extends AppCompatActivity {
     private String STANDARD;
     private String SUBCATEGORY_DEFENCE;
     private String RESOURCE;
+    private String BOARD;
     private String TYPE;
     private String url;
     private TextView tvNoData;
@@ -59,11 +60,15 @@ public class PdfListActivity extends AppCompatActivity {
         SUBCATEGORY_HOME = getIntent().getStringExtra("SUBCATEGORY_HOME");
         CATEGORY_HOME = getIntent().getStringExtra("CATEGORY_HOME");
         SUBJECT = getIntent().getStringExtra("SUBJECT");
+        BOARD = getIntent().getStringExtra("BOARD");
 
         if(CATEGORY_HOME.equals("SCHOOL BOARDS"))
             TYPE = getIntent().getStringExtra("TYPE");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tvNoData = (TextView) findViewById(R.id.tvNoData);
+
+        tvNoData.setVisibility(View.GONE);
 
         if (!CATEGORY_HOME.equals("DEFENCE")) toolbar.setTitle(SUBJECT);
         else toolbar.setTitle(SUBCATEGORY_DEFENCE);
@@ -89,8 +94,6 @@ public class PdfListActivity extends AppCompatActivity {
                 break;
         }
 
-        tvNoData = (TextView) findViewById(R.id.tvNoData);
-
         // region Selecting URL
         switch (CATEGORY_HOME) {
 
@@ -105,9 +108,10 @@ public class PdfListActivity extends AppCompatActivity {
 
             case "PRACTICE PAPERS":
 
-                url = Endpoints.PDF + "/" + SUBCATEGORY_HOME
+                url = Endpoints.PDF + "/" + BOARD
                         .replace(" ", "%20") + "/" + STANDARD
                         .replace(" ", "%20") + "/" + SUBJECT
+                        .replace(" ", "%20") + "/" + SUBCATEGORY_HOME
                         .replace(" ", "%20");
                 break;
 
@@ -116,8 +120,6 @@ public class PdfListActivity extends AppCompatActivity {
                         .replace(" ", "%20") + "/" + STANDARD
                         .replace(" ", "%20") + "/" + SUBJECT
                         .replace(" ", "%20");
-
-
         }
         //endregion
 
@@ -157,6 +159,7 @@ public class PdfListActivity extends AppCompatActivity {
 
                     if (response.equals("[]")) {
                         recyclerView.setVisibility(View.GONE);
+                        tvNoData.setVisibility(View.VISIBLE);
                     } else {
                         tvNoData.setVisibility(View.GONE);
                         JSONArray jsonArray = new JSONArray(response);

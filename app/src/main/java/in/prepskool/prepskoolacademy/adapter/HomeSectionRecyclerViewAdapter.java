@@ -99,7 +99,7 @@ public class HomeSectionRecyclerViewAdapter
 
                         Intent intent = new Intent(context, StandardActivity.class);
                         intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
-                        intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
+                        intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME + " BOARD");
                         intent.putExtra("type", "0");
                         context.startActivity(intent);
                         break;
@@ -118,6 +118,7 @@ public class HomeSectionRecyclerViewAdapter
                         Intent intent = new Intent(context, StandardActivity.class);
                         intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
                         intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
+                        intent.putExtra("BOARD", "cbse board");
                         intent.putExtra("type", "1");
                         context.startActivity(intent);
                         break;

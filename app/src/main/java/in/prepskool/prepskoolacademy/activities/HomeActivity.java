@@ -56,7 +56,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar myToolbar;
     private RecyclerViewType recyclerViewType;
     private RecyclerView rvCategories;
-    private ArrayList<Notification> arrayListNotifications;
     private ArrayList<SectionHome> sectionHomeArrayList;
     private ArrayList<String> arrayListSections;
     private ArrayList<Home> arrayListNcert;
@@ -99,7 +98,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         rvCategories.setLayoutManager(linearLayoutManager);
 
         //region Generating Arraylist
-        arrayListNotifications = new ArrayList<>();
         sectionHomeArrayList = new ArrayList<>();
         arrayListNcert = new ArrayList<>();
         arrayListPracticePaper = new ArrayList<>();
@@ -158,8 +156,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        getNotification();
     }
 
     //region Requesting Storage Permission
@@ -242,7 +238,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
     //endregion
 
-    public void getNotification() {
+    /*public void getNotification() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, Endpoints.NOTIFICATION, new Response.Listener<String>() {
 
@@ -279,7 +275,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         AppController.getInstance().addToRequestQueue(stringRequest);
-    }
+    }*/
 
     //region OptionsMenu and NavigationView Methods
     @Override

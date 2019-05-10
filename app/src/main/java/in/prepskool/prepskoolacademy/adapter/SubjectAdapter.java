@@ -17,11 +17,10 @@ import in.prepskool.prepskoolacademy.model.Subject;
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHolder> {
 
     Activity context;
-    private ArrayList<Subject> newsArrayList;
-    private View v;
+    private ArrayList<Subject> subjectArrayList;
 
-    public SubjectAdapter(Activity context, ArrayList<Subject> newsArrayList) {
-        this.newsArrayList = newsArrayList;
+    public SubjectAdapter(Activity context, ArrayList<Subject> subjectArrayList) {
+        this.subjectArrayList = subjectArrayList;
         this.context = context;
     }
 
@@ -40,24 +39,20 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_subject, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_subject, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Subject news = this.newsArrayList.get(position);
-        holder.tvChannelName.setText(news.getName());
+
+        Subject subject = subjectArrayList.get(position);
+        holder.tvChannelName.setText(subject.getName());
     }
 
     @Override
     public int getItemCount() {
-        return newsArrayList.size();
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
+        return subjectArrayList.size();
     }
 }
 
