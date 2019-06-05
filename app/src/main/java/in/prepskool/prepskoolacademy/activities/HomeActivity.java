@@ -1,8 +1,10 @@
 package in.prepskool.prepskoolacademy.activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,25 +27,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.util.ArrayList;
 
-import in.prepskool.prepskoolacademy.AppController;
-import in.prepskool.prepskoolacademy.Endpoints;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.RecyclerViewType;
 import in.prepskool.prepskoolacademy.adapter.HomeSectionRecyclerViewAdapter;
 import in.prepskool.prepskoolacademy.model.Home;
-import in.prepskool.prepskoolacademy.model.Notification;
 import in.prepskool.prepskoolacademy.model.SectionHome;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -53,15 +43,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     //region VARIABLE DECLARATION
     private static final int PERMISSION_REQUEST_CODE = 200;
-    private Toolbar myToolbar;
-    private RecyclerViewType recyclerViewType;
-    private RecyclerView rvCategories;
-    private ArrayList<SectionHome> sectionHomeArrayList;
-    private ArrayList<String> arrayListSections;
-    private ArrayList<Home> arrayListNcert;
-    private ArrayList<Home> arrayListPracticePaper;
-    private ArrayList<Home> arrayListBoards;
-    private NavigationView navigationView;
     private FloatingActionButton fab;
     //endregion
 
@@ -72,7 +53,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
 
         //region Toolbar
-        myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
         myToolbar.bringToFront();
         setSupportActionBar(myToolbar);
         //endregion
@@ -88,29 +69,29 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         });
         //endregion
 
-        recyclerViewType = RecyclerViewType.GRID;
+        RecyclerViewType recyclerViewType = RecyclerViewType.GRID;
 
         requestStoragePermission();
 
-        rvCategories = (RecyclerView) findViewById(R.id.home_sectioned_recycler_view);
+        RecyclerView rvCategories = (RecyclerView) findViewById(R.id.home_sectioned_recycler_view);
         rvCategories.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvCategories.setLayoutManager(linearLayoutManager);
 
         //region Generating Arraylist
-        sectionHomeArrayList = new ArrayList<>();
-        arrayListNcert = new ArrayList<>();
-        arrayListPracticePaper = new ArrayList<>();
-        arrayListBoards = new ArrayList<>();
-        arrayListSections = new ArrayList<>();
+        ArrayList<SectionHome> sectionHomeArrayList = new ArrayList<>();
+        ArrayList<Home> arrayListNcert = new ArrayList<>();
+        ArrayList<Home> arrayListPracticePaper = new ArrayList<>();
+        ArrayList<Home> arrayListBoards = new ArrayList<>();
+        ArrayList<String> arrayListSections = new ArrayList<>();
 
         arrayListSections.add("NCERT");
         arrayListSections.add("PRACTICE PAPERS");
         arrayListSections.add("SCHOOL BOARDS");
 
-        arrayListNcert.add(new Home("BOOKS", R.mipmap.ic_ncert_books));
-        arrayListNcert.add(new Home("NOTES", R.mipmap.ic_ncert_notes));
-        arrayListNcert.add(new Home("SOLUTIONS", R.mipmap.ic_ncert_solutions));
+        arrayListNcert.add(new Home("NCERT BOOKS", R.mipmap.ic_ncert_books));
+        arrayListNcert.add(new Home("NCERT NOTES", R.mipmap.ic_ncert_notes));
+        arrayListNcert.add(new Home("NCERT SOLUTIONS", R.mipmap.ic_ncert_solutions));
         arrayListNcert.add(new Home("EXEMPLAR BOOKS", R.mipmap.ic_exemplar_books));
         arrayListNcert.add(new Home("EXEMPLAR SOLUTIONS", R.mipmap.ic_exemplar_books));
 
@@ -154,7 +135,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -194,7 +175,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_CODE:
                 if (grantResults.length > 0) {
@@ -216,10 +197,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                                         new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                                     requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,
                                                             READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-                                                }
                                             }
                                         });
                                 return;
@@ -231,51 +210,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void showMessageOKCancel(String message,
-                                     DialogInterface.OnClickListener okListener) {
+    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(HomeActivity.this).setMessage(message).setPositiveButton
                 ("OK", okListener).setNegativeButton("Cancel", null).create().show();
     }
     //endregion
-
-    /*public void getNotification() {
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, Endpoints.NOTIFICATION, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-
-                try {
-
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = new JSONArray(jsonObject.getString("data"));
-
-                    for (int i = 0; i < jsonArray.length(); i++) {
-
-                        if (i == 5) break;
-
-                        Notification notification = new Notification();
-
-                        notification.setTitle(jsonArray.getJSONObject(i).getString("title"));
-                        notification.setDescription(jsonArray.getJSONObject(i).getString("description"));
-                        notification.setLink(jsonArray.getJSONObject(i).getString("link"));
-
-                        arrayListNotifications.add(notification);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("Volley", error.toString());
-            }
-        });
-        AppController.getInstance().addToRequestQueue(stringRequest);
-    }*/
 
     //region OptionsMenu and NavigationView Methods
     @Override
@@ -287,8 +226,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, DownloadedItemsActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, DownloadedItemsActivity.class));
         return super.onOptionsItemSelected(item);
     }
 
@@ -307,17 +245,49 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = menuItem.getItemId();
 
-        if (id == R.id.ncert_books) {
+        switch (id) {
+            case R.id.nav_ncert_books:
+                Intent intent = new Intent(this, StandardActivity.class);
+                intent.putExtra("CATEGORY_HOME", "NCERT");
+                intent.putExtra("SUBCATEGORY_HOME", "BOOKS");
+                intent.putExtra("type", "0");
+                startActivity(intent);
+                break;
 
-        }  else if (id == R.id.bookmarks) {
+            case R.id.nav_downloads:
+                startActivity(new Intent(this, DownloadedItemsActivity.class));
+                break;
 
-        } else if (id == R.id.rate_app) {
+            case R.id.nav_rate:
+                Toast.makeText(this, "Rating", Toast.LENGTH_SHORT).show();
+                Uri uri = Uri.parse("market://details?id=com.ext.ui");
+                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                // To count with Play market backstack, After pressing back button,
+                // to taken back to our application, we need to add following flags to intent.
+                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                try {
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("http://play.google.com/store/apps/details?id=com.ext.ui")));
+                }
+                break;
 
-        } else if (id == R.id.about_us) {
+            case R.id.nav_about_us:
+                startActivity(new Intent(this, AboutUsActivity.class));
+                break;
 
-        } else if (id == R.id.privacy_policy) {
+            case R.id.nav_privacy_policy:
+                startActivity(new Intent(this, PrivacyPolicyActivity.class));
+                break;
 
+            case R.id.nav_share:
+                Toast.makeText(this, "Share Link", Toast.LENGTH_SHORT).show();
+                break;
         }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

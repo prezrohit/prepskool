@@ -1,17 +1,22 @@
 package in.prepskool.prepskoolacademy.activities;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
+import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,14 +31,12 @@ public class StandardActivity extends AppCompatActivity {
     private GridView gvStandard;
     private ArrayList<Standard> list;
     private StandardAdapter standardAdapter;
-    private Toolbar toolbar;
     private HashMap<String, String> stdRomans;
     private String CATEGORY_HOME;
     private String SUBCATEGORY_HOME;
     private String type;
     private String STANDARD;
     private String BOARD;
-    private TextView tvBreadCrumbStandard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +48,13 @@ public class StandardActivity extends AppCompatActivity {
         type = getIntent().getStringExtra("type");
         BOARD = getIntent().getStringExtra("BOARD");
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_standard);
 
-        tvBreadCrumbStandard = (TextView) findViewById(R.id.breadCrumbStandard);
-        tvBreadCrumbStandard.setText(" /" + SUBCATEGORY_HOME);
+        HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.breadCrumbStandard);
+        // loads html from string and displays cat_pic.png from the app's drawable folder
+        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + SUBCATEGORY_HOME.replace(" BOARD", "") + "</font></small>",
+                new HtmlResImageGetter(htmlTextView));
 
         gvStandard = (GridView) findViewById(R.id.grid_view_class);
         stdRomans = new HashMap<>();

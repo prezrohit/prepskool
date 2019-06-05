@@ -12,12 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <org.sufficientlysecure.htmltextview.HtmlTextView
             android:id="@+id/breadCrumbStandard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="regegrgrgre"/>
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
         <GridView
             android:id="@+id/grid_view_class"
@@ -31,8 +31,6 @@
             android:verticalSpacing="10dp">
 
         </GridView>
-
-
 
     </RelativeLayout>
 </LinearLayout>

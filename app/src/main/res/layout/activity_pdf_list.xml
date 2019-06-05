@@ -9,13 +9,13 @@
         android:id="@+id/tool"
         layout="@layout/toolbar" />
 
-    <TextView
+    <org.sufficientlysecure.htmltextview.HtmlTextView
         android:id="@+id/tvBreadCrumbPdfList"
-        android:layout_below="@id/tool"
-        android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="rgojrojg" />
+        android:layout_below="@id/tool"
+        android:layout_margin="10dp"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/sectioned_recycler_view"

@@ -8,6 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
+import java.util.HashMap;
+
 import in.prepskool.prepskoolacademy.IntentData;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.adapter.ViewPagerAdapter;
@@ -17,23 +22,19 @@ import in.prepskool.prepskoolacademy.fragments.ScienceFragment;
 
 public class StreamActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
-    private ViewPagerAdapter viewPagerAdapter;
-    private TextView tvCvHeader;
-    private String BOARD;
-    private TextView tvBreadCrumbStream;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stream);
 
+        HashMap<String, String> standards = new HashMap<>();
+        standards.put("Class 12", "12th");
+        standards.put("Class 11", "11th");
+
         IntentData.SUBCATEGORY_HOME = getIntent().getStringExtra("SUBCATEGORY_HOME");
         IntentData.STANDARD = getIntent().getStringExtra("STANDARD");
         IntentData.CATEGORY_HOME = getIntent().getStringExtra("CATEGORY_HOME");
-        BOARD = getIntent().getStringExtra("BOARD");
+        String BOARD = getIntent().getStringExtra("BOARD");
 
         Bundle data = new Bundle();
         data.putString("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
@@ -41,15 +42,19 @@ public class StreamActivity extends AppCompatActivity {
         data.putString("STANDARD", IntentData.STANDARD);
         data.putString("BOARD", BOARD);
 
-        tvBreadCrumbStream = findViewById(R.id.breadCrumbStream);
-        tvBreadCrumbStream.setText(" /" + IntentData.SUBCATEGORY_HOME + " /" + IntentData.STANDARD);
+        //region breadcrumbs setup
+        HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.breadCrumbStream);
+        // loads html from string and displays cat_pic.png from the app's drawable folder
+        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + IntentData.SUBCATEGORY_HOME.replace(" BOARD", "") + "</font></small> > <small><font color=\"#12c48b\">" + IntentData.STANDARD +"</font></small>",
+                new HtmlResImageGetter(htmlTextView));
+        //endregion
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_stream);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_stream);
         toolbar.setTitle(R.string.title_subject);
         setSupportActionBar(toolbar);
 
-        viewPager = findViewById(R.id.pager);
-        tabLayout = findViewById(R.id.tablayout);
+        ViewPager viewPager = findViewById(R.id.pager);
+        TabLayout tabLayout = findViewById(R.id.tablayout);
 
         ScienceFragment scienceFragment = new ScienceFragment();
         scienceFragment.setArguments(data);
@@ -58,7 +63,7 @@ public class StreamActivity extends AppCompatActivity {
         ArtFragment artFragment = new ArtFragment();
         artFragment.setArguments(data);
 
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(scienceFragment, "Science");
         viewPagerAdapter.addFragment(commerceFragment, "Commerce");
         viewPagerAdapter.addFragment(artFragment, "Humanities");
@@ -79,3 +84,7 @@ public class StreamActivity extends AppCompatActivity {
         });
     }
 }
+
+
+
+///                  > <small><font color="#29b6f6">12th</font></small>

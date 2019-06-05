@@ -19,7 +19,12 @@ import com.android.volley.toolbox.StringRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import in.prepskool.prepskoolacademy.AppController;
 import in.prepskool.prepskoolacademy.Endpoints;
 import in.prepskool.prepskoolacademy.IntentData;
@@ -32,20 +37,16 @@ public class NonBoardActivity extends AppCompatActivity {
     //region Variable Declaration
     private NonBoardAdapter adapter;
     private RecyclerView rvNonBoard;
-    private StringRequest stringRequest;
     private ProgressDialog mProgressDialog;
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<String> arrayListSubject = new ArrayList<>();
     private ArrayList<String> arrayListRemove;
-    private Toolbar toolbar;
     private String CATEGORY_HOME;
     private String SUBCATEGORY_HOME;
     private String STANDARD;
     private String BOARD;
     private String SUBJECT;
-    private TextView tvBreadCrumbNonBoard;
     private TextView tvNoData;
-    private String url;
     //endregion
 
     @Override
@@ -53,15 +54,22 @@ public class NonBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_non_board);
 
+        HashMap<String, String> standards = new HashMap<String, String>();
+        standards.put("Class 10", "10th");
+        standards.put("Class 9", "9th");
+        standards.put("Class 8", "8th");
+        standards.put("Class 7", "7th");
+        standards.put("Class 6", "6th");
         SUBCATEGORY_HOME = getIntent().getStringExtra("SUBCATEGORY_HOME");
         STANDARD = getIntent().getStringExtra("STANDARD");
         CATEGORY_HOME = getIntent().getStringExtra("CATEGORY_HOME");
         BOARD = getIntent().getStringExtra("BOARD");
 
+        String url;
         switch (CATEGORY_HOME) {
 
             case "SCHOOL BOARDS":
-                url = Endpoints.SUBJECTS + "?id=" + STANDARD
+                url = Endpoints.NB_SUBJECTS + "?id=" + STANDARD
                         .replace(" ", "%20") + "&category=" + SUBCATEGORY_HOME
                         .replace(" ", "%20");
                 break;
@@ -83,7 +91,7 @@ public class NonBoardActivity extends AppCompatActivity {
         tvNoData.setVisibility(View.GONE);
 
         //region Setting Toolbar
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_subject);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -101,8 +109,10 @@ public class NonBoardActivity extends AppCompatActivity {
         mProgressDialog.setTitle("Loading");
         mProgressDialog.setMessage("Please wait...");
 
-        tvBreadCrumbNonBoard = (TextView) findViewById(R.id.breadCrumbNonBoard);
-        tvBreadCrumbNonBoard.setText(" /" + SUBCATEGORY_HOME + "/" + STANDARD);
+        HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.breadCrumbNonBoard);
+        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
+                        + "</font></small> > <small><font color=\"#12c48b\">" + standards.get(STANDARD)
+                + "</font></small>", new HtmlResImageGetter(htmlTextView));
 
         arrayListRemove = new ArrayList<>();
         arrayListRemove.add("Physics");
@@ -156,49 +166,47 @@ public class NonBoardActivity extends AppCompatActivity {
 
         mProgressDialog.show();
 
-        stringRequest = new StringRequest(Request.Method.GET, url,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
 
-            @Override
-            public void onResponse(String response) {
+                    @Override
+                    public void onResponse(String response) {
 
-                mProgressDialog.dismiss();
+                        mProgressDialog.dismiss();
 
-                if(response.equals("{\"status\":\"no data\"}")) {
-                    rvNonBoard.setVisibility(View.GONE);
-                    tvNoData.setVisibility(View.VISIBLE);
-                }
+                        if (response.equals("{\"status\":\"no data\"}")) {
+                            rvNonBoard.setVisibility(View.GONE);
+                            tvNoData.setVisibility(View.VISIBLE);
+                        } else {
+                            try {
 
-                else {
-                    try {
+                                JSONArray jsonArray = new JSONArray(response);
+                                Log.v("#### arrayss", jsonArray.toString());
 
-                        JSONArray jsonArray = new JSONArray(response);
-                        Log.v("#### arrayss", jsonArray.toString());
+                                for (int i = 0; i < jsonArray.length(); i++) {
 
-                        for (int i = 0; i < jsonArray.length(); i++) {
+                                    arrayListSubject.add(jsonArray.getJSONObject(i).getString("name"));
+                                }
 
-                            arrayListSubject.add(jsonArray.getJSONObject(i).getString("name"));
+                                if (SUBCATEGORY_HOME.equals("ICSE")) {
+                                    if (!(STANDARD.equals("Class 12") || STANDARD.equals("Class 11") ||
+                                            STANDARD.equals("Class 10") || STANDARD.equals("Class 9")))
+                                        arrayListSubject.removeAll(arrayListRemove);
+                                } else if (!(STANDARD.equals("Class 12") || STANDARD.equals("Class 11")))
+                                    arrayListSubject.removeAll(arrayListRemove);
+
+                                rvNonBoard.setHasFixedSize(true);
+                                rvNonBoard.setLayoutManager(linearLayoutManager);
+                                adapter = new NonBoardAdapter(NonBoardActivity.this, arrayListSubject);
+                                rvNonBoard.setAdapter(adapter);
+
+                            } catch (JSONException e) {
+                                Log.v("#####", "error occured");
+                                e.printStackTrace();
+                            }
                         }
-
-                        if (SUBCATEGORY_HOME.equals("ICSE")) {
-                            if (!(STANDARD.equals("Class 12") || STANDARD.equals("Class 11") ||
-                                    STANDARD.equals("Class 10") || STANDARD.equals("Class 9")))
-                                arrayListSubject.removeAll(arrayListRemove);
-                        } else if (!(STANDARD.equals("Class 12") || STANDARD.equals("Class 11")))
-                            arrayListSubject.removeAll(arrayListRemove);
-
-                        rvNonBoard.setHasFixedSize(true);
-                        rvNonBoard.setLayoutManager(linearLayoutManager);
-                        adapter = new NonBoardAdapter(NonBoardActivity.this, arrayListSubject);
-                        rvNonBoard.setAdapter(adapter);
-
-                    } catch (JSONException e) {
-                        Log.v("#####", "error occured");
-                        e.printStackTrace();
                     }
-                }
-            }
-        }, new Response.ErrorListener() {
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 mProgressDialog.dismiss();

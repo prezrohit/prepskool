@@ -70,15 +70,23 @@ public class CommerceFragment extends Fragment {
         IntentData.STANDARD = getArguments().getString("STANDARD");
         BOARD = getArguments().getString("BOARD");
 
-        if (IntentData.CATEGORY_HOME.equals("PRACTICE PAPERS"))
-
-            url = Endpoints.PAPERS + IntentData.STANDARD
-                    .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
-                    .replace(" ", "%20") + "/Commerce";
-        else
-            url = Endpoints.SUBJECTS + "/" + IntentData.STANDARD
-                    .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
-                    .replace(" ", "%20") + "/Commerce";
+        switch (IntentData.CATEGORY_HOME) {
+            case "SCHOOL BOARDS":
+                url = Endpoints.B_SUBJECTS + "/" + IntentData.STANDARD
+                        .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
+                        .replace(" ", "%20") + "/Commerce";
+                break;
+            case "PRACTICE PAPERS":
+                url = Endpoints.PAPERS + IntentData.STANDARD
+                        .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
+                        .replace(" ", "%20") + "/Commerce";
+                break;
+            default:
+                url = Endpoints.SUBJECTS + "/" + IntentData.STANDARD
+                        .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
+                        .replace(" ", "%20") + "/Commerce";
+                break;
+        }
 
         rvCommerce.addOnItemTouchListener(new RecyclerTouchListener(getActivity(),
                 rvCommerce, new RecyclerTouchListener.ClickListener() {

@@ -18,8 +18,11 @@ import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
+import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import in.prepskool.prepskoolacademy.AppController;
 import in.prepskool.prepskoolacademy.Endpoints;
@@ -36,19 +39,10 @@ public class PdfListActivity extends AppCompatActivity {
     protected static final String RECYCLER_VIEW_TYPE = "recycler_view_type";
     private RecyclerViewType recyclerViewType;
     private RecyclerView recyclerView;
-    private Toolbar toolbar;
     private ProgressDialog progressDialog;
-    private String CATEGORY_HOME;
-    private String SUBJECT;
-    private String SUBCATEGORY_HOME;
-    private String STANDARD;
-    private String SUBCATEGORY_DEFENCE;
-    private String RESOURCE;
-    private String BOARD;
     private String TYPE;
     private String url;
     private TextView tvNoData;
-    private TextView tvBreadCrumbPdfList;
     //endregion
 
     @Override
@@ -56,22 +50,28 @@ public class PdfListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdf_list);
 
-        STANDARD = getIntent().getStringExtra("STANDARD");
-        SUBCATEGORY_HOME = getIntent().getStringExtra("SUBCATEGORY_HOME");
-        CATEGORY_HOME = getIntent().getStringExtra("CATEGORY_HOME");
-        SUBJECT = getIntent().getStringExtra("SUBJECT");
-        BOARD = getIntent().getStringExtra("BOARD");
+        HashMap<String, String> standards = new HashMap<String, String>();
+        standards.put("Class 12", "12th");
+        standards.put("Class 11", "11th");
+        standards.put("Class 10", "10th");
+        standards.put("Class 9", "9th");
+        standards.put("Class 8", "8th");
+        standards.put("Class 7", "7th");
+        standards.put("Class 6", "6th");
+
+        String STANDARD = getIntent().getStringExtra("STANDARD");
+        String SUBCATEGORY_HOME = getIntent().getStringExtra("SUBCATEGORY_HOME");
+        String CATEGORY_HOME = getIntent().getStringExtra("CATEGORY_HOME");
+        String SUBJECT = getIntent().getStringExtra("SUBJECT");
+        String BOARD = getIntent().getStringExtra("BOARD");
 
         if(CATEGORY_HOME.equals("SCHOOL BOARDS"))
             TYPE = getIntent().getStringExtra("TYPE");
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(SUBJECT);
         tvNoData = (TextView) findViewById(R.id.tvNoData);
-
         tvNoData.setVisibility(View.GONE);
-
-        if (!CATEGORY_HOME.equals("DEFENCE")) toolbar.setTitle(SUBJECT);
-        else toolbar.setTitle(SUBCATEGORY_DEFENCE);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -84,13 +84,17 @@ public class PdfListActivity extends AppCompatActivity {
             }
         });
 
-        tvBreadCrumbPdfList = (TextView) findViewById(R.id.tvBreadCrumbPdfList);
+        HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.tvBreadCrumbPdfList);
         switch (CATEGORY_HOME) {
             case "SCHOOL BOARDS":
-                tvBreadCrumbPdfList.setText(" /" + SUBCATEGORY_HOME + " /" + STANDARD + " /" + SUBJECT + " /" + TYPE);
+                htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
+                        + "</font></small> > <small><font color=\"#12c48b\">" + standards.get(STANDARD) + "</font></small> > <small><font color='#ff6347'>"
+                        + SUBJECT + "</font></small> > <small><font color='#ffca28'>" + TYPE + "</font></small>", new HtmlResImageGetter(htmlTextView));
                 break;
             default:
-                tvBreadCrumbPdfList.setText(" /" + SUBCATEGORY_HOME + " /" + STANDARD + " /" + SUBJECT);
+                htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
+                        + "</font></small> > <small><font color=\"#12c48b\">" + standards.get(STANDARD) + "</font></small> > <small><font color='#ffca28'>"
+                        + SUBJECT + "</font></small>", new HtmlResImageGetter(htmlTextView));
                 break;
         }
 

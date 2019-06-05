@@ -93,6 +93,7 @@ public class HomeSectionRecyclerViewAdapter
 
                 IntentData.CATEGORY_HOME = sectionHome.getSectionLabel();
                 IntentData.SUBCATEGORY_HOME = sectionHome.getItemArrayList().get(position).getLabel();
+                IntentData.SUBCATEGORY_HOME = IntentData.SUBCATEGORY_HOME.replace("NCERT ", "");
 
                 switch (IntentData.CATEGORY_HOME) {
                     case "SCHOOL BOARDS": {

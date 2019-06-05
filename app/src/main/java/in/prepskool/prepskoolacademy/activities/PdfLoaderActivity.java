@@ -22,6 +22,7 @@ public class PdfLoaderActivity extends AppCompatActivity {
     private File file;
     private String pdfLink;
     private String pdfSlug;
+    private String pdfName;
     private WebView webView;
     private Context context;
 
@@ -31,6 +32,7 @@ public class PdfLoaderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pdf_loader);
 
         pdfSlug = getIntent().getStringExtra("slug");
+        pdfName = getIntent().getStringExtra("name");
 
         webView = (WebView) findViewById(R.id.webView);
         context = PdfLoaderActivity.this;
@@ -66,6 +68,7 @@ public class PdfLoaderActivity extends AppCompatActivity {
             Intent intent = new Intent(context, DownloadActivity.class);
             intent.putExtra("link", pdfLink);
             intent.putExtra("slug", pdfSlug);
+            intent.putExtra("name", pdfName);
             context.startActivity(intent);
             finish();
         }

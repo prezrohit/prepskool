@@ -41,6 +41,7 @@ public class DownloadActivity extends AppCompatActivity {
     private String folderPath;
     private String pdfUrl;
     private String pdfSlug;
+    private String pdfName;
     private ProgressDialog mProgressDialog;
     private static final int PERMISSION_REQUEST_CODE = 200;
     private String TAG = DownloadActivity.class.getSimpleName();
@@ -50,12 +51,17 @@ public class DownloadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download);
 
+        pdfUrl = getIntent().getStringExtra("link");
+        pdfSlug = getIntent().getStringExtra("slug");
+        pdfName = getIntent().getStringExtra("name");
+
+        Log.v(TAG, "Name: " + pdfName);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(pdfName);
         setSupportActionBar(toolbar);
 
         btnDownload = findViewById(R.id.btnDownload);
-        pdfUrl = getIntent().getStringExtra("link");
-        pdfSlug = getIntent().getStringExtra("slug");
 
         requestStoragePermission();
 

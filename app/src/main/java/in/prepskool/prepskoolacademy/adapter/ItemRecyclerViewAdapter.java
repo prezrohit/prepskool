@@ -2,6 +2,7 @@ package in.prepskool.prepskoolacademy.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +55,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(ItemViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
         holder.itemLabel.setText(arrayList.get(position).getName());
 
         holder.itemVieww.setOnClickListener(new View.OnClickListener() {
@@ -62,8 +63,9 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
             public void onClick(View view) {
 
                 Intent i = new Intent(context, PdfLoaderActivity.class);
-                i.putExtra("link", arrayList.get(position).getLink());
-                i.putExtra("slug", arrayList.get(position).getSlug());
+                i.putExtra("name", arrayList.get(holder.getAdapterPosition()).getName());
+                i.putExtra("link", arrayList.get(holder.getAdapterPosition()).getLink());
+                i.putExtra("slug", arrayList.get(holder.getAdapterPosition()).getSlug());
                 context.startActivity(i);
             }
         });
@@ -73,8 +75,9 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
             public void onClick(View view) {
 
                 Intent i = new Intent(context, DownloadActivity.class);
-                i.putExtra("link", arrayList.get(position).getLink());
-                i.putExtra("slug", arrayList.get(position).getSlug());
+                i.putExtra("name", arrayList.get(holder.getAdapterPosition()).getName());
+                i.putExtra("link", arrayList.get(holder.getAdapterPosition()).getLink());
+                i.putExtra("slug", arrayList.get(holder.getAdapterPosition()).getSlug());
                 context.startActivity(i);
             }
         });

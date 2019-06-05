@@ -1,6 +1,5 @@
 package in.prepskool.prepskoolacademy.services;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -18,7 +17,6 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.util.Random;
 
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.activities.HomeActivity;
 import in.prepskool.prepskoolacademy.activities.WebViewActivity;
 
 /**
@@ -31,11 +29,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String ADMIN_CHANNEL_ID ="admin_channel";
 
     @Override
+    public void onNewToken(String s) {
+        super.onNewToken(s);
+        Log.e("NEW_TOKEN",s);
+    }
+
+    @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
         notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             setupChannels();
@@ -49,7 +52,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,
                 PendingIntent.FLAG_ONE_SHOT);
-
 
         int notificationId = new Random().nextInt(60000);
 

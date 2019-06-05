@@ -75,16 +75,23 @@ public class ArtFragment extends Fragment {
         STANDARD = getArguments().getString("STANDARD");
         BOARD = getArguments().getString("BOARD");
 
-        if (IntentData.CATEGORY_HOME.equals("PRACTICE PAPERS"))
-
-            url = Endpoints.PAPERS + IntentData.STANDARD
-                    .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
-                    .replace(" ", "%20") + "/Science";
-
-        else
-            url = Endpoints.SUBJECTS + "/" + IntentData.STANDARD
-                    .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
-                    .replace(" ", "%20") + "/Arts";
+        switch (IntentData.CATEGORY_HOME) {
+            case "SCHOOL BOARDS":
+                url = Endpoints.B_SUBJECTS +  "/" + IntentData.STANDARD
+                        .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
+                        .replace(" ", "%20") + "/Arts";
+                break;
+            case "PRACTICE PAPERS":
+                url = Endpoints.PAPERS + IntentData.STANDARD
+                        .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
+                        .replace(" ", "%20") + "/Arts";
+                break;
+            default:
+                url = Endpoints.SUBJECTS + "/" + IntentData.STANDARD
+                        .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
+                        .replace(" ", "%20") + "/Arts";
+                break;
+        }
 
         rvArts.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rvArts,
                 new RecyclerTouchListener.ClickListener() {
