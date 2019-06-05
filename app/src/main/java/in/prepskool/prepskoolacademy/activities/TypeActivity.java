@@ -69,8 +69,8 @@ public class TypeActivity extends AppCompatActivity {
 
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.tvBreadCrumbType);
         // loads html from string and displays cat_pic.png from the app's drawable folder
-        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
-                + "</font></small> > <small><font color=\"#12c48b\">" + standards.get(STANDARD) + "</font></small> > <small><font color='red'>"
+        htmlTextView.setHtml("<small><font color=\"#808080\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
+                + "</font></small> >> <small><font color=\"#808080\">" + standards.get(STANDARD) + "</font></small> >> <small><font color='#808080'>"
                 + SUBJECT + "</font></small>", new HtmlResImageGetter(htmlTextView));
 
         tvNoData = findViewById(R.id.tv_no_data_type);

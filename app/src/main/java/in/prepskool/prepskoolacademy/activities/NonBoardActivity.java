@@ -110,8 +110,8 @@ public class NonBoardActivity extends AppCompatActivity {
         mProgressDialog.setMessage("Please wait...");
 
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.breadCrumbNonBoard);
-        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
-                        + "</font></small> > <small><font color=\"#12c48b\">" + standards.get(STANDARD)
+        htmlTextView.setHtml("<small><font color=\"#808080\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
+                        + "</font></small> >> <small><font color=\"#808080\">" + standards.get(STANDARD)
                 + "</font></small>", new HtmlResImageGetter(htmlTextView));
 
         arrayListRemove = new ArrayList<>();

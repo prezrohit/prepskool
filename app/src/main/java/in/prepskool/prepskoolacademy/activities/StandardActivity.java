@@ -53,7 +53,7 @@ public class StandardActivity extends AppCompatActivity {
 
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.breadCrumbStandard);
         // loads html from string and displays cat_pic.png from the app's drawable folder
-        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + SUBCATEGORY_HOME.replace(" BOARD", "") + "</font></small>",
+        htmlTextView.setHtml("<small><font color=\"#808080\">" + SUBCATEGORY_HOME.replace(" BOARD", "") + "</font></small>",
                 new HtmlResImageGetter(htmlTextView));
 
         gvStandard = (GridView) findViewById(R.id.grid_view_class);

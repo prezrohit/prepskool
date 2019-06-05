@@ -85,17 +85,14 @@ public class PdfListActivity extends AppCompatActivity {
         });
 
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.tvBreadCrumbPdfList);
-        switch (CATEGORY_HOME) {
-            case "SCHOOL BOARDS":
-                htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
-                        + "</font></small> > <small><font color=\"#12c48b\">" + standards.get(STANDARD) + "</font></small> > <small><font color='#ff6347'>"
-                        + SUBJECT + "</font></small> > <small><font color='#ffca28'>" + TYPE + "</font></small>", new HtmlResImageGetter(htmlTextView));
-                break;
-            default:
-                htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
-                        + "</font></small> > <small><font color=\"#12c48b\">" + standards.get(STANDARD) + "</font></small> > <small><font color='#ffca28'>"
-                        + SUBJECT + "</font></small>", new HtmlResImageGetter(htmlTextView));
-                break;
+        if ("SCHOOL BOARDS".equals(CATEGORY_HOME)) {
+            htmlTextView.setHtml("<small><font color=\"#808080\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
+                    + "</font></small> >> <small><font color=\"#808080\">" + standards.get(STANDARD) + "</font></small> >> <small><font color='#808080'>"
+                    + SUBJECT + "</font></small> >> <small><font color='#808080'>" + TYPE + "</font></small>", new HtmlResImageGetter(htmlTextView));
+        } else {
+            htmlTextView.setHtml("<small><font color=\"#808080\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
+                    + "</font></small> >> <small><font color=\"#808080\">" + standards.get(STANDARD) + "</font></small> >> <small><font color='#808080'>"
+                    + SUBJECT + "</font></small>", new HtmlResImageGetter(htmlTextView));
         }
 
         // region Selecting URL

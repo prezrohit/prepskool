@@ -45,7 +45,7 @@ public class StreamActivity extends AppCompatActivity {
         //region breadcrumbs setup
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.breadCrumbStream);
         // loads html from string and displays cat_pic.png from the app's drawable folder
-        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + IntentData.SUBCATEGORY_HOME.replace(" BOARD", "") + "</font></small> > <small><font color=\"#12c48b\">" + IntentData.STANDARD +"</font></small>",
+        htmlTextView.setHtml("<small><font color=\"#808080\">" + IntentData.SUBCATEGORY_HOME.replace(" BOARD", "") + "</font></small> >> <small><font color=\"#808080\">" + IntentData.STANDARD +"</font></small>",
                 new HtmlResImageGetter(htmlTextView));
         //endregion
 

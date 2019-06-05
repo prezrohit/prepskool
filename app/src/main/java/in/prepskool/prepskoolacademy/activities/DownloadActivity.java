@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -37,11 +38,9 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class DownloadActivity extends AppCompatActivity {
 
-    private Button btnDownload;
     private String folderPath;
     private String pdfUrl;
     private String pdfSlug;
-    private String pdfName;
     private ProgressDialog mProgressDialog;
     private static final int PERMISSION_REQUEST_CODE = 200;
     private String TAG = DownloadActivity.class.getSimpleName();
@@ -53,15 +52,15 @@ public class DownloadActivity extends AppCompatActivity {
 
         pdfUrl = getIntent().getStringExtra("link");
         pdfSlug = getIntent().getStringExtra("slug");
-        pdfName = getIntent().getStringExtra("name");
-
-        Log.v(TAG, "Name: " + pdfName);
+        String pdfName = getIntent().getStringExtra("name");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(pdfName);
         setSupportActionBar(toolbar);
 
-        btnDownload = findViewById(R.id.btnDownload);
+        TextView tvBreadcrumbDownload = findViewById(R.id.tvBreadCrumbDownload);
+        tvBreadcrumbDownload.setText(pdfName);
+
+        Button btnDownload = findViewById(R.id.btnDownload);
 
         requestStoragePermission();
 
