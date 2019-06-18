@@ -134,6 +134,8 @@ public class ArtFragment extends Fragment {
                     }
                 }));
 
+        Log.v( "Arts", "url: " + url );
+
         stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
 
             @Override

@@ -12,3 +12,7 @@ public class Endpoints {
     public static final String CRITERIA = "http://prepskool.in/app/public/api/criteria";         /// not being used
     public static final String GOOGLEDRIVE = "https://drive.google.com/uc?export=download&id=";
 }
+
+
+
+//http://prepskool.in/app/public/api/subjects/?id=class 12/&category=solutions

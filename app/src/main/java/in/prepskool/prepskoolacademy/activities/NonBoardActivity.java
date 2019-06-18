@@ -176,6 +176,8 @@ public class NonBoardActivity extends AppCompatActivity {
             }
         }));
 
+        Log.v( "NonBoard", "url: " + url );
+
         mProgressDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,

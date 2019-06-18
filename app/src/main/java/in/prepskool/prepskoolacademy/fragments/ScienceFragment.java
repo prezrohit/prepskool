@@ -127,6 +127,8 @@ public class ScienceFragment extends Fragment {
                     }
                 }));
 
+        Log.v( "Science", "url: " + url );
+
         stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
 
             @Override

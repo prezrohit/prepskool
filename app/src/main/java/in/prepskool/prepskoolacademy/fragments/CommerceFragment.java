@@ -131,6 +131,8 @@ public class CommerceFragment extends Fragment {
             }
         }));
 
+        Log.v( "Commerce", "url: " + url );
+
         stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
 
             @Override

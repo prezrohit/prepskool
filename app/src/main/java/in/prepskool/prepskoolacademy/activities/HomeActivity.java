@@ -401,7 +401,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     case "Chapter Wise Questions":
                         intent.putExtra("CATEGORY_HOME", "SCHOOL BOARDS");
                         intent.putExtra("SUBCATEGORY_HOME", "CBSE BOARD");
-                        intent.putExtra("TYPE", "Chapter Wise Questions");
+                        intent.putExtra("TYPE", "NCERT Chapterwise Important Questions");
                         intent.putExtra("source", 1);
                         intent.putExtra("type", "1");
                         startActivity(intent);
