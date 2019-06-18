@@ -55,8 +55,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         int notificationId = new Random().nextInt(60000);
 
-        Log.v("####gg", "r: " + remoteMessage.getNotification().getTitle());
-        Log.v("####gg", "r: " + remoteMessage.getNotification().getBody());
         //Log.v("####gg", remoteMessage.getData().get("message"));
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, ADMIN_CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_announcement_black_24dp)  //a resource for your custom small icon

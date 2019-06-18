@@ -20,17 +20,15 @@ import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import in.prepskool.prepskoolacademy.AppController;
-import in.prepskool.prepskoolacademy.Endpoints;
-import in.prepskool.prepskoolacademy.IntentData;
+import in.prepskool.prepskoolacademy.utils.Endpoints;
+import in.prepskool.prepskoolacademy.utils.IntentData;
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.RecyclerTouchListener;
+import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
 import in.prepskool.prepskoolacademy.activities.PdfListActivity;
-import in.prepskool.prepskoolacademy.activities.StreamActivity;
 import in.prepskool.prepskoolacademy.activities.TypeActivity;
 import in.prepskool.prepskoolacademy.adapter.SubjectAdapter;
 import in.prepskool.prepskoolacademy.model.Subject;
@@ -47,6 +45,8 @@ public class CommerceFragment extends Fragment {
     String url;
     private String SUBJECT;
     private String BOARD;
+    private int sourceId;
+    private String TYPE;
     private TextView tvNoData;
 
     @Override
@@ -69,6 +69,8 @@ public class CommerceFragment extends Fragment {
         IntentData.CATEGORY_HOME = getArguments().getString("CATEGORY_HOME");
         IntentData.STANDARD = getArguments().getString("STANDARD");
         BOARD = getArguments().getString("BOARD");
+        sourceId = getArguments().getInt("source", 0);
+        TYPE = getArguments().getString("TYPE");
 
         switch (IntentData.CATEGORY_HOME) {
             case "SCHOOL BOARDS":
@@ -76,7 +78,7 @@ public class CommerceFragment extends Fragment {
                         .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
                         .replace(" ", "%20") + "/Commerce";
                 break;
-            case "PRACTICE PAPERS":
+            case "CBSE PRACTICE PAPERS":
                 url = Endpoints.PAPERS + IntentData.STANDARD
                         .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
                         .replace(" ", "%20") + "/Commerce";
@@ -104,12 +106,20 @@ public class CommerceFragment extends Fragment {
 
                 if (IntentData.CATEGORY_HOME.equals("SCHOOL BOARDS")) {
 
-                    intent = new Intent(getActivity(), TypeActivity.class);
-                    intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
-                    intent.putExtra("SUBJECT", SUBJECT);
-                    intent.putExtra("STANDARD", IntentData.STANDARD);
-                    intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
-                } else if (IntentData.CATEGORY_HOME.equals("PRACTICE PAPERS"))
+                    if (sourceId == 1) {
+                        intent.putExtra("TYPE", TYPE);
+                        intent.putExtra("source", 1);
+                    }
+
+                    else {
+                        intent = new Intent(getActivity(), TypeActivity.class);
+                        intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
+                        intent.putExtra("SUBJECT", SUBJECT);
+                        intent.putExtra("STANDARD", IntentData.STANDARD);
+                        intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
+                    }
+
+                } else if (IntentData.CATEGORY_HOME.equals("CBSE PRACTICE PAPERS"))
                     intent.putExtra("BOARD", BOARD);
 
                 startActivity(intent);
@@ -136,14 +146,12 @@ public class CommerceFragment extends Fragment {
                     try {
 
                         JSONArray jsonArray = new JSONArray(response);
-                        Log.v(CommerceFragment.class.getSimpleName(), response + "       " + jsonArray.length());
 
                         for (int i = 0; i < jsonArray.length(); i++) {
 
                             Subject subject = new Subject();
                             subject.setName(jsonArray.getJSONObject(i).getString("name"));
                             arrayList.add(subject);
-                            Log.v(CommerceFragment.class.getSimpleName(), arrayList.get(i).getName());
                         }
 
                         rvCommerce.setHasFixedSize(true);
@@ -154,7 +162,6 @@ public class CommerceFragment extends Fragment {
                         mProgressDialog.dismiss();
 
                     } catch (JSONException e) {
-                        Log.v("#####", "error occured");
                         e.printStackTrace();
                     }
                 }
@@ -162,8 +169,7 @@ public class CommerceFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.v("VolleyError", "not working");
-                Log.v("VolleyError", error.toString());
+                Log.v(CommerceFragment.class.getSimpleName(), "VolleyError: " + error.getLocalizedMessage());
             }
         });
 

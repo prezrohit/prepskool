@@ -20,19 +20,14 @@ import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import in.prepskool.prepskoolacademy.AppController;
-import in.prepskool.prepskoolacademy.Endpoints;
-import in.prepskool.prepskoolacademy.IntentData;
+import in.prepskool.prepskoolacademy.utils.Endpoints;
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.RecyclerTouchListener;
-import in.prepskool.prepskoolacademy.activities.NonBoardActivity;
+import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
 import in.prepskool.prepskoolacademy.activities.PdfListActivity;
-import in.prepskool.prepskoolacademy.activities.StreamActivity;
 import in.prepskool.prepskoolacademy.activities.TypeActivity;
 import in.prepskool.prepskoolacademy.adapter.SubjectAdapter;
 import in.prepskool.prepskoolacademy.model.Subject;
@@ -50,7 +45,10 @@ public class ArtFragment extends Fragment {
     private String BOARD;
     private String STANDARD;
     private String SUBCATEGORY_HOME;
+    private String CATEGORY_HOME;
     private String url;
+    private int sourceId;
+    private String TYPE;
     private TextView tvNoData;
 
     @Override
@@ -71,24 +69,26 @@ public class ArtFragment extends Fragment {
         rvArts = vi.findViewById(R.id.rvArt);
 
         SUBCATEGORY_HOME = getArguments().getString("SUBCATEGORY_HOME");
-        IntentData.CATEGORY_HOME = getArguments().getString("CATEGORY_HOME");
+        CATEGORY_HOME = getArguments().getString("CATEGORY_HOME");
         STANDARD = getArguments().getString("STANDARD");
         BOARD = getArguments().getString("BOARD");
+        sourceId = getArguments().getInt("source", 0);
+        TYPE = getArguments().getString("TYPE");
 
-        switch (IntentData.CATEGORY_HOME) {
+        switch (CATEGORY_HOME) {
             case "SCHOOL BOARDS":
-                url = Endpoints.B_SUBJECTS +  "/" + IntentData.STANDARD
-                        .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
+                url = Endpoints.B_SUBJECTS +  "/" + STANDARD
+                        .replace(" ", "%20") + "/" + SUBCATEGORY_HOME
                         .replace(" ", "%20") + "/Arts";
                 break;
-            case "PRACTICE PAPERS":
-                url = Endpoints.PAPERS + IntentData.STANDARD
-                        .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
+            case "CBSE PRACTICE PAPERS":
+                url = Endpoints.PAPERS + STANDARD
+                        .replace(" ", "%20") + "/" + SUBCATEGORY_HOME
                         .replace(" ", "%20") + "/Arts";
                 break;
             default:
-                url = Endpoints.SUBJECTS + "/" + IntentData.STANDARD
-                        .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
+                url = Endpoints.SUBJECTS + "/" + STANDARD
+                        .replace(" ", "%20") + "/" + SUBCATEGORY_HOME
                         .replace(" ", "%20") + "/Arts";
                 break;
         }
@@ -102,19 +102,27 @@ public class ArtFragment extends Fragment {
                         SUBJECT = arrayList.get(position).getName();
 
                         Intent intent = new Intent(getActivity(), PdfListActivity.class);
-                        intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
+                        intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
                         intent.putExtra("SUBJECT", SUBJECT);
-                        intent.putExtra("STANDARD", IntentData.STANDARD);
-                        intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
+                        intent.putExtra("STANDARD", STANDARD);
+                        intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
 
-                        if (IntentData.CATEGORY_HOME.equals("SCHOOL BOARDS")) {
+                        if (CATEGORY_HOME.equals("SCHOOL BOARDS")) {
 
-                            intent = new Intent(getActivity(), TypeActivity.class);
-                            intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
-                            intent.putExtra("SUBJECT", SUBJECT);
-                            intent.putExtra("STANDARD", IntentData.STANDARD);
-                            intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
-                        } else if (IntentData.CATEGORY_HOME.equals("PRACTICE PAPERS"))
+                            if (sourceId == 1) {
+                                intent.putExtra("TYPE", TYPE);
+                                intent.putExtra("source", 1);
+                            }
+
+                            else {
+                                intent = new Intent(getActivity(), TypeActivity.class);
+                                intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
+                                intent.putExtra("SUBJECT", SUBJECT);
+                                intent.putExtra("STANDARD", STANDARD);
+                                intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
+                            }
+                        }
+                        else if (CATEGORY_HOME.equals("CBSE PRACTICE PAPERS"))
                             intent.putExtra("BOARD", BOARD);
 
                         startActivity(intent);
@@ -141,13 +149,11 @@ public class ArtFragment extends Fragment {
                     try {
 
                         JSONArray jsonArray = new JSONArray(response);
-                        Log.v(ArtFragment.class.getSimpleName(), response + "       " + jsonArray.length());
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             Subject news = new Subject();
                             news.setName(jsonArray.getJSONObject(i).getString("name"));
                             arrayList.add(news);
-                            Log.v(ArtFragment.class.getSimpleName(), arrayList.get(i).getName());
                         }
 
                         rvArts.setHasFixedSize(true);
@@ -158,7 +164,6 @@ public class ArtFragment extends Fragment {
 
 
                     } catch (JSONException e) {
-                        Log.v("#####", "error occured");
                         e.printStackTrace();
                     }
                 }
@@ -166,8 +171,7 @@ public class ArtFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.v("VolleyError", "not working");
-                Log.v("VolleyError", error.toString());
+                Log.v(ArtFragment.class.getSimpleName(), "VolleyError: " + error.getLocalizedMessage());
             }
         });
 

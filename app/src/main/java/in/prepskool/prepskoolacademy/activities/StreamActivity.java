@@ -6,14 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 
 import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.HashMap;
 
-import in.prepskool.prepskoolacademy.IntentData;
+import in.prepskool.prepskoolacademy.utils.IntentData;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.adapter.ViewPagerAdapter;
 import in.prepskool.prepskoolacademy.fragments.ArtFragment;
@@ -35,18 +34,23 @@ public class StreamActivity extends AppCompatActivity {
         IntentData.STANDARD = getIntent().getStringExtra("STANDARD");
         IntentData.CATEGORY_HOME = getIntent().getStringExtra("CATEGORY_HOME");
         String BOARD = getIntent().getStringExtra("BOARD");
+        int sourceId = getIntent().getIntExtra("source", 0);
+        String TYPE = getIntent().getStringExtra("TYPE");
 
         Bundle data = new Bundle();
         data.putString("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
         data.putString("CATEGORY_HOME", IntentData.CATEGORY_HOME);
         data.putString("STANDARD", IntentData.STANDARD);
         data.putString("BOARD", BOARD);
+        if (sourceId == 1) {
+            data.putInt("source", sourceId);
+            data.putString("TYPE", TYPE);
+        }
 
         //region breadcrumbs setup
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.breadCrumbStream);
-        // loads html from string and displays cat_pic.png from the app's drawable folder
-        htmlTextView.setHtml("<small><font color=\"#808080\">" + IntentData.SUBCATEGORY_HOME.replace(" BOARD", "") + "</font></small> >> <small><font color=\"#808080\">" + IntentData.STANDARD +"</font></small>",
-                new HtmlResImageGetter(htmlTextView));
+        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + IntentData.SUBCATEGORY_HOME.replace(" BOARD", "")
+                        + "</font></small> >> <small><font color=\"#12c48b\">" + IntentData.STANDARD +"</font></small>", new HtmlResImageGetter(htmlTextView));
         //endregion
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_stream);
@@ -75,7 +79,6 @@ public class StreamActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp));
 
-        //back to previous activity
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,7 +87,3 @@ public class StreamActivity extends AppCompatActivity {
         });
     }
 }
-
-
-
-///                  > <small><font color="#29b6f6">12th</font></small>

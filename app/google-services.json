@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "986870296665",
+    "firebase_url": "https://prepskoolacademy-bdf6b.firebaseio.com",
+    "project_id": "prepskoolacademy-bdf6b",
+    "storage_bucket": "prepskoolacademy-bdf6b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986870296665:android:7ecf9d4bf618faa3",
+        "android_client_info": {
+          "package_name": "in.prepskool.prepskoolacademy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "986870296665-58nbrd95050hvgoo84fpkmsuf2cdin7d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.prepskool.prepskoolacademy",
+            "certificate_hash": "8f17ed39b62097b278eed196afb8fd4148df36f2"
+          }
+        },
+        {
+          "client_id": "986870296665-scvmf7hf2svk0v9eh0knrltt32pmch43.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHomWMUOPSqpjq-Df3CoalPEeN8P3hT2U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "986870296665-scvmf7hf2svk0v9eh0knrltt32pmch43.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

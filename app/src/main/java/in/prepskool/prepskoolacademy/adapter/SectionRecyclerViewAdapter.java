@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.ArrayList;
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.RecyclerViewType;
+import in.prepskool.prepskoolacademy.utils.RecyclerViewType;
 import in.prepskool.prepskoolacademy.model.SectionModel;
 
 public class SectionRecyclerViewAdapter extends RecyclerView.Adapter<SectionRecyclerViewAdapter.SectionViewHolder> {
@@ -28,11 +28,13 @@ public class SectionRecyclerViewAdapter extends RecyclerView.Adapter<SectionRecy
 
     private Context context;
     private ArrayList<SectionModel> sectionModelArrayList;
+    private String title;
 
     public SectionRecyclerViewAdapter(Context context, RecyclerViewType recyclerViewType,
-                                      ArrayList<SectionModel> sectionModelArrayList) {
+                                      ArrayList<SectionModel> sectionModelArrayList, String title) {
         this.context = context;
         this.sectionModelArrayList = sectionModelArrayList;
+        this.title = title;
     }
 
     @NonNull
@@ -60,7 +62,7 @@ public class SectionRecyclerViewAdapter extends RecyclerView.Adapter<SectionRecy
                 LinearLayoutManager.VERTICAL, false);
         holder.itemRecyclerView.setLayoutManager(linearLayoutManager);
 
-        ItemRecyclerViewAdapter adapter = new ItemRecyclerViewAdapter(context, sectionModel.getItemArrayList());
+        ItemRecyclerViewAdapter adapter = new ItemRecyclerViewAdapter(context, sectionModel.getItemArrayList(), title);
         holder.itemRecyclerView.setAdapter(adapter);
     }
 

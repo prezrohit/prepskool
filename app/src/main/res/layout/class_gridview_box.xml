@@ -17,7 +17,6 @@
         android:padding="10dp"
         android:paddingBottom="0dp">
 
-
         <TextView
             android:id="@+id/txt_class"
             android:layout_width="wrap_content"

@@ -2,23 +2,22 @@ package in.prepskool.prepskoolacademy.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
@@ -26,10 +25,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import in.prepskool.prepskoolacademy.AppController;
-import in.prepskool.prepskoolacademy.Endpoints;
-import in.prepskool.prepskoolacademy.IntentData;
+import in.prepskool.prepskoolacademy.utils.Endpoints;
+import in.prepskool.prepskoolacademy.utils.IntentData;
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.RecyclerTouchListener;
+import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
 import in.prepskool.prepskoolacademy.adapter.NonBoardAdapter;
 
 public class NonBoardActivity extends AppCompatActivity {
@@ -46,6 +45,8 @@ public class NonBoardActivity extends AppCompatActivity {
     private String STANDARD;
     private String BOARD;
     private String SUBJECT;
+    private int sourceId;
+    private String TYPE;
     private TextView tvNoData;
     //endregion
 
@@ -64,6 +65,8 @@ public class NonBoardActivity extends AppCompatActivity {
         STANDARD = getIntent().getStringExtra("STANDARD");
         CATEGORY_HOME = getIntent().getStringExtra("CATEGORY_HOME");
         BOARD = getIntent().getStringExtra("BOARD");
+        sourceId = getIntent().getIntExtra("source", 0);
+        TYPE = getIntent().getStringExtra("TYPE");
 
         String url;
         switch (CATEGORY_HOME) {
@@ -74,7 +77,7 @@ public class NonBoardActivity extends AppCompatActivity {
                         .replace(" ", "%20");
                 break;
 
-            case "PRACTICE PAPERS":
+            case "CBSE PRACTICE PAPERS":
                 url = Endpoints.PAPERS + STANDARD
                         .replace(" ", "%20") + "/" + SUBCATEGORY_HOME
                         .replace(" ", "%20");
@@ -110,8 +113,8 @@ public class NonBoardActivity extends AppCompatActivity {
         mProgressDialog.setMessage("Please wait...");
 
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.breadCrumbNonBoard);
-        htmlTextView.setHtml("<small><font color=\"#808080\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
-                        + "</font></small> >> <small><font color=\"#808080\">" + standards.get(STANDARD)
+        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
+                        + "</font></small> >> <small><font color=\"#12c48b\">" + standards.get(STANDARD)
                 + "</font></small>", new HtmlResImageGetter(htmlTextView));
 
         arrayListRemove = new ArrayList<>();
@@ -145,15 +148,24 @@ public class NonBoardActivity extends AppCompatActivity {
                 intent.putExtra("STANDARD", STANDARD);
                 intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
 
-                if (IntentData.CATEGORY_HOME.equals("SCHOOL BOARDS")) {
+                if (CATEGORY_HOME.equals("SCHOOL BOARDS")) {
 
-                    intent = new Intent(NonBoardActivity.this, TypeActivity.class);
-                    intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
-                    intent.putExtra("SUBJECT", SUBJECT);
-                    intent.putExtra("STANDARD", STANDARD);
-                    intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
+                    if (sourceId == 1) {
+                        intent.putExtra("TYPE", TYPE);
+                        intent.putExtra("source", 1);
+                    }
+
+                    else {
+
+                        intent = new Intent(NonBoardActivity.this, TypeActivity.class);
+                        intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
+                        intent.putExtra("SUBJECT", SUBJECT);
+                        intent.putExtra("STANDARD", STANDARD);
+                        intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
+                    }
                 }
-                else if (IntentData.CATEGORY_HOME.equals("PRACTICE PAPERS"))
+
+                else if (CATEGORY_HOME.equals("CBSE PRACTICE PAPERS"))
                     intent.putExtra("BOARD", BOARD);
 
                 startActivity(intent);
@@ -181,7 +193,6 @@ public class NonBoardActivity extends AppCompatActivity {
                             try {
 
                                 JSONArray jsonArray = new JSONArray(response);
-                                Log.v("#### arrayss", jsonArray.toString());
 
                                 for (int i = 0; i < jsonArray.length(); i++) {
 
@@ -201,7 +212,6 @@ public class NonBoardActivity extends AppCompatActivity {
                                 rvNonBoard.setAdapter(adapter);
 
                             } catch (JSONException e) {
-                                Log.v("#####", "error occured");
                                 e.printStackTrace();
                             }
                         }
@@ -210,7 +220,6 @@ public class NonBoardActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 mProgressDialog.dismiss();
-                Log.v("VolleyError", "not working");
                 Log.v("VolleyError", error.toString());
             }
         });

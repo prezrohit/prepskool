@@ -38,6 +38,10 @@ dependencies {
 
     //html text view
     implementation 'org.sufficientlysecure:html-textview:3.6'
+
+    //Expandable RecyclerView
+    implementation 'com.thoughtbot:expandablerecyclerview:1.0'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

@@ -3,8 +3,8 @@ package in.prepskool.prepskoolacademy.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -23,12 +23,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import in.prepskool.prepskoolacademy.AppController;
-import in.prepskool.prepskoolacademy.Endpoints;
+import in.prepskool.prepskoolacademy.utils.Endpoints;
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.RecyclerTouchListener;
+import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
 import in.prepskool.prepskoolacademy.adapter.NotificationAdapter;
 import in.prepskool.prepskoolacademy.model.Notification;
-import in.prepskool.prepskoolacademy.model.Subject;
 
 public class NotificationActivity extends AppCompatActivity {
 
@@ -113,7 +112,6 @@ public class NotificationActivity extends AppCompatActivity {
                     mProgressDialog.dismiss();
 
                 } catch (JSONException e) {
-                    Log.v("#####", "error occured");
                     e.printStackTrace();
                 }
             }

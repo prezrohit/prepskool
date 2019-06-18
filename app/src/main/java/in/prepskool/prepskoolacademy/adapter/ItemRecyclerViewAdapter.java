@@ -25,7 +25,6 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         private TextView itemLabel;
         private TextView itemVieww;
         private TextView itemDown;
-        private ImageView imgPdfView;
 
         ItemViewHolder(View itemView) {
             super(itemView);
@@ -35,16 +34,17 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
             itemDown = (TextView) itemView.findViewById(R.id.item_down);
 
-            imgPdfView = (ImageView) itemView.findViewById(R.id.pdf_img_view);
         }
     }
 
     private Context context;
     private ArrayList<Pdf> arrayList;
+    private String title;
 
-    ItemRecyclerViewAdapter(Context context, ArrayList<Pdf> arrayList) {
+    ItemRecyclerViewAdapter(Context context, ArrayList<Pdf> arrayList, String title) {
         this.context = context;
         this.arrayList = arrayList;
+        this.title = title;
     }
 
     @Override
@@ -56,6 +56,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
+
         holder.itemLabel.setText(arrayList.get(position).getName());
 
         holder.itemVieww.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +67,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
                 i.putExtra("name", arrayList.get(holder.getAdapterPosition()).getName());
                 i.putExtra("link", arrayList.get(holder.getAdapterPosition()).getLink());
                 i.putExtra("slug", arrayList.get(holder.getAdapterPosition()).getSlug());
+                i.putExtra("title", title);
                 context.startActivity(i);
             }
         });
@@ -78,6 +80,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
                 i.putExtra("name", arrayList.get(holder.getAdapterPosition()).getName());
                 i.putExtra("link", arrayList.get(holder.getAdapterPosition()).getLink());
                 i.putExtra("slug", arrayList.get(holder.getAdapterPosition()).getSlug());
+                i.putExtra("title", title);
                 context.startActivity(i);
             }
         });

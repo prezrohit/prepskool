@@ -1,6 +1,5 @@
 package in.prepskool.prepskoolacademy.fragments;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,10 +23,10 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 import in.prepskool.prepskoolacademy.AppController;
-import in.prepskool.prepskoolacademy.Endpoints;
-import in.prepskool.prepskoolacademy.IntentData;
+import in.prepskool.prepskoolacademy.utils.Endpoints;
+import in.prepskool.prepskoolacademy.utils.IntentData;
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.RecyclerTouchListener;
+import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
 import in.prepskool.prepskoolacademy.activities.PdfListActivity;
 import in.prepskool.prepskoolacademy.activities.TypeActivity;
 import in.prepskool.prepskoolacademy.adapter.SubjectAdapter;
@@ -44,6 +43,8 @@ public class ScienceFragment extends Fragment {
     private String SUBJECT;
     private String BOARD;
     private String url;
+    private int sourceId;
+    private String TYPE;
     private TextView tvNoData;
 
     @Override
@@ -63,6 +64,8 @@ public class ScienceFragment extends Fragment {
         IntentData.CATEGORY_HOME = getArguments().getString("CATEGORY_HOME");
         IntentData.STANDARD = getArguments().getString("STANDARD");
         BOARD = getArguments().getString("BOARD");
+        sourceId = getArguments().getInt("source", 0);
+        TYPE = getArguments().getString("TYPE");
 
         switch (IntentData.CATEGORY_HOME) {
             case "SCHOOL BOARDS":
@@ -70,7 +73,7 @@ public class ScienceFragment extends Fragment {
                         .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
                         .replace(" ", "%20") + "/Science";
                 break;
-            case "PRACTICE PAPERS":
+            case "CBSE PRACTICE PAPERS":
                 url = Endpoints.PAPERS + IntentData.STANDARD
                         .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
                         .replace(" ", "%20") + "/Science";
@@ -98,12 +101,21 @@ public class ScienceFragment extends Fragment {
 
                         if (IntentData.CATEGORY_HOME.equals("SCHOOL BOARDS")) {
 
-                            intent = new Intent(getActivity(), TypeActivity.class);
-                            intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
-                            intent.putExtra("SUBJECT", SUBJECT);
-                            intent.putExtra("STANDARD", IntentData.STANDARD);
-                            intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
-                        } else if (IntentData.CATEGORY_HOME.equals("PRACTICE PAPERS"))
+                            if (sourceId == 1) {
+                                intent.putExtra("TYPE", TYPE);
+                                intent.putExtra("source", 1);
+                            }
+
+                            else {
+                                intent = new Intent(getActivity(), TypeActivity.class);
+                                intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
+                                intent.putExtra("SUBJECT", SUBJECT);
+                                intent.putExtra("STANDARD", IntentData.STANDARD);
+                                intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
+
+                            }
+
+                        } else if (IntentData.CATEGORY_HOME.equals("CBSE PRACTICE PAPERS"))
                             intent.putExtra("BOARD", BOARD);
 
                         startActivity(intent);
@@ -130,13 +142,10 @@ public class ScienceFragment extends Fragment {
 
                         JSONArray jsonArray = new JSONArray(response);
 
-                        Log.v(ScienceFragment.class.getSimpleName(), response + "       " + jsonArray.length());
-
                         for (int i = 0; i < jsonArray.length(); i++) {
                             Subject news = new Subject();
                             news.setName(jsonArray.getJSONObject(i).getString("name"));
                             arrayList.add(news);
-                            Log.v(ScienceFragment.class.getSimpleName(), arrayList.get(i).getName());
                         }
 
                         rvScience.setHasFixedSize(true);
@@ -145,7 +154,6 @@ public class ScienceFragment extends Fragment {
                         rvScience.setAdapter(adapter);
 
                     } catch (JSONException e) {
-                        Log.v("#####", "error occured");
                         e.printStackTrace();
                     }
                 }
@@ -153,8 +161,7 @@ public class ScienceFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.v("VolleyError", "not working");
-                Log.v("VolleyError", error.toString());
+                Log.v(ScienceFragment.class.getSimpleName(), "VolleyError: " + error.getLocalizedMessage());
             }
         });
 

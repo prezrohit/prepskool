@@ -1,5 +1,6 @@
 package in.prepskool.prepskoolacademy.activities;
 
+import android.animation.ObjectAnimator;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,20 +22,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.RecyclerViewType;
+import in.prepskool.prepskoolacademy.adapter.ExpandableListAdapter;
 import in.prepskool.prepskoolacademy.adapter.HomeSectionRecyclerViewAdapter;
 import in.prepskool.prepskoolacademy.model.Home;
+import in.prepskool.prepskoolacademy.model.NavigationMenu;
 import in.prepskool.prepskoolacademy.model.SectionHome;
+import in.prepskool.prepskoolacademy.utils.RecyclerViewType;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -44,6 +52,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     //region VARIABLE DECLARATION
     private static final int PERMISSION_REQUEST_CODE = 200;
     private FloatingActionButton fab;
+    private ExpandableListView expandableListView;
+    private String TAG = HomeActivity.class.getSimpleName();
+    private ArrayList<NavigationMenu> headerList = new ArrayList<>();
+    private DrawerLayout drawer;
+    private LinkedHashMap<String, ArrayList<NavigationMenu>> childList = new LinkedHashMap<>();
     //endregion
 
     @Override
@@ -53,8 +66,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
 
         //region Toolbar
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar myToolbar = findViewById(R.id.toolbar);
         myToolbar.bringToFront();
+        myToolbar.setTitle(R.string.study_material);
         setSupportActionBar(myToolbar);
         //endregion
 
@@ -73,10 +87,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         requestStoragePermission();
 
-        RecyclerView rvCategories = (RecyclerView) findViewById(R.id.home_sectioned_recycler_view);
-        rvCategories.setHasFixedSize(true);
+        expandableListView = findViewById(R.id.expandableListView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        RecyclerView rvCategories = findViewById(R.id.home_sectioned_recycler_view);
+        rvCategories.setHasFixedSize(true);
         rvCategories.setLayoutManager(linearLayoutManager);
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
         //region Generating Arraylist
         ArrayList<SectionHome> sectionHomeArrayList = new ArrayList<>();
@@ -86,7 +104,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         ArrayList<String> arrayListSections = new ArrayList<>();
 
         arrayListSections.add("NCERT");
-        arrayListSections.add("PRACTICE PAPERS");
+        arrayListSections.add("CBSE PRACTICE PAPERS");
         arrayListSections.add("SCHOOL BOARDS");
 
         arrayListNcert.add(new Home("NCERT BOOKS", R.mipmap.ic_ncert_books));
@@ -97,9 +115,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         sectionHomeArrayList.add(new SectionHome(arrayListSections.get(0), arrayListNcert));
 
-        arrayListPracticePaper.add(new Home("SAMPLE PAPERS", R.mipmap.ic_pdf));
-        arrayListPracticePaper.add(new Home("PAST YEAR PAPERS", R.mipmap.ic_pdf));
-        arrayListPracticePaper.add(new Home("GUESS PAPERS", R.mipmap.ic_pdf));
+        arrayListPracticePaper.add(new Home("SAMPLE PAPERS", R.drawable.ic_cbse));
+        arrayListPracticePaper.add(new Home("PAST YEAR PAPERS", R.drawable.ic_cbse));
+        arrayListPracticePaper.add(new Home("GUESS PAPERS", R.drawable.ic_cbse));
 
         sectionHomeArrayList.add(new SectionHome(arrayListSections.get(1), arrayListPracticePaper));
 
@@ -116,7 +134,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 recyclerViewType, sectionHomeArrayList);
 
         rvCategories.setAdapter(adapter);
-
         rvCategories.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -129,13 +146,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        prepareMenuData();
+        populateExpandableList();
+
+        drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,
                 myToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -144,7 +164,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         if (checkPermission()) {
 
-            Toast.makeText(this, "Permission Already Granted", Toast.LENGTH_SHORT).show();
             boolean success = true;
             File folder = new File(Environment.getExternalStorageDirectory() + File.separator + "Prepskool");
             if (!folder.exists()) {
@@ -157,7 +176,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 Log.v("HomeActivity", "Folder Creating Error");
         } else {
             requestPermission();
-            Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -175,38 +193,31 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_REQUEST_CODE:
-                if (grantResults.length > 0) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0) {
 
-                    boolean writeAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                    boolean readAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                boolean writeAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean readAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
 
-                    if (writeAccepted && readAccepted)
-                        Toast.makeText(HomeActivity.this, "Permission Granted",
-                                Toast.LENGTH_SHORT).show();
-                    else {
+                if (writeAccepted && readAccepted)
+                    Log.v(TAG, "Permission Granted");
+                else {
 
-                        Toast.makeText(HomeActivity.this, "Permission Denied",
-                                Toast.LENGTH_SHORT).show();
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if (shouldShowRequestPermissionRationale(WRITE_EXTERNAL_STORAGE)) {
-                                showMessageOKCancel("You need to allow access to both the permissions",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                    requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,
-                                                            READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
-                                            }
-                                        });
-                                return;
-                            }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (shouldShowRequestPermissionRationale(WRITE_EXTERNAL_STORAGE)) {
+                            showMessageOKCancel("You need to allow access to both the permissions",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,
+                                                    READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+                                        }
+                                    });
                         }
                     }
                 }
-                break;
+            }
         }
     }
 
@@ -226,13 +237,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        startActivity(new Intent(this, DownloadedItemsActivity.class));
+        startActivity(new Intent(this, SavedFilesActivity.class));
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -242,55 +253,233 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        // Handle navigation view item clicks here.
-        int id = menuItem.getItemId();
 
-        switch (id) {
-            case R.id.nav_ncert_books:
-                Intent intent = new Intent(this, StandardActivity.class);
-                intent.putExtra("CATEGORY_HOME", "NCERT");
-                intent.putExtra("SUBCATEGORY_HOME", "BOOKS");
-                intent.putExtra("type", "0");
-                startActivity(intent);
-                break;
-
-            case R.id.nav_downloads:
-                startActivity(new Intent(this, DownloadedItemsActivity.class));
-                break;
-
-            case R.id.nav_rate:
-                Toast.makeText(this, "Rating", Toast.LENGTH_SHORT).show();
-                Uri uri = Uri.parse("market://details?id=com.ext.ui");
-                Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
-                // To count with Play market backstack, After pressing back button,
-                // to taken back to our application, we need to add following flags to intent.
-                goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-                        Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
-                        Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                try {
-                    startActivity(goToMarket);
-                } catch (ActivityNotFoundException e) {
-                    startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("http://play.google.com/store/apps/details?id=com.ext.ui")));
-                }
-                break;
-
-            case R.id.nav_about_us:
-                startActivity(new Intent(this, AboutUsActivity.class));
-                break;
-
-            case R.id.nav_privacy_policy:
-                startActivity(new Intent(this, PrivacyPolicyActivity.class));
-                break;
-
-            case R.id.nav_share:
-                Toast.makeText(this, "Share Link", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
     //endregion
+
+    private void prepareMenuData() {
+
+        headerList.add(new NavigationMenu("NCERT Book", R.drawable.ic_ncert_book));
+        headerList.add(new NavigationMenu("Saved Files", R.drawable.ic_saved_files_black));
+        headerList.add(new NavigationMenu("CBSE", R.mipmap.ic_cbse));
+        headerList.add(new NavigationMenu("ICSE", R.mipmap.ic_cicse));
+        headerList.add(new NavigationMenu("DELHI", R.mipmap.ic_delhi));
+        headerList.add(new NavigationMenu("Online Test", R.drawable.ic_online_test));
+        headerList.add(new NavigationMenu("Rate App", R.drawable.ic_rate));
+        headerList.add(new NavigationMenu("Share", R.drawable.ic_menu_share));
+        headerList.add(new NavigationMenu("About Us", R.drawable.ic_about_us));
+        headerList.add(new NavigationMenu("Privacy Policy", R.drawable.ic_privacy_policy));
+
+        childList.put("NCERT Book", null);
+
+        childList.put(headerList.get(1).getTitle(), null);
+
+        ArrayList<NavigationMenu> arrayList = new ArrayList<>();
+        arrayList.add(new NavigationMenu("NCERT Notes", R.mipmap.ic_pdf));
+        arrayList.add(new NavigationMenu("Topper Answer Sheet", R.mipmap.ic_pdf));
+        arrayList.add(new NavigationMenu("Chapter Wise Questions", R.mipmap.ic_pdf));
+
+        childList.put(headerList.get(2).getTitle(), arrayList);
+
+        ArrayList<NavigationMenu> arrayList1 = new ArrayList<>();
+        arrayList1.add(new NavigationMenu("Past Year Papers", R.mipmap.ic_pdf));
+        arrayList1.add(new NavigationMenu("Marking Scheme", R.mipmap.ic_pdf));
+        arrayList1.add(new NavigationMenu("Sample Papers", R.mipmap.ic_pdf));
+
+        childList.put(headerList.get(3).getTitle(), arrayList1);
+        childList.put(headerList.get(4).getTitle(), arrayList1);
+        childList.put(headerList.get(5).getTitle(), null);
+        childList.put(headerList.get(6).getTitle(), null);
+        childList.put(headerList.get(7).getTitle(), null);
+        childList.put(headerList.get(8).getTitle(), null);
+        childList.put(headerList.get(9).getTitle(), null);
+    }
+
+    private void populateExpandableList() {
+
+        ExpandableListAdapter expandableListAdapter = new ExpandableListAdapter(this, headerList, childList);
+        expandableListView.setAdapter(expandableListAdapter);
+
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+
+                if (childList.get(headerList.get(groupPosition).getTitle()) == null) {
+                    drawer.closeDrawers();
+                }
+
+                String list = headerList.get(groupPosition).getTitle();
+
+                switch (list) {
+
+                    case "NCERT Book":
+                        Intent intent = new Intent(HomeActivity.this, StandardActivity.class);
+                        intent.putExtra("CATEGORY_HOME", "NCERT");
+                        intent.putExtra("SUBCATEGORY_HOME", "BOOKS");
+                        intent.putExtra("type", "0");
+                        startActivity(intent);
+                        break;
+
+                    case "Saved Files":
+                        startActivity(new Intent(HomeActivity.this, SavedFilesActivity.class));
+                        break;
+
+                    case "Rate App":
+                        Uri uri = Uri.parse("market://details?id=com.ext.ui");
+                        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                        // To count with Play market backstack, After pressing back button,
+                        // to taken back to our application, we need to add following flags to intent.
+                        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                        try {
+                            startActivity(goToMarket);
+                        } catch (ActivityNotFoundException e) {
+                            startActivity(new Intent(Intent.ACTION_VIEW,
+                                    Uri.parse("http://play.google.com/store/apps/details?id=com.ext.ui")));
+                        }
+                        break;
+
+                    case "Online Test":
+                        Intent intent1 = new Intent(HomeActivity.this, WebViewActivity.class);
+                        intent1.putExtra("sender", 1);
+                        intent1.putExtra("url", "https://logicalpaper.co/practice-online-test/");
+                        startActivity(intent1);
+                        break;
+
+                    case "Share":
+                        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                        sharingIntent.setType("text/plain");
+                        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "SUBJECT");
+                        sharingIntent.putExtra(Intent.EXTRA_TEXT, "Download PrepskoolAcademy Android App");
+                        startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                        break;
+
+                    case "About Us":
+                        startActivity(new Intent(HomeActivity.this, AboutUsActivity.class));
+                        break;
+
+                    case "Privacy Policy":
+                        startActivity(new Intent(HomeActivity.this, PrivacyPolicyActivity.class));
+                        break;
+                }
+
+                return false;
+            }
+        });
+
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+                drawer.closeDrawers();
+
+                String childName = childList.get(headerList.get(groupPosition).getTitle()).get(childPosition).getTitle();
+                Intent intent = new Intent(getApplicationContext(), StandardActivity.class);
+
+                switch (childName) {
+
+                    case "NCERT Notes":
+                        intent.putExtra("CATEGORY_HOME", "NCERT");
+                        intent.putExtra("SUBCATEGORY_HOME", "NOTES");
+                        intent.putExtra("type", "1");
+                        startActivity(intent);
+                        break;
+
+                    case "Topper Answer Sheet":
+                        intent.putExtra("CATEGORY_HOME", "SCHOOL BOARDS");
+                        intent.putExtra("SUBCATEGORY_HOME", "CBSE BOARD");
+                        intent.putExtra("TYPE", "Topper Answer Sheet");
+                        intent.putExtra("source", 1);
+                        intent.putExtra("type", "1");
+                        startActivity(intent);
+                        break;
+
+                    case "Chapter Wise Questions":
+                        intent.putExtra("CATEGORY_HOME", "SCHOOL BOARDS");
+                        intent.putExtra("SUBCATEGORY_HOME", "CBSE BOARD");
+                        intent.putExtra("TYPE", "Chapter Wise Questions");
+                        intent.putExtra("source", 1);
+                        intent.putExtra("type", "1");
+                        startActivity(intent);
+                        break;
+                }
+
+                String header = headerList.get(groupPosition).getTitle();
+                Log.v(TAG, "header: " + header + " and Child: " + childName);
+
+                switch (childName) {
+
+                    case "Past Year Papers":
+
+                        switch (header) {
+                            case "ICSE":
+                                intent.putExtra("CATEGORY_HOME", "PRACTICE PAPERS");
+                                intent.putExtra("SUBCATEGORY_HOME", "Past Year Papers");
+                                intent.putExtra("BOARD", "ICSE Board");
+                                intent.putExtra("type", "1");
+                                startActivity(intent);
+                                break;
+
+                            case "DELHI":
+                                intent.putExtra("CATEGORY_HOME", "PRACTICE PAPERS");
+                                intent.putExtra("SUBCATEGORY_HOME", "Past Year Papers");
+                                intent.putExtra("BOARD", "DELHI BOARD");
+                                intent.putExtra("type", "1");
+                                startActivity(intent);
+                                break;
+                        }
+                        break;
+
+                    case "Marking Scheme":
+
+                        switch (header) {
+                            case "ICSE":
+                                intent.putExtra("CATEGORY_HOME", "SCHOOL BOARDS");
+                                intent.putExtra("SUBCATEGORY_HOME", "ICSE Board");
+                                intent.putExtra("TYPE", "Marking Scheme");
+                                intent.putExtra("source", 1);
+                                intent.putExtra("type", "1");
+                                startActivity(intent);
+                                break;
+
+                            case "DELHI":
+                                intent.putExtra("CATEGORY_HOME", "SCHOOL BOARDS");
+                                intent.putExtra("SUBCATEGORY_HOME", "DELHI BOARD");
+                                intent.putExtra("TYPE", "Marking Scheme");
+                                intent.putExtra("source", 1);
+                                intent.putExtra("type", "1");
+                                startActivity(intent);
+                                break;
+                        }
+                        break;
+
+                    case "Sample Papers":
+
+                        switch (header) {
+                            case "ICSE":
+                                intent.putExtra("CATEGORY_HOME", "PRACTICE PAPERS");
+                                intent.putExtra("SUBCATEGORY_HOME", "Sample Papers");
+                                intent.putExtra("BOARD", "ICSE Board");
+                                intent.putExtra("type", "1");
+                                startActivity(intent);
+                                break;
+
+                            case "DELHI":
+                                intent.putExtra("CATEGORY_HOME", "PRACTICE PAPERS");
+                                intent.putExtra("SUBCATEGORY_HOME", "Sample Papers");
+                                intent.putExtra("BOARD", "DELHI BOARD");
+                                intent.putExtra("type", "1");
+                                startActivity(intent);
+                                break;
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
+    }
 }

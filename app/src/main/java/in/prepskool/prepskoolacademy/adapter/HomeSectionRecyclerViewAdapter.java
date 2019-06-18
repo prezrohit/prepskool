@@ -10,14 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import in.prepskool.prepskoolacademy.IntentData;
+import in.prepskool.prepskoolacademy.utils.IntentData;
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.RecyclerTouchListener;
-import in.prepskool.prepskoolacademy.RecyclerViewType;
+import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
+import in.prepskool.prepskoolacademy.utils.RecyclerViewType;
 import in.prepskool.prepskoolacademy.activities.StandardActivity;
 import in.prepskool.prepskoolacademy.model.SectionHome;
 
@@ -96,6 +95,7 @@ public class HomeSectionRecyclerViewAdapter
                 IntentData.SUBCATEGORY_HOME = IntentData.SUBCATEGORY_HOME.replace("NCERT ", "");
 
                 switch (IntentData.CATEGORY_HOME) {
+
                     case "SCHOOL BOARDS": {
 
                         Intent intent = new Intent(context, StandardActivity.class);
@@ -114,7 +114,7 @@ public class HomeSectionRecyclerViewAdapter
                         context.startActivity(intent);
                         break;
                     }
-                    case "PRACTICE PAPERS":  {
+                    case "CBSE PRACTICE PAPERS":  {
 
                         Intent intent = new Intent(context, StandardActivity.class);
                         intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);

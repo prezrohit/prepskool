@@ -40,4 +40,8 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="AppTheme.SplashActivity" parent="AppTheme.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_launcher_background</item>
+    </style>
+
 </resources>

@@ -1,12 +1,15 @@
 package in.prepskool.prepskoolacademy.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
 import java.util.ArrayList;
+
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.model.Standard;
 
@@ -21,6 +24,7 @@ public class StandardAdapter extends BaseAdapter {
     public StandardAdapter(ArrayList<Standard> list, Context context) {
         this.list = list;
         inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        Activity activityCompat = (Activity) context;
     }
 
     @Override
@@ -44,7 +48,6 @@ public class StandardAdapter extends BaseAdapter {
         Holder holder;
 
         if (view == null) {
-
             holder = new Holder();
             view = inflater.inflate(R.layout.class_gridview_box,null);
             holder.boardName =( TextView) view.findViewById(R.id.txt_class);

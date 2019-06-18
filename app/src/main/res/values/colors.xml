@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#29b6f6</color>
-    <color name="colorPrimaryDark">#29b6f6</color>
+    <color name="colorPrimary">#ff9900</color>
+    <color name="colorPrimaryDark">#ff9900</color>
     <color name="green_aw">#00574B</color>
     <color name="colorAccent">#ffca28</color>
     <color name="floating_action_button">#7599ed</color>
     <color name="white">#ffffff</color>
-    <color name="transparent">#669acc</color>
+    <color name="transparent">#80ffffff</color>
     <color name="navigationdrawer_background">#80deea</color>
     <color name="black">#000000</color>
     <color name="green">#5acad6</color>
@@ -20,3 +20,5 @@
 
     <color name="black_overlay">#66000000</color>
 </resources>
+
+<!--29b6f6-->

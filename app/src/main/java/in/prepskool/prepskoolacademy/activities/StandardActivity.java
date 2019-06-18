@@ -1,19 +1,15 @@
 package in.prepskool.prepskoolacademy.activities;
 
 import android.content.Intent;
-import android.os.Build;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
@@ -21,12 +17,15 @@ import org.sufficientlysecure.htmltextview.HtmlTextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import in.prepskool.prepskoolacademy.IntentData;
+import in.prepskool.prepskoolacademy.AppController;
+import in.prepskool.prepskoolacademy.CheckNetworkService;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.adapter.StandardAdapter;
 import in.prepskool.prepskoolacademy.model.Standard;
+import in.prepskool.prepskoolacademy.utils.ConnectivityReceiver;
 
-public class StandardActivity extends AppCompatActivity {
+public class StandardActivity extends AppCompatActivity
+        implements ConnectivityReceiver.ConnectivityReceiverListener {
 
     private GridView gvStandard;
     private ArrayList<Standard> list;
@@ -37,23 +36,29 @@ public class StandardActivity extends AppCompatActivity {
     private String type;
     private String STANDARD;
     private String BOARD;
+    private int sourceId;
+    private String TYPE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_standard);
 
+        startService(new Intent(this, CheckNetworkService.class));
+
         CATEGORY_HOME = getIntent().getStringExtra("CATEGORY_HOME");
         SUBCATEGORY_HOME = getIntent().getStringExtra("SUBCATEGORY_HOME");
         type = getIntent().getStringExtra("type");
         BOARD = getIntent().getStringExtra("BOARD");
+        sourceId = getIntent().getIntExtra("source", 0);
+        TYPE = getIntent().getStringExtra("TYPE");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_standard);
 
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.breadCrumbStandard);
         // loads html from string and displays cat_pic.png from the app's drawable folder
-        htmlTextView.setHtml("<small><font color=\"#808080\">" + SUBCATEGORY_HOME.replace(" BOARD", "") + "</font></small>",
+        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + SUBCATEGORY_HOME.replace(" BOARD", "") + "</font></small>",
                 new HtmlResImageGetter(htmlTextView));
 
         gvStandard = (GridView) findViewById(R.id.grid_view_class);
@@ -104,6 +109,7 @@ public class StandardActivity extends AppCompatActivity {
                         }
 
                         break;
+
                     case "SCHOOL BOARDS":
 
                         if (SUBCATEGORY_HOME.equals("ICSE Board")) {
@@ -115,6 +121,8 @@ public class StandardActivity extends AppCompatActivity {
                                 intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
                                 intent.putExtra("STANDARD", STANDARD);
                                 intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
+                                intent.putExtra("TYPE", TYPE);
+                                intent.putExtra("source", sourceId);
                                 startActivity(intent);
 
                             } else {
@@ -125,6 +133,7 @@ public class StandardActivity extends AppCompatActivity {
                                 intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
                                 startActivity(intent);
                             }
+
                         } else {
 
                             if (STANDARD.equals("Class 11") || STANDARD.equals("Class 12")) {
@@ -132,7 +141,9 @@ public class StandardActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), StreamActivity.class);
                                 intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
                                 intent.putExtra("STANDARD", STANDARD);
+                                intent.putExtra("TYPE", TYPE);
                                 intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
+                                intent.putExtra("source", sourceId);
                                 startActivity(intent);
 
                             } else {
@@ -140,13 +151,15 @@ public class StandardActivity extends AppCompatActivity {
                                 Intent intent = new Intent(getApplicationContext(), NonBoardActivity.class);
                                 intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
                                 intent.putExtra("STANDARD", STANDARD);
+                                intent.putExtra("TYPE", TYPE);
                                 intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
+                                intent.putExtra("source", sourceId);
                                 startActivity(intent);
                             }
                         }
                         break;
 
-                    case "PRACTICE PAPERS":
+                    case "CBSE PRACTICE PAPERS":
 
                         Intent intent;
 
@@ -181,8 +194,9 @@ public class StandardActivity extends AppCompatActivity {
         list.clear();
         populateClasses();
         standardAdapter = new StandardAdapter(list, this);
-
         gvStandard.setAdapter(standardAdapter);
+
+        AppController.getInstance().setConnectivityListener(StandardActivity.this);
     }
 
     public void populateClasses() {
@@ -212,5 +226,35 @@ public class StandardActivity extends AppCompatActivity {
             s3.setName(s2[1]);
             list.add(s3);
         }
+    }
+
+    private void checkConnection() {
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        showSnack(isConnected);
+    }
+
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+            message = "Good! Connected to Internet";
+            color = Color.WHITE;
+        } else {
+            message = "Sorry! Not connected to internet";
+            color = Color.RED;
+        }
+
+        Snackbar snackbar = Snackbar
+                .make(findViewById(R.id.grid_view_class), message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack(isConnected);
     }
 }

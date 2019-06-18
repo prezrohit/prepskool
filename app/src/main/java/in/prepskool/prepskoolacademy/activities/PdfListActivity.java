@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -25,10 +24,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import in.prepskool.prepskoolacademy.AppController;
-import in.prepskool.prepskoolacademy.Endpoints;
-import in.prepskool.prepskoolacademy.IntentData;
+import in.prepskool.prepskoolacademy.utils.Endpoints;
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.RecyclerViewType;
+import in.prepskool.prepskoolacademy.utils.RecyclerViewType;
 import in.prepskool.prepskoolacademy.adapter.SectionRecyclerViewAdapter;
 import in.prepskool.prepskoolacademy.model.Pdf;
 import in.prepskool.prepskoolacademy.model.SectionModel;
@@ -43,6 +41,7 @@ public class PdfListActivity extends AppCompatActivity {
     private String TYPE;
     private String url;
     private TextView tvNoData;
+    private String SUBCATEGORY_HOME;
     //endregion
 
     @Override
@@ -60,7 +59,7 @@ public class PdfListActivity extends AppCompatActivity {
         standards.put("Class 6", "6th");
 
         String STANDARD = getIntent().getStringExtra("STANDARD");
-        String SUBCATEGORY_HOME = getIntent().getStringExtra("SUBCATEGORY_HOME");
+        SUBCATEGORY_HOME = getIntent().getStringExtra("SUBCATEGORY_HOME");
         String CATEGORY_HOME = getIntent().getStringExtra("CATEGORY_HOME");
         String SUBJECT = getIntent().getStringExtra("SUBJECT");
         String BOARD = getIntent().getStringExtra("BOARD");
@@ -86,12 +85,12 @@ public class PdfListActivity extends AppCompatActivity {
 
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.tvBreadCrumbPdfList);
         if ("SCHOOL BOARDS".equals(CATEGORY_HOME)) {
-            htmlTextView.setHtml("<small><font color=\"#808080\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
-                    + "</font></small> >> <small><font color=\"#808080\">" + standards.get(STANDARD) + "</font></small> >> <small><font color='#808080'>"
-                    + SUBJECT + "</font></small> >> <small><font color='#808080'>" + TYPE + "</font></small>", new HtmlResImageGetter(htmlTextView));
+            htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
+                    + "</font></small> >> <small><font color=\"#12c48b\">" + standards.get(STANDARD) + "</font></small> >> <small><font color='#ff6347'>"
+                    + SUBJECT + "</font></small> >> <small><font color='#ffca28'>" + TYPE + "</font></small>", new HtmlResImageGetter(htmlTextView));
         } else {
-            htmlTextView.setHtml("<small><font color=\"#808080\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
-                    + "</font></small> >> <small><font color=\"#808080\">" + standards.get(STANDARD) + "</font></small> >> <small><font color='#808080'>"
+            htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
+                    + "</font></small> >> <small><font color=\"#12c48b\">" + standards.get(STANDARD) + "</font></small> >> <small><font color='#ffca28'>"
                     + SUBJECT + "</font></small>", new HtmlResImageGetter(htmlTextView));
         }
 
@@ -107,7 +106,7 @@ public class PdfListActivity extends AppCompatActivity {
                         .replace(" ", "%20");
                 break;
 
-            case "PRACTICE PAPERS":
+            case "CBSE PRACTICE PAPERS":
 
                 url = Endpoints.PDF + "/" + BOARD
                         .replace(" ", "%20") + "/" + STANDARD
@@ -166,6 +165,7 @@ public class PdfListActivity extends AppCompatActivity {
                         JSONArray jsonArray = new JSONArray(response);
 
                         for (int i = 0; i < jsonArray.length(); i++) {
+
                             ArrayList<Pdf> itemArrayList = new ArrayList<>();
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             String year = jsonObject.getString("year");
@@ -187,7 +187,7 @@ public class PdfListActivity extends AppCompatActivity {
                         }
                     }
 
-                    adapter = new SectionRecyclerViewAdapter(PdfListActivity.this, recyclerViewType, sectionModelArrayList);
+                    adapter = new SectionRecyclerViewAdapter(PdfListActivity.this, recyclerViewType, sectionModelArrayList, SUBCATEGORY_HOME);
                     recyclerView.setAdapter(adapter);
 
                 } catch (Exception e) {
@@ -207,10 +207,8 @@ public class PdfListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

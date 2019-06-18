@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android">
-
+<!--
     <item android:title="@string/app_name">
         <menu>
             <item
@@ -9,9 +9,9 @@
                 android:icon="@mipmap/ic_ncert_books"
                 android:title="@string/ncert_book"/>
             <item
-                android:id="@+id/nav_downloads"
-                android:icon="@drawable/ic_download_black"
-                android:title="@string/my_downloads"/>
+                android:id="@+id/nav_saved_files"
+                android:icon="@drawable/ic_saved_files_black"
+                android:title="@string/saved_files"/>
         </menu>
     </item>
 
@@ -35,6 +35,6 @@
                 android:title="@string/title_privacy_policy"
                 />
         </menu>
-    </item>
+    </item>-->
 
 </menu>

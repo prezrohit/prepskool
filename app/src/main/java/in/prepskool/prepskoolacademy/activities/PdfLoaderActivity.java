@@ -19,25 +19,19 @@ import in.prepskool.prepskoolacademy.R;
 
 public class PdfLoaderActivity extends AppCompatActivity {
 
-    private File file;
-    private String pdfLink;
-    private String pdfSlug;
-    private String pdfName;
-    private WebView webView;
-    private Context context;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdf_loader);
 
-        pdfSlug = getIntent().getStringExtra("slug");
-        pdfName = getIntent().getStringExtra("name");
+        String pdfSlug = getIntent().getStringExtra("slug");
+        String pdfName = getIntent().getStringExtra("name");
+        String title = getIntent().getStringExtra("title");
 
-        webView = (WebView) findViewById(R.id.webView);
-        context = PdfLoaderActivity.this;
+        WebView webView = (WebView) findViewById(R.id.webView);
+        Context context = PdfLoaderActivity.this;
 
-        file = new File(new File(Environment.getExternalStorageDirectory() + File.separator + "Prepskool").getAbsolutePath(),
+        File file = new File(new File(Environment.getExternalStorageDirectory() + File.separator + "Prepskool").getAbsolutePath(),
                 pdfSlug + ".pdf");
 
         if (file.exists()) {
@@ -64,11 +58,12 @@ public class PdfLoaderActivity extends AppCompatActivity {
 
         } else {
 
-            pdfLink = getIntent().getStringExtra("link");
+            String pdfLink = getIntent().getStringExtra("link");
             Intent intent = new Intent(context, DownloadActivity.class);
             intent.putExtra("link", pdfLink);
             intent.putExtra("slug", pdfSlug);
             intent.putExtra("name", pdfName);
+            intent.putExtra("title", title);
             context.startActivity(intent);
             finish();
         }
