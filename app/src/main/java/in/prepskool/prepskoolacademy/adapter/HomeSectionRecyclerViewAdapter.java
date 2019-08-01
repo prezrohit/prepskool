@@ -114,6 +114,7 @@ public class HomeSectionRecyclerViewAdapter
                         context.startActivity(intent);
                         break;
                     }
+
                     case "CBSE PRACTICE PAPERS":  {
 
                         Intent intent = new Intent(context, StandardActivity.class);

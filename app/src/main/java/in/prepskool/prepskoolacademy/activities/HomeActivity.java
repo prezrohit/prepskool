@@ -1,6 +1,5 @@
 package in.prepskool.prepskoolacademy.activities;
 
-import android.animation.ObjectAnimator;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,12 +27,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import in.prepskool.prepskoolacademy.R;
@@ -47,7 +43,8 @@ import in.prepskool.prepskoolacademy.utils.RecyclerViewType;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     //region VARIABLE DECLARATION
     private static final int PERMISSION_REQUEST_CODE = 200;
@@ -260,6 +257,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
     //endregion
 
+    //region Preparing Navigation Menu Items
     private void prepareMenuData() {
 
         headerList.add(new NavigationMenu("NCERT Book", R.drawable.ic_ncert_book));
@@ -482,4 +480,5 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
     }
+    //endregion
 }
