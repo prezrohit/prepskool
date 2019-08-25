@@ -19,17 +19,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private ArrayList<NavigationMenu> listHeaderName;
-    private LinkedHashMap<String, ArrayList<NavigationMenu>> mapGroupAndChild;
+    private LinkedHashMap<NavigationMenu.Menu, ArrayList<NavigationMenu>> mapGroupAndChild;
 
-    public ExpandableListAdapter(Context context, ArrayList<NavigationMenu> listHeaderName, LinkedHashMap<String, ArrayList<NavigationMenu>> mapGroupAndChild) {
+    public ExpandableListAdapter(Context context, ArrayList<NavigationMenu> listHeaderName,
+                                 LinkedHashMap<NavigationMenu.Menu, ArrayList<NavigationMenu>> mapGroupAndChild) {
         this.context = context;
         this.listHeaderName = listHeaderName;
         this.mapGroupAndChild = mapGroupAndChild;
     }
 
     @Override
-    public NavigationMenu getChild(int groupPosition, int childPosititon) {
-        return mapGroupAndChild.get(listHeaderName.get(groupPosition).getTitle()).get(childPosititon);
+    public NavigationMenu getChild(int groupPosition, int childPosition) {
+        return mapGroupAndChild.get(listHeaderName.get(groupPosition).getMenuId()).get(childPosition);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         childViewHolder.txtListChild.setText(child.getTitle());
-        childViewHolder.imgSubMenuIcon.setImageResource(child.getId());
+        childViewHolder.imgSubMenuIcon.setImageResource(child.getIconId());
 
         return convertView;
     }
@@ -62,10 +63,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int groupPosition) {
 
-        if (mapGroupAndChild.get(getGroup(groupPosition).getTitle()) == null)
+        if (mapGroupAndChild.get(getGroup(groupPosition).getMenuId()) == null)
             return 0;
         else
-            return mapGroupAndChild.get(getGroup(groupPosition).getTitle()).size();
+            return mapGroupAndChild.get(getGroup(groupPosition).getMenuId()).size();
     }
 
     @Override
@@ -101,7 +102,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
         viewHolder.lblListHeader.setTypeface(null, Typeface.BOLD);
         viewHolder.lblListHeader.setText(header.getTitle());
-        viewHolder.imgHeaderIcon.setImageResource(header.getId());
+        viewHolder.imgHeaderIcon.setImageResource(header.getIconId());
         if (getChildrenCount(groupPosition) == 0)
             viewHolder.imgDropUpDown.setVisibility(View.GONE);
         else

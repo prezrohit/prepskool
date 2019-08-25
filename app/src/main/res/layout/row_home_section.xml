@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="15dp">
 
     <TextView
         android:id="@+id/home_section_label"
@@ -11,10 +11,8 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:text="@string/app_name"
-        android:layout_marginLeft="10dp"
-        android:textSize="15sp" />
+        android:textSize="16sp" />
 
-    <!--  recycler view for items -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/home_item_recycler_view"
         android:layout_width="match_parent"

@@ -44,8 +44,6 @@ public class StandardActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_standard);
 
-        startService(new Intent(this, CheckNetworkService.class));
-
         CATEGORY_HOME = getIntent().getStringExtra("CATEGORY_HOME");
         SUBCATEGORY_HOME = getIntent().getStringExtra("SUBCATEGORY_HOME");
         type = getIntent().getStringExtra("type");

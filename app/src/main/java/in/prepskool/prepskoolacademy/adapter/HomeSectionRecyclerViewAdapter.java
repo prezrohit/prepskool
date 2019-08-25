@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import in.prepskool.prepskoolacademy.retrofit_model.SectionedHome;
 import in.prepskool.prepskoolacademy.utils.IntentData;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
@@ -23,7 +24,7 @@ import in.prepskool.prepskoolacademy.model.SectionHome;
 public class HomeSectionRecyclerViewAdapter
         extends RecyclerView.Adapter<HomeSectionRecyclerViewAdapter.HomeSectionViewHolder> {
 
-    class HomeSectionViewHolder extends RecyclerView.ViewHolder {
+    static class HomeSectionViewHolder extends RecyclerView.ViewHolder {
         private TextView sectionLabel;
         private RecyclerView itemRecyclerView;
 
@@ -36,10 +37,10 @@ public class HomeSectionRecyclerViewAdapter
 
     private Context context;
     private RecyclerViewType recyclerViewType;
-    private ArrayList<SectionHome> sectionHomeArrayList;
+    private ArrayList<SectionedHome> sectionHomeArrayList;
 
     public HomeSectionRecyclerViewAdapter(Context context, RecyclerViewType recyclerViewType,
-                               ArrayList<SectionHome> sectionHomeArrayList) {
+                                          ArrayList<SectionedHome> sectionHomeArrayList) {
         this.context = context;
         this.recyclerViewType = recyclerViewType;
         this.sectionHomeArrayList = sectionHomeArrayList;
@@ -55,36 +56,19 @@ public class HomeSectionRecyclerViewAdapter
 
     @Override
     public void onBindViewHolder(@NonNull HomeSectionViewHolder holder, int position) {
-        final SectionHome sectionHome = sectionHomeArrayList.get(position);
+        final SectionedHome sectionHome = sectionHomeArrayList.get(position);
         holder.sectionLabel.setText(sectionHome.getSectionLabel());
 
         //recycler view for items
         holder.itemRecyclerView.setHasFixedSize(true);
         holder.itemRecyclerView.setNestedScrollingEnabled(false);
-
-        /* set layout manager on basis of recyclerview enum type */
-        switch (recyclerViewType) {
-            case LINEAR_VERTICAL:
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context,
-                        LinearLayoutManager.VERTICAL, false);
-                holder.itemRecyclerView.setLayoutManager(linearLayoutManager);
-                break;
-            case LINEAR_HORIZONTAL:
-                LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(context,
-                        LinearLayoutManager.HORIZONTAL, false);
-                holder.itemRecyclerView.setLayoutManager(linearLayoutManager1);
-                break;
-            case GRID:
-                GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
-                holder.itemRecyclerView.setLayoutManager(gridLayoutManager);
-                break;
-        }
+        holder.itemRecyclerView.setLayoutManager(new GridLayoutManager(context, 3));
 
         HomeItemRecyclerViewAdapter adapter = new HomeItemRecyclerViewAdapter(context,
-                sectionHome.getItemArrayList());
+                sectionHome.getHomeDataList());
         holder.itemRecyclerView.setAdapter(adapter);
 
-        holder.itemRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(context,
+        /*holder.itemRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(context,
                 holder.itemRecyclerView, new RecyclerTouchListener.ClickListener() {
 
             @Override
@@ -115,7 +99,7 @@ public class HomeSectionRecyclerViewAdapter
                         break;
                     }
 
-                    case "CBSE PRACTICE PAPERS":  {
+                    case "CBSE PRACTICE PAPERS": {
 
                         Intent intent = new Intent(context, StandardActivity.class);
                         intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
@@ -132,7 +116,7 @@ public class HomeSectionRecyclerViewAdapter
             public void onLongClick(View view, int position) {
 
             }
-        }));
+        }));*/
     }
 
     @Override

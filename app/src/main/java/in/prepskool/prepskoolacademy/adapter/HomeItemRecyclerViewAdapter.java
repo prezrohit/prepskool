@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.model.Home;
+import in.prepskool.prepskoolacademy.retrofit_model.Home;
 
 public class HomeItemRecyclerViewAdapter
         extends RecyclerView.Adapter<HomeItemRecyclerViewAdapter.HomeItemViewHolder> {
@@ -49,8 +49,8 @@ public class HomeItemRecyclerViewAdapter
     public void onBindViewHolder(@NonNull HomeItemViewHolder holder, int position) {
 
         Home home = arrayList.get(position);
-        holder.itemLabel.setText(home.getLabel());
-        holder.imgHome.setImageResource(home.getImgId());
+        holder.itemLabel.setText(home.getName());
+        holder.imgHome.setImageResource(home.getIconId());
     }
 
     @Override
