@@ -2,6 +2,9 @@ package in.prepskool.prepskoolacademy.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,57 +14,52 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.model.Standard;
+import in.prepskool.prepskoolacademy.activities.StreamActivity;
+import in.prepskool.prepskoolacademy.retrofit_model.Standard;
 
-public class StandardAdapter extends BaseAdapter {
-
-    private static LayoutInflater inflater=null;
-
-    private ArrayList<Standard> list;
+public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.StandardViewHolder> {
 
     private Context context;
+    private ArrayList<Standard> standardList;
 
-    public StandardAdapter(ArrayList<Standard> list, Context context) {
-        this.list = list;
-        inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        Activity activityCompat = (Activity) context;
+    public StandardAdapter(Context context, ArrayList<Standard> standardList) {
+        this.context = context;
+        this.standardList = standardList;
+    }
+
+    @NonNull
+    @Override
+    public StandardViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        View view = LayoutInflater.from(context).inflate(R.layout.class_gridview_box, viewGroup, false);
+        return new StandardViewHolder(view);
     }
 
     @Override
-    public int getCount() {
-        return list.size();
+    public void onBindViewHolder(@NonNull StandardViewHolder standardViewHolder, int i) {
+        Standard standard = standardList.get(i);
+        standardViewHolder.lblStandard.setText(standard.getName());
+
+        standardViewHolder.lblStandard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, StreamActivity.class));
+            }
+        });
     }
 
     @Override
-    public Object getItem(int i) {
-        return i;
+    public int getItemCount() {
+        return standardList.isEmpty() ? 0 : standardList.size();
     }
 
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
+    static class StandardViewHolder extends RecyclerView.ViewHolder {
 
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+        private TextView lblStandard;
 
-        Holder holder;
+        StandardViewHolder(@NonNull View itemView) {
+            super(itemView);
 
-        if (view == null) {
-            holder = new Holder();
-            view = inflater.inflate(R.layout.class_gridview_box,null);
-            holder.boardName =( TextView) view.findViewById(R.id.txt_class);
-            holder.boardName.setText(list.get(i).getRom());
-            view.setTag(holder);
+            lblStandard = itemView.findViewById(R.id.lbl_standard);
         }
-        else {
-
-            holder = (Holder) view.getTag();
-        }
-        return view;
-    }
-
-    public class Holder{
-        TextView boardName;
     }
 }

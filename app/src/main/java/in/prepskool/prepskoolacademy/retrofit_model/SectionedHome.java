@@ -20,33 +20,25 @@ public class SectionedHome {
         return sectionLabel;
     }
 
-    public void setSectionLabel(String sectionLabel) {
-        this.sectionLabel = sectionLabel;
-    }
-
     public ArrayList<Home> getHomeDataList() {
         return homeDataList;
     }
 
-    public void setHomeDataList(ArrayList<Home> homeDataList) {
-        this.homeDataList = homeDataList;
+    public void generateListByNcert(String label, ArrayList<NcertData> ncertList) {
+        this.sectionLabel = label;
+        for (NcertData ncertData : ncertList)
+            this.homeDataList.add(new Home(ncertData));
     }
 
-    public void generateListByNcert(ArrayList<Ncert> ncertList) {
-        this.sectionLabel = "NCERT";
-        for (Ncert ncert: ncertList)
-            this.homeDataList.add(new Home(ncert));
+    public void generateListByPracticePaper(String label, ArrayList<PracticePaperData> practicePapersList) {
+        this.sectionLabel = label;
+        for (PracticePaperData practicePaperData : practicePapersList)
+            homeDataList.add(new Home(practicePaperData));
     }
 
-    public void generateListByPracticePaper(ArrayList<PracticePaper> practicePapersList) {
-        this.sectionLabel = "CBSE PRACTICE PAPERS";
-        for (PracticePaper practicePaper: practicePapersList)
-            homeDataList.add(new Home(practicePaper));
-    }
-
-    public void generateListByBoard(ArrayList<Board> boardsList) {
-        this.sectionLabel = "SCHOOL BOARDS";
-        for (Board board: boardsList)
-            homeDataList.add(new Home(board));
+    public void generateListByBoard(String label, ArrayList<BoardData> boardsList) {
+        this.sectionLabel = label;
+        for (BoardData boardData : boardsList)
+            homeDataList.add(new Home(boardData));
     }
 }

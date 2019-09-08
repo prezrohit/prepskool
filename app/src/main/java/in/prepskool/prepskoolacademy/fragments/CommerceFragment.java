@@ -1,7 +1,6 @@
 package in.prepskool.prepskoolacademy.fragments;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -11,86 +10,84 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 
-import in.prepskool.prepskoolacademy.AppController;
-import in.prepskool.prepskoolacademy.utils.Endpoints;
-import in.prepskool.prepskoolacademy.utils.IntentData;
+import javax.inject.Inject;
+
+import in.prepskool.prepskoolacademy.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
-import in.prepskool.prepskoolacademy.activities.PdfListActivity;
-import in.prepskool.prepskoolacademy.activities.TypeActivity;
 import in.prepskool.prepskoolacademy.adapter.SubjectAdapter;
-import in.prepskool.prepskoolacademy.model.Subject;
+import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
+import in.prepskool.prepskoolacademy.retrofit_model.Subject;
+import in.prepskool.prepskoolacademy.retrofit_model.SubjectResponse;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class CommerceFragment extends Fragment {
+    @Inject
+    Retrofit retrofit;
 
-    View vi;
-    SubjectAdapter adapter;
-    RecyclerView rvCommerce;
-    StringRequest stringRequest;
-    private ProgressDialog mProgressDialog;
-    LinearLayoutManager linearLayoutManager;
-    ArrayList<Subject> arrayList = new ArrayList<>();
-    String url;
-    private String SUBJECT;
-    private String BOARD;
-    private int sourceId;
-    private String TYPE;
-    private TextView tvNoData;
+    private ProgressBar progressBar;
+    private RecyclerView rvCommerce;
+    private TextView lblNoData;
+
+    private static final String TAG = "CommerceFragment";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        vi = inflater.inflate(R.layout.fragment_commerce, container, false);
-        mProgressDialog = new ProgressDialog(getContext());
-        mProgressDialog.setTitle("Loading");
-        mProgressDialog.setMessage("Please wait...");
+        View view = inflater.inflate(R.layout.fragment_commerce, container, false);
 
-        tvNoData = (TextView) vi.findViewById(R.id.tv_no_data_commerce);
-        tvNoData.setVisibility(View.GONE);
+        progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
+        lblNoData = (TextView) view.findViewById(R.id.tv_no_data_commerce);
+        rvCommerce = view.findViewById(R.id.rv_commerce);
+        lblNoData.setVisibility(View.GONE);
 
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        arrayList = new ArrayList<>();
-        rvCommerce = vi.findViewById(R.id.rvComm);
+        ((PrepskoolApplication) getActivity().getApplication()).getSubjectComponent().inject(this);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        getCommerceSubjects(apiInterface);
 
-        IntentData.SUBCATEGORY_HOME = getArguments().getString("SUBCATEGORY_HOME");
-        IntentData.CATEGORY_HOME = getArguments().getString("CATEGORY_HOME");
-        IntentData.STANDARD = getArguments().getString("STANDARD");
-        BOARD = getArguments().getString("BOARD");
-        sourceId = getArguments().getInt("source", 0);
-        TYPE = getArguments().getString("TYPE");
+        return view;
+    }
 
-        switch (IntentData.CATEGORY_HOME) {
-            case "SCHOOL BOARDS":
-                url = Endpoints.B_SUBJECTS + "/" + IntentData.STANDARD
-                        .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
-                        .replace(" ", "%20") + "/Commerce";
-                break;
-            case "CBSE PRACTICE PAPERS":
-                url = Endpoints.PAPERS + IntentData.STANDARD
-                        .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
-                        .replace(" ", "%20") + "/Commerce";
-                break;
-            default:
-                url = Endpoints.SUBJECTS + "/" + IntentData.STANDARD
-                        .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
-                        .replace(" ", "%20") + "/Commerce";
-                break;
-        }
+    private void getCommerceSubjects(ApiInterface apiInterface) {
+        progressBar.setVisibility(View.VISIBLE);
+        Call<SubjectResponse> call = apiInterface.getSubjects();
+        call.enqueue(new Callback<SubjectResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SubjectResponse> call, @NonNull Response<SubjectResponse> response) {
 
-        rvCommerce.addOnItemTouchListener(new RecyclerTouchListener(getActivity(),
+                progressBar.setVisibility(View.GONE);
+                Log.d(TAG, "onResponse: " + response.message());
+                if (response.isSuccessful()) {
+                    ArrayList<Subject> subjectsList = response.body().getSubjectList();
+                    rvCommerce.setLayoutManager(new LinearLayoutManager(getContext()));
+                    SubjectAdapter subjectAdapter = new SubjectAdapter(getContext(), subjectsList);
+                    rvCommerce.setAdapter(subjectAdapter);
+
+                } else {
+                    rvCommerce.setVisibility(View.GONE);
+                    lblNoData.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SubjectResponse> call, @NonNull Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
+            }
+        });
+    }
+}
+
+
+
+/*rvCommerce.addOnItemTouchListener(new RecyclerTouchListener(getActivity(),
                 rvCommerce, new RecyclerTouchListener.ClickListener() {
 
             @Override
@@ -98,7 +95,7 @@ public class CommerceFragment extends Fragment {
 
                 SUBJECT = arrayList.get(position).getName();
 
-                Intent intent = new Intent(getActivity(), PdfListActivity.class);
+                Intent intent = new Intent(getActivity(), ResourceActivity.class);
                 intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
                 intent.putExtra("SUBJECT", SUBJECT);
                 intent.putExtra("STANDARD", IntentData.STANDARD);
@@ -112,7 +109,7 @@ public class CommerceFragment extends Fragment {
                     }
 
                     else {
-                        intent = new Intent(getActivity(), TypeActivity.class);
+                        intent = new Intent(getActivity(), ResourceTypeActivity.class);
                         intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
                         intent.putExtra("SUBJECT", SUBJECT);
                         intent.putExtra("STANDARD", IntentData.STANDARD);
@@ -129,54 +126,4 @@ public class CommerceFragment extends Fragment {
             public void onLongClick(View view, int position) {
 
             }
-        }));
-
-        Log.v( "Commerce", "url: " + url );
-
-        stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-
-                Log.v(CommerceFragment.class.getSimpleName(), response);
-
-                if (response.equals("{\"status\":\"no data\"}")) {
-                    tvNoData.setVisibility(View.VISIBLE);
-                    rvCommerce.setVisibility(View.GONE);
-                } else {
-
-                    try {
-
-                        JSONArray jsonArray = new JSONArray(response);
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-
-                            Subject subject = new Subject();
-                            subject.setName(jsonArray.getJSONObject(i).getString("name"));
-                            arrayList.add(subject);
-                        }
-
-                        rvCommerce.setHasFixedSize(true);
-                        rvCommerce.setLayoutManager(linearLayoutManager);
-                        adapter = new SubjectAdapter(getActivity(), arrayList);
-                        rvCommerce.setAdapter(adapter);
-
-                        mProgressDialog.dismiss();
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.v(CommerceFragment.class.getSimpleName(), "VolleyError: " + error.getLocalizedMessage());
-            }
-        });
-
-        AppController.getInstance().addToRequestQueue(stringRequest);
-
-        return vi;
-    }
-}
+        }));*/

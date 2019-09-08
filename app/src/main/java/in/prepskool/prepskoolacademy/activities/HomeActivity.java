@@ -34,16 +34,18 @@ import java.util.LinkedHashMap;
 
 import javax.inject.Inject;
 
-import in.prepskool.prepskoolacademy.CheckNetworkService;
 import in.prepskool.prepskoolacademy.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.adapter.ExpandableListAdapter;
 import in.prepskool.prepskoolacademy.adapter.HomeSectionRecyclerViewAdapter;
 import in.prepskool.prepskoolacademy.model.NavigationMenu;
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
+import in.prepskool.prepskoolacademy.retrofit_model.Board;
 import in.prepskool.prepskoolacademy.retrofit_model.HomeResponse;
+import in.prepskool.prepskoolacademy.retrofit_model.Ncert;
+import in.prepskool.prepskoolacademy.retrofit_model.PracticePaper;
 import in.prepskool.prepskoolacademy.retrofit_model.SectionedHome;
-import in.prepskool.prepskoolacademy.utils.RecyclerViewType;
+import in.prepskool.prepskoolacademy.services.CheckNetworkService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,27 +70,20 @@ import static in.prepskool.prepskoolacademy.model.NavigationMenu.Menu.SAVED_FILE
 import static in.prepskool.prepskoolacademy.model.NavigationMenu.Menu.SHARE;
 import static in.prepskool.prepskoolacademy.model.NavigationMenu.Menu.TOPPER_ANSWERS;
 
-public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
-
-    //region VARIABLE DECLARATION
-
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @Inject
     Retrofit retrofit;
 
     private DrawerLayout drawer;
-    private FloatingActionButton fab;
     private RecyclerView rvCategories;
     private ProgressBar progressBar;
     private ExpandableListView expandableListView;
 
     private ArrayList<NavigationMenu> headerList;
     private LinkedHashMap<NavigationMenu.Menu, ArrayList<NavigationMenu>> childList;
-    private ArrayList<SectionedHome> homeArrayList;
 
     private static final int PERMISSION_REQUEST_CODE = 200;
     private String TAG = HomeActivity.class.getSimpleName();
-    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,11 +97,11 @@ public class HomeActivity extends AppCompatActivity
 
         setToolbar();
 
-        fab = findViewById(R.id.fab_home);
+        final FloatingActionButton fab = findViewById(R.id.fab_notifications);
         drawer = findViewById(R.id.drawer_layout);
         progressBar = findViewById(R.id.progress_bar);
         expandableListView = findViewById(R.id.expandable_list_view);
-        rvCategories = findViewById(R.id.home_sectioned_recycler_view);
+        rvCategories = findViewById(R.id.rv_sectioned_home);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -118,7 +113,6 @@ public class HomeActivity extends AppCompatActivity
         rvCategories.setHasFixedSize(true);
         rvCategories.setLayoutManager(new LinearLayoutManager(this));
 
-        //rvCategories.setAdapter(adapter);
         rvCategories.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
@@ -131,6 +125,14 @@ public class HomeActivity extends AppCompatActivity
             }
         });
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent notificationIntent = new Intent(HomeActivity.this, NotificationActivity.class);
+                startActivity(notificationIntent);
+            }
+        });
+
         getHomeResponse(apiInterface);
 
         prepareMenuData();
@@ -140,6 +142,14 @@ public class HomeActivity extends AppCompatActivity
                 setToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+    }
+
+    private Toolbar setToolbar() {
+        Toolbar myToolbar = findViewById(R.id.toolbar);
+        myToolbar.bringToFront();
+        myToolbar.setTitle(R.string.study_material);
+        setSupportActionBar(myToolbar);
+        return myToolbar;
     }
 
     //region Requesting Storage Permission
@@ -176,8 +186,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-     @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0) {
 
@@ -404,7 +413,7 @@ public class HomeActivity extends AppCompatActivity
                             case ICSE:
                                 intent.putExtra("CATEGORY_HOME", "PRACTICE PAPERS");
                                 intent.putExtra("SUBCATEGORY_HOME", "Past Year Papers");
-                                intent.putExtra("BOARD", "ICSE Board");
+                                intent.putExtra("BOARD", "ICSE BoardData");
                                 intent.putExtra("type", "1");
                                 startActivity(intent);
                                 break;
@@ -424,7 +433,7 @@ public class HomeActivity extends AppCompatActivity
                         switch (headerMenuId) {
                             case ICSE:
                                 intent.putExtra("CATEGORY_HOME", "SCHOOL BOARDS");
-                                intent.putExtra("SUBCATEGORY_HOME", "ICSE Board");
+                                intent.putExtra("SUBCATEGORY_HOME", "ICSE BoardData");
                                 intent.putExtra("TYPE", "Marking Scheme");
                                 intent.putExtra("source", 1);
                                 intent.putExtra("type", "1");
@@ -448,7 +457,7 @@ public class HomeActivity extends AppCompatActivity
                             case ICSE:
                                 intent.putExtra("CATEGORY_HOME", "PRACTICE PAPERS");
                                 intent.putExtra("SUBCATEGORY_HOME", "Sample Papers");
-                                intent.putExtra("BOARD", "ICSE Board");
+                                intent.putExtra("BOARD", "ICSE BoardData");
                                 intent.putExtra("type", "1");
                                 startActivity(intent);
                                 break;
@@ -469,57 +478,42 @@ public class HomeActivity extends AppCompatActivity
     }
     //endregion
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.fab_home:
-                Intent notificationIntent = new Intent(HomeActivity.this, NotificationActivity.class);
-                startActivity(notificationIntent);
-                break;
-        }
-    }
-
-    private Toolbar setToolbar() {
-        Toolbar myToolbar = findViewById(R.id.toolbar);
-        myToolbar.bringToFront();
-        myToolbar.setTitle(R.string.study_material);
-        setSupportActionBar(myToolbar);
-        return myToolbar;
-    }
-
     private void getHomeResponse(ApiInterface apiInterface) {
         progressBar.setVisibility(View.VISIBLE);
-        Call<ArrayList<HomeResponse>> call = apiInterface.getHomeResponse();
-        call.enqueue(new Callback<ArrayList<HomeResponse>>() {
+        Call<HomeResponse> call = apiInterface.getHomeResponse();
+        call.enqueue(new Callback<HomeResponse>() {
             @Override
-            public void onResponse(@NonNull Call<ArrayList<HomeResponse>> call, @NonNull Response<ArrayList<HomeResponse>> response) {
+            public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {
                 progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "onResponse: " + response.body().get(0).getStatus());
+                Log.d(TAG, "onResponse: " + response.message());
+
                 if (response.isSuccessful()) {
-                    ArrayList<HomeResponse> homeDataList = response.body();
-                    homeArrayList = new ArrayList<>();
+                    HomeResponse homeResponse = response.body();
+                    Ncert ncert = homeResponse.getNcert();
+                    Board board = homeResponse.getBoard();
+                    PracticePaper practicePaper = homeResponse.getPracticePaper();
+                    ArrayList<SectionedHome> homeArrayList = new ArrayList<>();
 
                     SectionedHome sectionedHome = new SectionedHome();
-
-                    sectionedHome.generateListByNcert(homeDataList.get(0).getNcertTypeList());
+                    sectionedHome.generateListByNcert(ncert.getLabel(), ncert.getNcertDataList());
                     homeArrayList.add(sectionedHome);
 
                     SectionedHome sectionedHome1 = new SectionedHome();
-                    sectionedHome1.generateListByPracticePaper(homeDataList.get(0).getPracticePapersList());
+                    sectionedHome1.generateListByPracticePaper(practicePaper.getLabel(), practicePaper.getPracticePaperDataList());
                     homeArrayList.add(sectionedHome1);
 
                     SectionedHome sectionedHome2 = new SectionedHome();
-                    sectionedHome2.generateListByBoard(homeDataList.get(0).getBoardsList());
+                    sectionedHome2.generateListByBoard(board.getLabel(), board.getBoardDataList());
                     homeArrayList.add(sectionedHome2);
 
                     HomeSectionRecyclerViewAdapter homeSectionRecyclerViewAdapter = new HomeSectionRecyclerViewAdapter(HomeActivity.this,
-                            RecyclerViewType.GRID, homeArrayList);
+                            homeArrayList);
                     rvCategories.setAdapter(homeSectionRecyclerViewAdapter);
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<ArrayList<HomeResponse>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<HomeResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
             }

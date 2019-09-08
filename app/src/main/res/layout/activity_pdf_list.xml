@@ -1,36 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#f2f2f2">
 
-    <include
-        android:id="@+id/tool"
-        layout="@layout/toolbar" />
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
 
     <org.sufficientlysecure.htmltextview.HtmlTextView
-        android:id="@+id/tvBreadCrumbPdfList"
+        android:id="@+id/lbl_breadcrumb_resource"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tool"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/sectioned_recycler_view"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_below="@+id/tvBreadCrumbPdfList"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tvNoData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_below="@+id/tvBreadCrumbPdfList"
-        android:layout_centerHorizontal="true"
-        android:text="No data"
-        android:textSize="20sp"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_sectioned_resource"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/lbl_no_data_resource"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+            android:text="No data"
+            android:textSize="20sp"/>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

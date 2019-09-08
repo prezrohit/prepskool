@@ -1,14 +1,21 @@
 package in.prepskool.prepskoolacademy.retrofit_model;
 
-public class Ncert {
-    private String id;
-    private String name;
+import com.google.gson.annotations.SerializedName;
 
-    public String getId() {
-        return id;
+import java.util.ArrayList;
+
+public class Ncert {
+    @SerializedName("label")
+    private String label;
+
+    @SerializedName("data")
+    private ArrayList<NcertData> ncertDataList;
+
+    public String getLabel() {
+        return label;
     }
 
-    public String getName() {
-        return name;
+    public ArrayList<NcertData> getNcertDataList() {
+        return ncertDataList;
     }
 }

@@ -4,22 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import in.prepskool.prepskoolacademy.retrofit_model.SectionedHome;
-import in.prepskool.prepskoolacademy.utils.IntentData;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
-import in.prepskool.prepskoolacademy.utils.RecyclerViewType;
 import in.prepskool.prepskoolacademy.activities.StandardActivity;
-import in.prepskool.prepskoolacademy.model.SectionHome;
 
 public class HomeSectionRecyclerViewAdapter
         extends RecyclerView.Adapter<HomeSectionRecyclerViewAdapter.HomeSectionViewHolder> {
@@ -36,13 +33,10 @@ public class HomeSectionRecyclerViewAdapter
     }
 
     private Context context;
-    private RecyclerViewType recyclerViewType;
     private ArrayList<SectionedHome> sectionHomeArrayList;
 
-    public HomeSectionRecyclerViewAdapter(Context context, RecyclerViewType recyclerViewType,
-                                          ArrayList<SectionedHome> sectionHomeArrayList) {
+    public HomeSectionRecyclerViewAdapter(Context context, ArrayList<SectionedHome> sectionHomeArrayList) {
         this.context = context;
-        this.recyclerViewType = recyclerViewType;
         this.sectionHomeArrayList = sectionHomeArrayList;
     }
 
@@ -67,6 +61,19 @@ public class HomeSectionRecyclerViewAdapter
         HomeItemRecyclerViewAdapter adapter = new HomeItemRecyclerViewAdapter(context,
                 sectionHome.getHomeDataList());
         holder.itemRecyclerView.setAdapter(adapter);
+
+        holder.itemRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(context, holder.itemRecyclerView,
+                new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                context.startActivity(new Intent(context, StandardActivity.class));
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Toast.makeText(context, sectionHome.getHomeDataList().get(position).getName(), Toast.LENGTH_SHORT).show();
+            }
+        }));
 
         /*holder.itemRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(context,
                 holder.itemRecyclerView, new RecyclerTouchListener.ClickListener() {

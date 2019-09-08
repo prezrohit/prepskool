@@ -39,26 +39,26 @@
                 android:layout_height="match_parent">
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/home_sectioned_recycler_view"
+                    android:id="@+id/rv_sectioned_home"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
-
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/fab_home"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="25dp"
-                    android:background="@color/colorPrimary"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:src="@drawable/ic_notifications"
-                    app:fabCustomSize="60dp"
-                    app:rippleColor="@color/colorPrimary" />
 
             </RelativeLayout>
 
         </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/ic_notifications"
+            app:fabCustomSize="60dp"
+            app:rippleColor="@color/colorPrimary" />
 
         <ProgressBar
             android:id="@+id/progress_bar"

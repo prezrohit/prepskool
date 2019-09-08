@@ -1,16 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.NonBoardActivity">
 
-    <include
-        layout="@layout/toolbar"/>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
 
     <org.sufficientlysecure.htmltextview.HtmlTextView
-        android:id="@+id/breadCrumbNonBoard"
+        android:id="@+id/bread_crumb_non_board"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -19,21 +36,28 @@
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"/>
 
     <TextView
-        android:id="@+id/txt_no_data_non_board"
+        android:id="@+id/lbl_no_data_non_board"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:layout_below="@+id/breadCrumbNonBoard"
+        android:layout_below="@+id/bread_crumb_non_board"
         android:gravity="center"
         android:text="No Data"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/breadCrumbNonBoard"
+        android:layout_below="@id/bread_crumb_non_board"
         android:clickable="true"
         android:focusable="true"
         android:scrollbars="vertical"
-        android:id="@+id/rvSci"/>
+        android:id="@+id/rv_non_board"/>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 
 </RelativeLayout>

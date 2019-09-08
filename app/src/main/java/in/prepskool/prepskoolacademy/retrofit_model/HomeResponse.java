@@ -9,28 +9,28 @@ public class HomeResponse {
     @SerializedName("status")
     private String status;
 
-    @SerializedName("boards")
-    private ArrayList<Board> boardsList;
+    @SerializedName("ncert")
+    private Ncert ncert;
 
     @SerializedName("practice_papers")
-    private ArrayList<PracticePaper> practicePapersList;
+    private PracticePaper practicePaper;
 
-    @SerializedName("ncert")
-    private ArrayList<Ncert> ncertTypeList;
+    @SerializedName("boards")
+    private Board board;
 
     public String getStatus() {
         return status;
     }
 
-    public ArrayList<Board> getBoardsList() {
-        return boardsList;
+    public Ncert getNcert() {
+        return ncert;
     }
 
-    public ArrayList<PracticePaper> getPracticePapersList() {
-        return practicePapersList;
+    public PracticePaper getPracticePaper() {
+        return practicePaper;
     }
 
-    public ArrayList<Ncert> getNcertTypeList() {
-        return ncertTypeList;
+    public Board getBoard() {
+        return board;
     }
 }

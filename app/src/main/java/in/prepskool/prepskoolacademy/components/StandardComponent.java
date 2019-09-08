@@ -3,7 +3,6 @@ package in.prepskool.prepskoolacademy.components;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import in.prepskool.prepskoolacademy.activities.HomeActivity;
 import in.prepskool.prepskoolacademy.activities.StandardActivity;
 import in.prepskool.prepskoolacademy.retrofit.ApiClient;
 
@@ -11,5 +10,5 @@ import in.prepskool.prepskoolacademy.retrofit.ApiClient;
 @Component(modules = {ApiClient.class})
 public interface StandardComponent {
 
-    void inject(HomeActivity standardActivity);
+    void inject(StandardActivity standardActivity);
 }

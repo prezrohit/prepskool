@@ -3,39 +3,39 @@ package in.prepskool.prepskoolacademy.retrofit_model;
 import in.prepskool.prepskoolacademy.R;
 
 public class Home {
-    private String id;
+    private int id;
     private String name;
     private int iconId;
 
-    public Home(Ncert ncert) {
-        this.id = ncert.getId();
-        this.name = ncert.getName();
+    public Home(NcertData ncertData) {
+        this.id = ncertData.getId();
+        this.name = ncertData.getName();
         this.iconId = R.mipmap.ic_launcher;
     }
 
-    public Home(PracticePaper practicePaper) {
-        this.id = practicePaper.getId();
-        this.name = practicePaper.getName();
+    public Home(PracticePaperData practicePaperData) {
+        this.id = practicePaperData.getId();
+        this.name = practicePaperData.getName();
         this.iconId = R.mipmap.ic_launcher;
     }
 
-    public Home(Board board) {
-        this.id = board.getId();
-        this.name = board.getName();
+    public Home(BoardData boardData) {
+        this.id = boardData.getId();
+        this.name = boardData.getName();
         this.iconId = R.mipmap.ic_launcher;
     }
 
-    public Home(String id, String name, int iconId) {
+    public Home(int id, String name, int iconId) {
         this.id = id;
         this.name = name;
         this.iconId = iconId;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -3,53 +3,35 @@ package in.prepskool.prepskoolacademy.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.button.MaterialButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
 
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.activities.DownloadActivity;
-import in.prepskool.prepskoolacademy.activities.PdfLoaderActivity;
-import in.prepskool.prepskoolacademy.model.Pdf;
+import in.prepskool.prepskoolacademy.retrofit_model.Resource;
 
 public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ItemViewHolder> {
 
-    class ItemViewHolder extends RecyclerView.ViewHolder {
-
-        private TextView itemLabel;
-        private TextView itemVieww;
-        private TextView itemDown;
-
-        ItemViewHolder(View itemView) {
-            super(itemView);
-            itemLabel = (TextView) itemView.findViewById(R.id.item_label);
-
-            itemVieww = (TextView) itemView.findViewById(R.id.item_view);
-
-            itemDown = (TextView) itemView.findViewById(R.id.item_down);
-
-        }
-    }
-
     private Context context;
-    private ArrayList<Pdf> arrayList;
-    private String title;
+    private ArrayList<Resource> arrayList;
 
-    ItemRecyclerViewAdapter(Context context, ArrayList<Pdf> arrayList, String title) {
+    ItemRecyclerViewAdapter(Context context, ArrayList<Resource> arrayList) {
         this.context = context;
         this.arrayList = arrayList;
-        this.title = title;
     }
 
+    @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_custom_item,
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_resource_item,
                 parent, false);
         return new ItemViewHolder(view);
     }
@@ -57,31 +39,19 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
 
-        holder.itemLabel.setText(arrayList.get(position).getName());
+        holder.lblResourceName.setText(arrayList.get(position).getName());
 
-        holder.itemVieww.setOnClickListener(new View.OnClickListener() {
+        holder.btnViewResource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent i = new Intent(context, PdfLoaderActivity.class);
-                i.putExtra("name", arrayList.get(holder.getAdapterPosition()).getName());
-                i.putExtra("link", arrayList.get(holder.getAdapterPosition()).getLink());
-                i.putExtra("slug", arrayList.get(holder.getAdapterPosition()).getSlug());
-                i.putExtra("title", title);
-                context.startActivity(i);
+                Toast.makeText(context, "view", Toast.LENGTH_SHORT).show();
             }
         });
 
-        holder.itemDown.setOnClickListener(new View.OnClickListener() {
+        holder.btnDownloadResource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent i = new Intent(context, DownloadActivity.class);
-                i.putExtra("name", arrayList.get(holder.getAdapterPosition()).getName());
-                i.putExtra("link", arrayList.get(holder.getAdapterPosition()).getLink());
-                i.putExtra("slug", arrayList.get(holder.getAdapterPosition()).getSlug());
-                i.putExtra("title", title);
-                context.startActivity(i);
+                Toast.makeText(context, "download", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -89,5 +59,20 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
     @Override
     public int getItemCount() {
         return arrayList.size();
+    }
+
+    class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView lblResourceName;
+        private Button btnViewResource;
+        private Button btnDownloadResource;
+
+        ItemViewHolder(View itemView) {
+            super(itemView);
+
+            lblResourceName = (TextView) itemView.findViewById(R.id.lbl_resource_name);
+            btnViewResource = (MaterialButton) itemView.findViewById(R.id.btn_view_resource);
+            btnDownloadResource = (MaterialButton) itemView.findViewById(R.id.btn_download_resource);
+        }
     }
 }

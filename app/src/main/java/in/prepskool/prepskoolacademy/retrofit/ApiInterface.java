@@ -1,9 +1,8 @@
 package in.prepskool.prepskoolacademy.retrofit;
 
-import java.util.ArrayList;
-
 import in.prepskool.prepskoolacademy.retrofit_model.HomeResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.ResourceResponse;
+import in.prepskool.prepskoolacademy.retrofit_model.ResourceTypeResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.StandardResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.SubjectResponse;
 import retrofit2.Call;
@@ -21,5 +20,14 @@ public interface ApiInterface {
     Call<SubjectResponse> getSubjects();
 
     @GET("home")
-    Call<ArrayList<HomeResponse>> getHomeResponse();
+    Call<HomeResponse> getHomeResponse();
+
+    @GET("streams")
+    Call getStreams();
+
+    @GET("resourceTypes")
+    Call<ResourceTypeResponse> getResourceTypes();
+
+    @GET("boards")
+    Call getBoards();
 }

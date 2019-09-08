@@ -5,13 +5,15 @@ import android.app.Application;
 import javax.inject.Inject;
 
 import in.prepskool.prepskoolacademy.components.BoardComponent;
+import in.prepskool.prepskoolacademy.components.DaggerBoardComponent;
 import in.prepskool.prepskoolacademy.components.DaggerHomeComponent;
 import in.prepskool.prepskoolacademy.components.DaggerResourceComponent;
+import in.prepskool.prepskoolacademy.components.DaggerResourceTypeComponent;
 import in.prepskool.prepskoolacademy.components.DaggerStandardComponent;
 import in.prepskool.prepskoolacademy.components.DaggerSubjectComponent;
-import in.prepskool.prepskoolacademy.components.DaggerBoardComponent;
 import in.prepskool.prepskoolacademy.components.HomeComponent;
 import in.prepskool.prepskoolacademy.components.ResourceComponent;
+import in.prepskool.prepskoolacademy.components.ResourceTypeComponent;
 import in.prepskool.prepskoolacademy.components.StandardComponent;
 import in.prepskool.prepskoolacademy.components.SubjectComponent;
 import in.prepskool.prepskoolacademy.retrofit.ApiClient;
@@ -19,6 +21,7 @@ import in.prepskool.prepskoolacademy.utils.Endpoints;
 
 public class PrepskoolApplication extends Application {
 
+    private ResourceTypeComponent resourceTypeComponent;
     private StandardComponent standardComponent;
     private ResourceComponent resourceComponent;
     private SubjectComponent subjectComponent;
@@ -28,6 +31,10 @@ public class PrepskoolApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        resourceTypeComponent = DaggerResourceTypeComponent.builder()
+                .apiClient(new ApiClient(Endpoints.BASE_URL))
+                .build();
 
         standardComponent = DaggerStandardComponent.builder()
                 .apiClient(new ApiClient(Endpoints.BASE_URL))
@@ -73,5 +80,10 @@ public class PrepskoolApplication extends Application {
     @Inject
     public HomeComponent getHomeComponent() {
         return homeComponent;
+    }
+
+    @Inject
+    public ResourceTypeComponent getResourceTypeComponent() {
+        return resourceTypeComponent;
     }
 }

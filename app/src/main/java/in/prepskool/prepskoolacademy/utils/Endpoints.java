@@ -2,7 +2,7 @@ package in.prepskool.prepskoolacademy.utils;
 
 public class Endpoints {
 
-    public static final String BASE_URL = "http://prepskool.in/app/api/v1/";
+    public static final String BASE_URL = "https://codencolors.com/projects/prepskool/public/api/v1/";
 
     public static final String PAPERS = "http://prepskool.in/app/public/api/papers/";
     public static final String SUBJECTS = "http://prepskool.in/app/public/api/subjects";

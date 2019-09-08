@@ -1,7 +1,7 @@
 package in.prepskool.prepskoolacademy.retrofit_model;
 
 public class Resource {
-    private String id;
+    private int id;
     private String name;
     private String slug;
     private String url;
@@ -13,8 +13,15 @@ public class Resource {
     private String year;
     private String urlType;
     private String userId;
+    private String linkType;
+    private String isPaid;
+    private Board board;
+    private Stream stream;
+    private Subject subject;
+    private Standard standard;
+    private ResourceType resourceType;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -60,5 +67,33 @@ public class Resource {
 
     public String getUserId() {
         return userId;
+    }
+
+    public String getLinkType() {
+        return linkType;
+    }
+
+    public String getIsPaid() {
+        return isPaid;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public Stream getStream() {
+        return stream;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public Standard getStandard() {
+        return standard;
+    }
+
+    public ResourceType getResourceType() {
+        return resourceType;
     }
 }

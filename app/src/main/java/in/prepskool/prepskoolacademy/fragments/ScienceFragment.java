@@ -1,6 +1,5 @@
 package in.prepskool.prepskoolacademy.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -10,82 +9,94 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 
-import in.prepskool.prepskoolacademy.AppController;
-import in.prepskool.prepskoolacademy.utils.Endpoints;
-import in.prepskool.prepskoolacademy.utils.IntentData;
+import javax.inject.Inject;
+
+import in.prepskool.prepskoolacademy.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
-import in.prepskool.prepskoolacademy.activities.PdfListActivity;
-import in.prepskool.prepskoolacademy.activities.TypeActivity;
 import in.prepskool.prepskoolacademy.adapter.SubjectAdapter;
-import in.prepskool.prepskoolacademy.model.Subject;
+import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
+import in.prepskool.prepskoolacademy.retrofit_model.Subject;
+import in.prepskool.prepskoolacademy.retrofit_model.SubjectResponse;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class ScienceFragment extends Fragment {
 
-    View vi;
-    SubjectAdapter adapter;
-    RecyclerView rvScience;
-    StringRequest stringRequest;
-    LinearLayoutManager linearLayoutManager;
-    ArrayList<Subject> arrayList = new ArrayList<>();
-    private String SUBJECT;
-    private String BOARD;
-    private String url;
-    private int sourceId;
-    private String TYPE;
-    private TextView tvNoData;
+    @Inject
+    Retrofit retrofit;
+
+    private ProgressBar progressBar;
+    private RecyclerView rvScience;
+    private TextView lblNoData;
+
+    private static final String TAG = "ScienceFragment";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        vi = inflater.inflate(R.layout.fragment_science, container, false);
+        View view = inflater.inflate(R.layout.fragment_science, container, false);
 
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        arrayList = new ArrayList<>();
-        rvScience = vi.findViewById(R.id.rvSci);
+        progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
+        lblNoData = (TextView) view.findViewById(R.id.tv_no_data_science);
+        rvScience = view.findViewById(R.id.rv_science);
+        lblNoData.setVisibility(View.GONE);
 
-        tvNoData = (TextView) vi.findViewById(R.id.tv_no_data_science);
-        tvNoData.setVisibility(View.GONE);
+        ((PrepskoolApplication) getActivity().getApplication()).getSubjectComponent().inject(this);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        getScienceSubjects(apiInterface);
 
-        IntentData.SUBCATEGORY_HOME = getArguments().getString("SUBCATEGORY_HOME");
-        IntentData.CATEGORY_HOME = getArguments().getString("CATEGORY_HOME");
-        IntentData.STANDARD = getArguments().getString("STANDARD");
-        BOARD = getArguments().getString("BOARD");
-        sourceId = getArguments().getInt("source", 0);
-        TYPE = getArguments().getString("TYPE");
+        return view;
+    }
 
-        switch (IntentData.CATEGORY_HOME) {
-            case "SCHOOL BOARDS":
-                url = Endpoints.B_SUBJECTS + "/" + IntentData.STANDARD
-                        .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
-                        .replace(" ", "%20") + "/Science";
-                break;
-            case "CBSE PRACTICE PAPERS":
-                url = Endpoints.PAPERS + IntentData.STANDARD
-                        .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
-                        .replace(" ", "%20") + "/Science";
-                break;
-            default:
-                url = Endpoints.SUBJECTS + "/" + IntentData.STANDARD
-                        .replace(" ", "%20") + "/" + IntentData.SUBCATEGORY_HOME
-                        .replace(" ", "%20") + "/Science";
-                break;
-        }
+    private void getScienceSubjects(ApiInterface apiInterface) {
+        progressBar.setVisibility(View.VISIBLE);
+        Call<SubjectResponse> call = apiInterface.getSubjects();
+        call.enqueue(new Callback<SubjectResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SubjectResponse> call, @NonNull Response<SubjectResponse> response) {
+                progressBar.setVisibility(View.GONE);
 
-        rvScience.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rvScience,
+                Log.d(TAG, "onResponse: " + response.message());
+                if (response.isSuccessful()) {
+                    ArrayList<Subject> subjectsList = response.body().getSubjectList();
+                    rvScience.setLayoutManager(new LinearLayoutManager(getContext()));
+                    SubjectAdapter subjectAdapter = new SubjectAdapter(getContext(), subjectsList);
+                    rvScience.setAdapter(subjectAdapter);
+
+                } else {
+                    rvScience.setVisibility(View.GONE);
+                    lblNoData.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SubjectResponse> call, @NonNull Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
+            }
+        });
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*rvScience.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rvScience,
                 new RecyclerTouchListener.ClickListener() {
 
                     @Override
@@ -93,7 +104,7 @@ public class ScienceFragment extends Fragment {
 
                         SUBJECT = arrayList.get(position).getName();
 
-                        Intent intent = new Intent(getActivity(), PdfListActivity.class);
+                        Intent intent = new Intent(getActivity(), ResourceActivity.class);
                         intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
                         intent.putExtra("SUBJECT", SUBJECT);
                         intent.putExtra("STANDARD", IntentData.STANDARD);
@@ -107,7 +118,7 @@ public class ScienceFragment extends Fragment {
                             }
 
                             else {
-                                intent = new Intent(getActivity(), TypeActivity.class);
+                                intent = new Intent(getActivity(), ResourceTypeActivity.class);
                                 intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
                                 intent.putExtra("SUBJECT", SUBJECT);
                                 intent.putExtra("STANDARD", IntentData.STANDARD);
@@ -125,50 +136,4 @@ public class ScienceFragment extends Fragment {
                     public void onLongClick(View view, int position) {
 
                     }
-                }));
-
-        Log.v( "Science", "url: " + url );
-
-        stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-
-                Log.v(ScienceFragment.class.getSimpleName(), response);
-
-                if (response.equals("{\"status\":\"no data\"}")) {
-                    tvNoData.setVisibility(View.VISIBLE);
-                    rvScience.setVisibility(View.GONE);
-                } else {
-                    try {
-
-                        JSONArray jsonArray = new JSONArray(response);
-
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            Subject news = new Subject();
-                            news.setName(jsonArray.getJSONObject(i).getString("name"));
-                            arrayList.add(news);
-                        }
-
-                        rvScience.setHasFixedSize(true);
-                        rvScience.setLayoutManager(linearLayoutManager);
-                        adapter = new SubjectAdapter(getActivity(), arrayList);
-                        rvScience.setAdapter(adapter);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.v(ScienceFragment.class.getSimpleName(), "VolleyError: " + error.getLocalizedMessage());
-            }
-        });
-
-        AppController.getInstance().addToRequestQueue(stringRequest);
-
-        return vi;
-    }
-}
+                }));*/

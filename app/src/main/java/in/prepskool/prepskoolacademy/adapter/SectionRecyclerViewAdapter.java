@@ -8,66 +8,56 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import java.util.ArrayList;
+
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.utils.RecyclerViewType;
-import in.prepskool.prepskoolacademy.model.SectionModel;
+import in.prepskool.prepskoolacademy.retrofit_model.SectionedResource;
 
 public class SectionRecyclerViewAdapter extends RecyclerView.Adapter<SectionRecyclerViewAdapter.SectionViewHolder> {
 
-    class SectionViewHolder extends RecyclerView.ViewHolder {
-        private TextView sectionLabel;
-        private RecyclerView itemRecyclerView;
-
-        SectionViewHolder(View itemView) {
-            super(itemView);
-            sectionLabel = (TextView) itemView.findViewById(R.id.section_label);
-            itemRecyclerView = (RecyclerView) itemView.findViewById(R.id.item_recycler_view);
-        }
-    }
-
     private Context context;
-    private ArrayList<SectionModel> sectionModelArrayList;
-    private String title;
+    private ArrayList<SectionedResource> sectionedResourceList;
 
-    public SectionRecyclerViewAdapter(Context context, RecyclerViewType recyclerViewType,
-                                      ArrayList<SectionModel> sectionModelArrayList, String title) {
+    public SectionRecyclerViewAdapter(Context context, ArrayList<SectionedResource> sectionedResourceList) {
         this.context = context;
-        this.sectionModelArrayList = sectionModelArrayList;
-        this.title = title;
+        this.sectionedResourceList = sectionedResourceList;
     }
 
     @NonNull
     @Override
     public SectionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_custom_section,
-                parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_resource_section, parent, false);
         return new SectionViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SectionViewHolder holder, int position) {
 
-        final SectionModel sectionModel = sectionModelArrayList.get(position);
-        if (sectionModel.getSectionLabel().equals("null"))
-            holder.sectionLabel.setVisibility(View.GONE);
-        else
-            holder.sectionLabel.setText(sectionModel.getSectionLabel());
+        SectionedResource sectionedResource = sectionedResourceList.get(position);
 
-        //recycler view for items
-        holder.itemRecyclerView.setHasFixedSize(true);
-        holder.itemRecyclerView.setNestedScrollingEnabled(false);
+        holder.lblSectionLabel.setText(sectionedResource.getSectionLabel());
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context,
-                LinearLayoutManager.VERTICAL, false);
-        holder.itemRecyclerView.setLayoutManager(linearLayoutManager);
-
-        ItemRecyclerViewAdapter adapter = new ItemRecyclerViewAdapter(context, sectionModel.getItemArrayList(), title);
-        holder.itemRecyclerView.setAdapter(adapter);
+        holder.rvResourceItems.setHasFixedSize(true);
+        holder.rvResourceItems.setNestedScrollingEnabled(false);
+        holder.rvResourceItems.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        holder.rvResourceItems.setAdapter(new ItemRecyclerViewAdapter(context, sectionedResource.getResourceList()));
     }
 
     @Override
     public int getItemCount() {
-        return sectionModelArrayList.size();
+        return sectionedResourceList.size();
+    }
+
+    class SectionViewHolder extends RecyclerView.ViewHolder {
+        private TextView lblSectionLabel;
+        private RecyclerView rvResourceItems;
+
+        SectionViewHolder(View itemView) {
+            super(itemView);
+
+            lblSectionLabel = (TextView) itemView.findViewById(R.id.lbl_resource_label);
+            rvResourceItems = (RecyclerView) itemView.findViewById(R.id.rv_resource_items);
+        }
     }
 }

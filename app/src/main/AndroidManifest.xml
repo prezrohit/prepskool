@@ -31,15 +31,7 @@
             </intent-filter>
         </service>
 
-        <service android:name=".CheckNetworkService"/>
-
-        <receiver
-            android:name=".utils.ConnectivityReceiver"
-            android:enabled="true">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
+        <service android:name=".services.CheckNetworkService"/>
 
         <activity android:name=".activities.SavedFilesActivity" />
         <activity android:name=".activities.SplashActivity"
@@ -56,8 +48,8 @@
         <activity android:name=".activities.StreamActivity" />
         <activity android:name=".activities.NonBoardActivity" />
         <activity android:name=".activities.NotificationActivity" />
-        <activity android:name=".activities.TypeActivity" />
-        <activity android:name=".activities.PdfListActivity" />
+        <activity android:name=".activities.ResourceTypeActivity" />
+        <activity android:name=".activities.ResourceActivity" />
         <activity android:name=".activities.DownloadActivity" />
         <activity android:name=".activities.PdfLoaderActivity" />
 
@@ -69,7 +61,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".DialogActivity"
+        <activity android:name=".activities.DialogActivity"
             android:excludeFromRecents="true"/>
 
     </application>

@@ -1,14 +1,21 @@
 package in.prepskool.prepskoolacademy.retrofit_model;
 
-public class Board {
-    private String id;
-    private String name;
+import com.google.gson.annotations.SerializedName;
 
-    public String getId() {
-        return id;
+import java.util.ArrayList;
+
+public class Board {
+    @SerializedName("label")
+    private String label;
+
+    @SerializedName("data")
+    private ArrayList<BoardData> boardDataList;
+
+    public String getLabel() {
+        return label;
     }
 
-    public String getName() {
-        return name;
+    public ArrayList<BoardData> getBoardDataList() {
+        return boardDataList;
     }
 }
