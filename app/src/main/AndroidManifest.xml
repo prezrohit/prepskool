@@ -19,19 +19,9 @@
         android:roundIcon="@drawable/ic_application"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:allowBackup"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".activities.AboutUsActivity"/>
         <activity android:name=".activities.PrivacyPolicyActivity" />
-
-        <service
-            android:name=".services.MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
-        <service android:name=".services.CheckNetworkService"/>
 
         <activity android:name=".activities.SavedFilesActivity" />
         <activity android:name=".activities.SplashActivity"
@@ -63,6 +53,12 @@
 
         <activity android:name=".activities.DialogActivity"
             android:excludeFromRecents="true"/>
+
+        <service android:name=".services.CheckNetworkService"/>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-9962192841456948~7213251824" />
 
     </application>
 

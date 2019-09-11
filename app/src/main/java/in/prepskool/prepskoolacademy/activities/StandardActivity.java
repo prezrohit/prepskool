@@ -11,6 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -40,12 +45,18 @@ public class StandardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_standard);
 
+        MobileAds.initialize(this, getString(R.string.app_id));
+
         ((PrepskoolApplication) getApplication()).getStandardComponent().inject(this);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
         progressBar = findViewById(R.id.progress_bar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_standard);
+
+        AdView mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("658CE1DF8EB039135583BF17C48E41D8").build();
+        mAdView.loadAd(adRequest);
 
         //HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.breadCrumbStandard);
         // loads html from string and displays cat_pic.png from the app's drawable folder

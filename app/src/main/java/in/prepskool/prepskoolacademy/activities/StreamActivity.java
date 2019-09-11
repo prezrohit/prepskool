@@ -7,6 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.adapter.ViewPagerAdapter;
 import in.prepskool.prepskoolacademy.fragments.ArtFragment;
@@ -22,6 +26,8 @@ public class StreamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stream);
 
+        MobileAds.initialize(this, getString(R.string.app_id));
+
         /*//region breadcrumbs setup
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.breadCrumbStream);
         htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + IntentData.SUBCATEGORY_HOME.replace(" BOARD", "")
@@ -31,6 +37,10 @@ public class StreamActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_stream);
         toolbar.setTitle(R.string.title_subject);
         setSupportActionBar(toolbar);
+
+        AdView mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("658CE1DF8EB039135583BF17C48E41D8").build();
+        mAdView.loadAd(adRequest);
 
         ViewPager viewPager = findViewById(R.id.pager);
         TabLayout tabLayout = findViewById(R.id.tablayout);

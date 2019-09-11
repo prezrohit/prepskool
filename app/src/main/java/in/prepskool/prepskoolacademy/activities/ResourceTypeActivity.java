@@ -11,6 +11,11 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -70,10 +75,12 @@ public class ResourceTypeActivity extends AppCompatActivity {
     }
 
     private void getResourceTypes(ApiInterface apiInterface) {
+        progressBar.setVisibility(View.VISIBLE);
         Call<ResourceTypeResponse> call = apiInterface.getResourceTypes();
         call.enqueue(new Callback<ResourceTypeResponse>() {
             @Override
             public void onResponse(@NonNull Call<ResourceTypeResponse> call, @NonNull Response<ResourceTypeResponse> response) {
+                progressBar.setVisibility(View.GONE);
                 Log.d(TAG, "onResponse: " + response.message());
                 if (response.isSuccessful()) {
                     ArrayList<ResourceType> resourceTypeList = response.body().getResourceTypeList();
@@ -88,6 +95,7 @@ public class ResourceTypeActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<ResourceTypeResponse> call, @NonNull Throwable t) {
+                progressBar.setVisibility(View.GONE);
                 Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
             }
         });

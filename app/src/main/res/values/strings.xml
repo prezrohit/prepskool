@@ -12,6 +12,10 @@
     <string name="settings">Settings</string>
     <string name="welcome_text">Welcome to your Online School</string>
     <string name="study_material">Study Materials</string>
+    
+    <string name="app_id">ca-app-pub-9962192841456948~7213251824</string>
+    <string name="native_ad_unit_id">ca-app-pub-9962192841456948/4311756314</string>
+    <string name="banner_ad_unit_id">ca-app-pub-9962192841456948/3109911745</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Quiz</item>

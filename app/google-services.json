@@ -1,47 +1,48 @@
 {
   "project_info": {
-    "project_number": "986870296665",
-    "firebase_url": "https://prepskoolacademy-bdf6b.firebaseio.com",
-    "project_id": "prepskoolacademy-bdf6b",
-    "storage_bucket": "prepskoolacademy-bdf6b.appspot.com"
+    "project_number": "1046622794449",
+    "firebase_url": "https://prepskoolacademy-67122.firebaseio.com",
+    "project_id": "prepskoolacademy-67122",
+    "storage_bucket": "prepskoolacademy-67122.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:986870296665:android:7ecf9d4bf618faa3",
+        "mobilesdk_app_id": "1:1046622794449:android:71491e97ac50eb3ecdcbf0",
         "android_client_info": {
           "package_name": "in.prepskool.prepskoolacademy"
         }
       },
       "oauth_client": [
         {
-          "client_id": "986870296665-58nbrd95050hvgoo84fpkmsuf2cdin7d.apps.googleusercontent.com",
+          "client_id": "1046622794449-d9e1vjbsne3j32m3qqpq497mnm1u2nh6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "in.prepskool.prepskoolacademy",
-            "certificate_hash": "8f17ed39b62097b278eed196afb8fd4148df36f2"
+            "certificate_hash": "9d94226d7469f0970d7291cf9a49d42c120a330d"
           }
         },
         {
-          "client_id": "986870296665-scvmf7hf2svk0v9eh0knrltt32pmch43.apps.googleusercontent.com",
+          "client_id": "1046622794449-5isr6h1uisuoajmnjpnkrnmprga4c7mt.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBHomWMUOPSqpjq-Df3CoalPEeN8P3hT2U"
+          "current_key": "AIzaSyDMtGgIYbdY7hL3gAZ4gP-_3k0FszL4WIg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "986870296665-scvmf7hf2svk0v9eh0knrltt32pmch43.apps.googleusercontent.com",
+              "client_id": "1046622794449-5isr6h1uisuoajmnjpnkrnmprga4c7mt.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-9962192841456948~7213251824"
     }
   ],
   "configuration_version": "1"

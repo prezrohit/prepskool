@@ -8,14 +8,14 @@ public class ResourceResponse {
     @SerializedName("status")
     private String status;
 
-    @SerializedName("resources")
-    private ArrayList<Resource> resourceList;
+    @SerializedName("resources_list")
+    private ArrayList<ResourceList> resourceList;
 
     public String getStatus() {
         return status;
     }
 
-    public ArrayList<Resource> getResourceList() {
+    public ArrayList<ResourceList> getResourceList() {
         return resourceList;
     }
 }
