@@ -8,12 +8,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ import in.prepskool.prepskoolacademy.adapter.StandardAdapter;
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
 import in.prepskool.prepskoolacademy.retrofit_model.Standard;
 import in.prepskool.prepskoolacademy.retrofit_model.StandardResponse;
+import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,6 +42,7 @@ public class StandardActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
 
+    private RecyclerView rvStandard;
     private static final String TAG = "StandardActivity";
 
     @Override
@@ -46,16 +51,21 @@ public class StandardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_standard);
 
         MobileAds.initialize(this, getString(R.string.app_id));
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("658CE1DF8EB039135583BF17C48E41D8").build();
+
+        final InterstitialAd mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_ad));
+        mInterstitialAd.loadAd(adRequest);
 
         ((PrepskoolApplication) getApplication()).getStandardComponent().inject(this);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
 
+        rvStandard = findViewById(R.id.rv_standard);
         progressBar = findViewById(R.id.progress_bar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_standard);
 
         AdView mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("658CE1DF8EB039135583BF17C48E41D8").build();
         mAdView.loadAd(adRequest);
 
         //HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.breadCrumbStandard);
@@ -74,6 +84,24 @@ public class StandardActivity extends AppCompatActivity {
         });
 
         getStandard(apiInterface);
+
+        rvStandard.addOnItemTouchListener(new RecyclerTouchListener(this, rvStandard, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                if (mInterstitialAd.isLoaded()) {
+                    Log.d(TAG, "onClick: loadedddd");
+                    Toast.makeText(StandardActivity.this, "yooooo", Toast.LENGTH_SHORT).show();
+                    mInterstitialAd.show();
+                } else {
+                    Log.d(TAG, "The interstitial wasn't loaded yet.");
+                }
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Toast.makeText(StandardActivity.this, "long", Toast.LENGTH_SHORT).show();
+            }
+        }));
     }
 
     private void getStandard(ApiInterface apiInterface) {
@@ -88,7 +116,6 @@ public class StandardActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     ArrayList<Standard> standardsList = response.body().getStandardsList();
                     StandardAdapter standardAdapter = new StandardAdapter(StandardActivity.this, standardsList);
-                    RecyclerView rvStandard = findViewById(R.id.rv_standard);
                     rvStandard.setLayoutManager(new GridLayoutManager(StandardActivity.this, 3));
                     rvStandard.setAdapter(standardAdapter);
                 }

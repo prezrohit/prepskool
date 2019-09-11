@@ -16,6 +16,7 @@
     <string name="app_id">ca-app-pub-9962192841456948~7213251824</string>
     <string name="native_ad_unit_id">ca-app-pub-9962192841456948/4311756314</string>
     <string name="banner_ad_unit_id">ca-app-pub-9962192841456948/3109911745</string>
+    <string name="interstitial_ad_unit_ad">ca-app-pub-9962192841456948/3620600523</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Quiz</item>
