@@ -1,6 +1,5 @@
 package in.prepskool.prepskoolacademy.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -29,12 +28,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class ArtFragment extends Fragment {
-    @Inject
-    Retrofit retrofit;
 
-    private ProgressBar progressBar;
-    private RecyclerView rvArts;
-    private TextView lblNoData;
+    private ArrayList<Subject> subjectList;
 
     private static final String TAG = "ArtFragment";
 
@@ -43,45 +38,24 @@ public class ArtFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_arts, container, false);
 
-        progressBar = (ProgressBar)  view.findViewById(R.id.progress_bar);
-        rvArts = (RecyclerView) view.findViewById(R.id.rv_arts);
-        lblNoData = (TextView) view.findViewById(R.id.tv_no_data_arts);
+        if (getArguments() != null) {
+            subjectList = (ArrayList<Subject>) getArguments().getSerializable("list");
+        }
+
+        RecyclerView rvArts = (RecyclerView) view.findViewById(R.id.rv_arts);
+        TextView lblNoData = (TextView) view.findViewById(R.id.tv_no_data_arts);
         lblNoData.setVisibility(View.GONE);
 
-        ((PrepskoolApplication) getActivity().getApplication()).getSubjectComponent().inject(this);
-        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        getArtsSubjects(view, apiInterface);
+        if (subjectList == null || subjectList.isEmpty()) {
+            lblNoData.setVisibility(View.VISIBLE);
+            rvArts.setVisibility(View.GONE);
+        }
+
+        rvArts.setLayoutManager(new LinearLayoutManager(getActivity()));
+        SubjectAdapter subjectAdapter = new SubjectAdapter(getActivity(), subjectList);
+        rvArts.setAdapter(subjectAdapter);
 
         return view;
-    }
-
-    private void getArtsSubjects(final View view, ApiInterface apiInterface) {
-        progressBar.setVisibility(View.VISIBLE);
-        Call<SubjectResponse> call = apiInterface.getSubjects();
-        call.enqueue(new Callback<SubjectResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<SubjectResponse> call, @NonNull Response<SubjectResponse> response) {
-
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "onResponse: " + response.message());
-                if (response.isSuccessful()) {
-                    ArrayList<Subject> subjectsList = response.body().getSubjectList();
-                    rvArts.setLayoutManager(new LinearLayoutManager(getContext()));
-                    SubjectAdapter subjectAdapter = new SubjectAdapter(getContext(), subjectsList);
-                    rvArts.setAdapter(subjectAdapter);
-
-                } else {
-                    rvArts.setVisibility(View.GONE);
-                    lblNoData.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<SubjectResponse> call, @NonNull Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
-            }
-        });
     }
 }
 

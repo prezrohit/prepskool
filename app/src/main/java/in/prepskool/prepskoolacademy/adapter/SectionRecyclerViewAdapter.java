@@ -9,11 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.ads.formats.MediaView;
 import com.google.android.gms.ads.formats.NativeAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAdView;
@@ -21,7 +18,6 @@ import com.google.android.gms.ads.formats.UnifiedNativeAdView;
 import java.util.ArrayList;
 
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.retrofit_model.Resource;
 import in.prepskool.prepskoolacademy.retrofit_model.SectionedResource;
 
 public class SectionRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -117,7 +113,7 @@ public class SectionRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         UnifiedNativeAdViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            adView = (UnifiedNativeAdView) itemView.findViewById(R.id.ad_view);
+            adView = (UnifiedNativeAdView) itemView.findViewById(R.id.ad_native_resource);
 
             // The MediaView will display a video asset if one is present in the ad, and the
             // first image asset otherwise.

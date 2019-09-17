@@ -39,7 +39,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         Subject subject = subjectArrayList.get(position);
-        holder.lblSubjectName.setText(subject.getDisplayName());
+        holder.lblSubjectName.setText(subject.getName());
     }
 
     @Override

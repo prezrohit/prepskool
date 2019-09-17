@@ -1,40 +1,24 @@
 package in.prepskool.prepskoolacademy.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
-import in.prepskool.prepskoolacademy.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.adapter.SubjectAdapter;
-import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
 import in.prepskool.prepskoolacademy.retrofit_model.Subject;
-import in.prepskool.prepskoolacademy.retrofit_model.SubjectResponse;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class CommerceFragment extends Fragment {
-    @Inject
-    Retrofit retrofit;
 
-    private ProgressBar progressBar;
-    private RecyclerView rvCommerce;
-    private TextView lblNoData;
+    private ArrayList<Subject> subjectList;
 
     private static final String TAG = "CommerceFragment";
 
@@ -43,45 +27,24 @@ public class CommerceFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_commerce, container, false);
 
-        progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
-        lblNoData = (TextView) view.findViewById(R.id.tv_no_data_commerce);
-        rvCommerce = view.findViewById(R.id.rv_commerce);
+        if (getArguments() != null) {
+            subjectList = (ArrayList<Subject>) getArguments().getSerializable("list");
+        }
+
+        RecyclerView rvCommerce = view.findViewById(R.id.rv_commerce);
+        TextView lblNoData = (TextView) view.findViewById(R.id.tv_no_data_commerce);
         lblNoData.setVisibility(View.GONE);
 
-        ((PrepskoolApplication) getActivity().getApplication()).getSubjectComponent().inject(this);
-        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        getCommerceSubjects(apiInterface);
+        if (subjectList == null || subjectList.isEmpty()) {
+            lblNoData.setVisibility(View.VISIBLE);
+            rvCommerce.setVisibility(View.GONE);
+        }
+
+        rvCommerce.setLayoutManager(new LinearLayoutManager(getActivity()));
+        SubjectAdapter subjectAdapter = new SubjectAdapter(getActivity(), subjectList);
+        rvCommerce.setAdapter(subjectAdapter);
 
         return view;
-    }
-
-    private void getCommerceSubjects(ApiInterface apiInterface) {
-        progressBar.setVisibility(View.VISIBLE);
-        Call<SubjectResponse> call = apiInterface.getSubjects();
-        call.enqueue(new Callback<SubjectResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<SubjectResponse> call, @NonNull Response<SubjectResponse> response) {
-
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "onResponse: " + response.message());
-                if (response.isSuccessful()) {
-                    ArrayList<Subject> subjectsList = response.body().getSubjectList();
-                    rvCommerce.setLayoutManager(new LinearLayoutManager(getContext()));
-                    SubjectAdapter subjectAdapter = new SubjectAdapter(getContext(), subjectsList);
-                    rvCommerce.setAdapter(subjectAdapter);
-
-                } else {
-                    rvCommerce.setVisibility(View.GONE);
-                    lblNoData.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<SubjectResponse> call, @NonNull Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
-            }
-        });
     }
 }
 

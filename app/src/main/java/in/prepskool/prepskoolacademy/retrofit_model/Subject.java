@@ -2,7 +2,9 @@ package in.prepskool.prepskoolacademy.retrofit_model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Subject {
+import java.io.Serializable;
+
+public class Subject implements Serializable {
 
     @SerializedName("id")
     private int id;

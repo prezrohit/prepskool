@@ -14,6 +14,9 @@ import in.prepskool.prepskoolacademy.retrofit.ApiClient;
 @Singleton
 @Component(modules = {ApiClient.class})
 public interface SubjectComponent {
+
+    /// Remove Fragment inject methods
+
     void inject(ArtFragment artFragment);
 
     void inject(ScienceFragment scienceFragment);

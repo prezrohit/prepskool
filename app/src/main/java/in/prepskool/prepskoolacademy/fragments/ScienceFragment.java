@@ -29,12 +29,7 @@ import retrofit2.Retrofit;
 
 public class ScienceFragment extends Fragment {
 
-    @Inject
-    Retrofit retrofit;
-
-    private ProgressBar progressBar;
-    private RecyclerView rvScience;
-    private TextView lblNoData;
+    private ArrayList<Subject> subjectList;
 
     private static final String TAG = "ScienceFragment";
 
@@ -43,97 +38,23 @@ public class ScienceFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_science, container, false);
 
-        progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
-        lblNoData = (TextView) view.findViewById(R.id.tv_no_data_science);
-        rvScience = view.findViewById(R.id.rv_science);
+        if (getArguments() != null) {
+            subjectList = (ArrayList<Subject>) getArguments().getSerializable("list");
+        }
+
+        RecyclerView rvScience = view.findViewById(R.id.rv_science);
+        TextView lblNoData = (TextView) view.findViewById(R.id.tv_no_data_science);
         lblNoData.setVisibility(View.GONE);
 
-        ((PrepskoolApplication) getActivity().getApplication()).getSubjectComponent().inject(this);
-        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        getScienceSubjects(apiInterface);
+        if (subjectList == null || subjectList.isEmpty()) {
+            lblNoData.setVisibility(View.VISIBLE);
+            rvScience.setVisibility(View.GONE);
+        }
+
+        rvScience.setLayoutManager(new LinearLayoutManager(getActivity()));
+        SubjectAdapter subjectAdapter = new SubjectAdapter(getActivity(), subjectList);
+        rvScience.setAdapter(subjectAdapter);
 
         return view;
     }
-
-    private void getScienceSubjects(ApiInterface apiInterface) {
-        progressBar.setVisibility(View.VISIBLE);
-        Call<SubjectResponse> call = apiInterface.getSubjects();
-        call.enqueue(new Callback<SubjectResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<SubjectResponse> call, @NonNull Response<SubjectResponse> response) {
-                progressBar.setVisibility(View.GONE);
-
-                Log.d(TAG, "onResponse: " + response.message());
-                if (response.isSuccessful()) {
-                    ArrayList<Subject> subjectsList = response.body().getSubjectList();
-                    rvScience.setLayoutManager(new LinearLayoutManager(getContext()));
-                    SubjectAdapter subjectAdapter = new SubjectAdapter(getContext(), subjectsList);
-                    rvScience.setAdapter(subjectAdapter);
-
-                } else {
-                    rvScience.setVisibility(View.GONE);
-                    lblNoData.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<SubjectResponse> call, @NonNull Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
-            }
-        });
-    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-/*rvScience.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rvScience,
-                new RecyclerTouchListener.ClickListener() {
-
-                    @Override
-                    public void onClick(View view, int position) {
-
-                        SUBJECT = arrayList.get(position).getName();
-
-                        Intent intent = new Intent(getActivity(), ResourceActivity.class);
-                        intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
-                        intent.putExtra("SUBJECT", SUBJECT);
-                        intent.putExtra("STANDARD", IntentData.STANDARD);
-                        intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
-
-                        if (IntentData.CATEGORY_HOME.equals("SCHOOL BOARDS")) {
-
-                            if (sourceId == 1) {
-                                intent.putExtra("TYPE", TYPE);
-                                intent.putExtra("source", 1);
-                            }
-
-                            else {
-                                intent = new Intent(getActivity(), ResourceTypeActivity.class);
-                                intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
-                                intent.putExtra("SUBJECT", SUBJECT);
-                                intent.putExtra("STANDARD", IntentData.STANDARD);
-                                intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
-
-                            }
-
-                        } else if (IntentData.CATEGORY_HOME.equals("CBSE PRACTICE PAPERS"))
-                            intent.putExtra("BOARD", BOARD);
-
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onLongClick(View view, int position) {
-
-                    }
-                }));*/

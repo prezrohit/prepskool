@@ -39,16 +39,16 @@
             android:padding="5dp" />
 
         <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
+            android:id="@+id/ad_banner_standard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             ads:adSize="BANNER"
-            ads:adUnitId="@string/banner_ad_unit_id"/>
+            ads:adUnitId="@string/banner_ad_unit_id" />
 
         <org.sufficientlysecure.htmltextview.HtmlTextView
-            android:id="@+id/breadCrumbStandard"
+            android:id="@+id/bread_crumb_standard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

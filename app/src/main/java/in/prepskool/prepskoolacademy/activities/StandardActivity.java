@@ -62,7 +62,7 @@ public class StandardActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_standard);
 
-        AdView mAdView = findViewById(R.id.adView);
+        AdView mAdView = findViewById(R.id.ad_banner_standard);
         mAdView.loadAd(adRequest);
 
         //HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.breadCrumbStandard);
@@ -87,7 +87,7 @@ public class StandardActivity extends AppCompatActivity {
             public void onClick(View view, int position) {
                 if (mInterstitialAd.isLoaded()) {
                     Log.d(TAG, "onClick: loadedddd");
-                    Toast.makeText(StandardActivity.this, "yooooo", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StandardActivity.this, "interstitial loaded", Toast.LENGTH_SHORT).show();
                     mInterstitialAd.show();
                 } else {
                     Log.d(TAG, "The interstitial wasn't loaded yet.");
