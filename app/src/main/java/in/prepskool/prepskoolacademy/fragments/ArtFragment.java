@@ -1,5 +1,6 @@
 package in.prepskool.prepskoolacademy.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -18,18 +19,20 @@ import javax.inject.Inject;
 
 import in.prepskool.prepskoolacademy.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.R;
+import in.prepskool.prepskoolacademy.activities.NonBoardActivity;
+import in.prepskool.prepskoolacademy.activities.ResourceActivity;
+import in.prepskool.prepskoolacademy.activities.ResourceTypeActivity;
 import in.prepskool.prepskoolacademy.adapter.SubjectAdapter;
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
 import in.prepskool.prepskoolacademy.retrofit_model.Subject;
 import in.prepskool.prepskoolacademy.retrofit_model.SubjectResponse;
+import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class ArtFragment extends Fragment {
-
-    private ArrayList<Subject> subjectList;
 
     private static final String TAG = "ArtFragment";
 
@@ -38,9 +41,11 @@ public class ArtFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_arts, container, false);
 
-        if (getArguments() != null) {
-            subjectList = (ArrayList<Subject>) getArguments().getSerializable("list");
-        }
+        final ArrayList<Subject> subjectList = (ArrayList<Subject>) getArguments().getSerializable("list");
+        final int boardId = getArguments().getInt("board_id", -1);
+        final int standardId = getArguments().getInt("standard_id", -1);
+        final String sectionName = getArguments().getString("section_name");
+        final String standardName = getArguments().getString("standard_name");
 
         RecyclerView rvArts = (RecyclerView) view.findViewById(R.id.rv_arts);
         TextView lblNoData = (TextView) view.findViewById(R.id.tv_no_data_arts);
@@ -49,11 +54,39 @@ public class ArtFragment extends Fragment {
         if (subjectList == null || subjectList.isEmpty()) {
             lblNoData.setVisibility(View.VISIBLE);
             rvArts.setVisibility(View.GONE);
-        }
 
-        rvArts.setLayoutManager(new LinearLayoutManager(getActivity()));
-        SubjectAdapter subjectAdapter = new SubjectAdapter(getActivity(), subjectList);
-        rvArts.setAdapter(subjectAdapter);
+        } else {
+
+            rvArts.setLayoutManager(new LinearLayoutManager(getActivity()));
+            SubjectAdapter subjectAdapter = new SubjectAdapter(getActivity(), subjectList);
+            rvArts.setAdapter(subjectAdapter);
+
+            rvArts.addOnItemTouchListener(new RecyclerTouchListener(getContext(), rvArts, new RecyclerTouchListener.ClickListener() {
+                @Override
+                public void onClick(View view, int position) {
+                    int subjectId = subjectList.get(position).getId();
+                    Intent intent;
+                    if (boardId == 2) {           // for board Category
+                        intent = new Intent(getActivity(), ResourceTypeActivity.class);
+
+                    } else {
+                        intent = new Intent(getActivity(), ResourceActivity.class);
+                    }
+                    intent.putExtra("section_name", sectionName);
+                    intent.putExtra("standard_name", standardName);
+                    intent.putExtra("subject_name", subjectList.get(position).getName());
+                    intent.putExtra("board_id", boardId);
+                    intent.putExtra("standard_id", standardId);
+                    intent.putExtra("subject_id", subjectId);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onLongClick(View view, int position) {
+
+                }
+            }));
+        }
 
         return view;
     }

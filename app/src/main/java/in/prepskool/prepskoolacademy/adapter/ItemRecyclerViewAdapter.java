@@ -16,6 +16,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import in.prepskool.prepskoolacademy.R;
+import in.prepskool.prepskoolacademy.activities.DownloadActivity;
+import in.prepskool.prepskoolacademy.activities.PdfLoaderActivity;
 import in.prepskool.prepskoolacademy.retrofit_model.Resource;
 
 public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ItemViewHolder> {
@@ -37,21 +39,30 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
+        final Resource resource = arrayList.get(position);
 
-        holder.lblResourceName.setText(arrayList.get(position).getName());
+        holder.lblResourceName.setText(resource.getName());
 
         holder.btnViewResource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "view", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, PdfLoaderActivity.class);
+                intent.putExtra("name", resource.getName());
+                intent.putExtra("link", resource.getUrl());
+                intent.putExtra("slug", resource.getSlug());
+                context.startActivity(intent);
             }
         });
 
         holder.btnDownloadResource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "download", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, DownloadActivity.class);
+                intent.putExtra("name", resource.getName());
+                intent.putExtra("link", resource.getUrl());
+                intent.putExtra("slug", resource.getSlug());
+                context.startActivity(intent);
             }
         });
     }

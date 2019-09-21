@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.activities.ResourceTypeActivity;
+import in.prepskool.prepskoolacademy.retrofit_model.ResourceType;
 import in.prepskool.prepskoolacademy.retrofit_model.Subject;
 
 public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHolder> {
@@ -55,13 +56,6 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
 
             super(itemView);
             lblSubjectName = (TextView) itemView.findViewById(R.id.lbl_subject_name);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    context.startActivity(new Intent(context, ResourceTypeActivity.class));
-                }
-            });
         }
     }
 }

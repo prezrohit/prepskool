@@ -8,26 +8,39 @@ import in.prepskool.prepskoolacademy.retrofit_model.StreamResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.SubjectResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface ApiInterface {
+
 
     @GET("standards")
     Call<StandardResponse> getStandards();
 
+
     @GET("resources")
-    Call<ResourceResponse> getResources();
+    Call<ResourceResponse> getBoardResources(@Query("board_id") int categoryId, @Query("standard_id") int standardId,
+                                        @Query("subject_id") int subjectId, @Query("resource_type_id") int resourceTypeId);
+
+
+    @GET("resources")
+    Call<ResourceResponse> getOtherResources(@Query("standard_id") int standardId, @Query("subject_id") int subjectId);
+
 
     @GET("subjects")
-    Call<SubjectResponse> getSubjects();
+    Call<SubjectResponse> getSubjects(@Query("standard_id") int standardId);
+
 
     @GET("home")
     Call<HomeResponse> getHomeResponse();
 
+
     @GET("streams")
-    Call<StreamResponse> getStreams();
+    Call<StreamResponse> getStreams(@Query("standard_id") int standardId);
+
 
     @GET("resourceTypes")
-    Call<ResourceTypeResponse> getResourceTypes();
+    Call<ResourceTypeResponse> getResourceTypes(@Query("standard_id") int standardId, @Query("subject_id") int subjectId);
+
 
     @GET("boards")
     Call getBoards();

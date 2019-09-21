@@ -51,12 +51,6 @@ public class ResourceTypeAdapter extends RecyclerView.Adapter<ResourceTypeAdapte
             super(itemView);
 
             lblResourceType = itemView.findViewById(R.id.lbl_resource_type);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    context.startActivity(new Intent(context, ResourceActivity.class));
-                }
-            });
         }
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,22 +19,12 @@ import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
 import in.prepskool.prepskoolacademy.activities.StandardActivity;
 
-public class HomeSectionRecyclerViewAdapter
-        extends RecyclerView.Adapter<HomeSectionRecyclerViewAdapter.HomeSectionViewHolder> {
-
-    static class HomeSectionViewHolder extends RecyclerView.ViewHolder {
-        private TextView sectionLabel;
-        private RecyclerView itemRecyclerView;
-
-        HomeSectionViewHolder(View itemView) {
-            super(itemView);
-            sectionLabel = (TextView) itemView.findViewById(R.id.home_section_label);
-            itemRecyclerView = (RecyclerView) itemView.findViewById(R.id.home_item_recycler_view);
-        }
-    }
+public class HomeSectionRecyclerViewAdapter extends RecyclerView.Adapter<HomeSectionRecyclerViewAdapter.HomeSectionViewHolder> {
 
     private Context context;
     private ArrayList<SectionedHome> sectionHomeArrayList;
+
+    private static final String TAG = "HomeSectionRecyclerView";
 
     public HomeSectionRecyclerViewAdapter(Context context, ArrayList<SectionedHome> sectionHomeArrayList) {
         this.context = context;
@@ -43,8 +34,7 @@ public class HomeSectionRecyclerViewAdapter
     @NonNull
     @Override
     public HomeSectionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_home_section,
-                parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_home_section, parent, false);
         return new HomeSectionViewHolder(view);
     }
 
@@ -58,77 +48,43 @@ public class HomeSectionRecyclerViewAdapter
         holder.itemRecyclerView.setNestedScrollingEnabled(false);
         holder.itemRecyclerView.setLayoutManager(new GridLayoutManager(context, 3));
 
-        HomeItemRecyclerViewAdapter adapter = new HomeItemRecyclerViewAdapter(context,
-                sectionHome.getHomeDataList());
+        HomeItemRecyclerViewAdapter adapter = new HomeItemRecyclerViewAdapter(context, sectionHome.getHomeDataList());
         holder.itemRecyclerView.setAdapter(adapter);
 
-        holder.itemRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(context, holder.itemRecyclerView,
-                new RecyclerTouchListener.ClickListener() {
+        final int sectionPosition = position;
+        final int sectionId = sectionHome.getSectionLabel().equals("Boards") ? 2 : -1;
+
+        holder.itemRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(context, holder.itemRecyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                context.startActivity(new Intent(context, StandardActivity.class));
+                Log.d(TAG, "boardId: " + sectionId);
+                Intent intent = new Intent(context, StandardActivity.class);
+                intent.putExtra("board_id", sectionId);
+                intent.putExtra("section_name", sectionHomeArrayList.get(sectionPosition).getHomeDataList().get(position).getName());
+                context.startActivity(intent);
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                Toast.makeText(context, sectionHome.getHomeDataList().get(position).getName(), Toast.LENGTH_SHORT).show();
+
             }
         }));
-
-        /*holder.itemRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(context,
-                holder.itemRecyclerView, new RecyclerTouchListener.ClickListener() {
-
-            @Override
-            public void onClick(View view, int position) {
-
-                IntentData.CATEGORY_HOME = sectionHome.getSectionLabel();
-                IntentData.SUBCATEGORY_HOME = sectionHome.getItemArrayList().get(position).getLabel();
-                IntentData.SUBCATEGORY_HOME = IntentData.SUBCATEGORY_HOME.replace("NCERT ", "");
-
-                switch (IntentData.CATEGORY_HOME) {
-
-                    case "SCHOOL BOARDS": {
-
-                        Intent intent = new Intent(context, StandardActivity.class);
-                        intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
-                        intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME + " BOARD");
-                        intent.putExtra("type", "0");
-                        context.startActivity(intent);
-                        break;
-                    }
-                    case "NCERT": {
-
-                        Intent intent = new Intent(context, StandardActivity.class);
-                        intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
-                        intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
-                        intent.putExtra("type", "0");
-                        context.startActivity(intent);
-                        break;
-                    }
-
-                    case "CBSE PRACTICE PAPERS": {
-
-                        Intent intent = new Intent(context, StandardActivity.class);
-                        intent.putExtra("CATEGORY_HOME", IntentData.CATEGORY_HOME);
-                        intent.putExtra("SUBCATEGORY_HOME", IntentData.SUBCATEGORY_HOME);
-                        intent.putExtra("BOARD", "cbse board");
-                        intent.putExtra("type", "1");
-                        context.startActivity(intent);
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));*/
     }
 
     @Override
     public int getItemCount() {
         return sectionHomeArrayList.size();
+    }
+
+    static class HomeSectionViewHolder extends RecyclerView.ViewHolder {
+        private TextView sectionLabel;
+        private RecyclerView itemRecyclerView;
+
+        HomeSectionViewHolder(View itemView) {
+            super(itemView);
+            sectionLabel = (TextView) itemView.findViewById(R.id.home_section_label);
+            itemRecyclerView = (RecyclerView) itemView.findViewById(R.id.home_item_recycler_view);
+        }
     }
 }
 

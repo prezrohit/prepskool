@@ -37,14 +37,7 @@ public class StandardAdapter extends RecyclerView.Adapter<StandardAdapter.Standa
     @Override
     public void onBindViewHolder(@NonNull StandardViewHolder standardViewHolder, int i) {
         Standard standard = standardList.get(i);
-        standardViewHolder.lblStandard.setText(standard.getName());
-
-        standardViewHolder.lblStandard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(context, StreamActivity.class));
-            }
-        });
+        standardViewHolder.lblStandard.setText(standard.getDisplayName());
     }
 
     @Override

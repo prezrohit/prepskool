@@ -1,5 +1,6 @@
 package in.prepskool.prepskoolacademy.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +12,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
+import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
+import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.ArrayList;
 
@@ -26,6 +25,7 @@ import in.prepskool.prepskoolacademy.adapter.ResourceTypeAdapter;
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
 import in.prepskool.prepskoolacademy.retrofit_model.ResourceType;
 import in.prepskool.prepskoolacademy.retrofit_model.ResourceTypeResponse;
+import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,13 +38,21 @@ public class ResourceTypeActivity extends AppCompatActivity {
     private TextView lblNoData;
     private RecyclerView rvResourceType;
     private ProgressBar progressBar;
+    private ArrayList<ResourceType> resourceTypeList;
 
     private static final String TAG = "ResourceTypeActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_type);
+        setContentView(R.layout.activity_resource_type);
+
+        final String sectionName = getIntent().getStringExtra("section_name");
+        final String standardName = getIntent().getStringExtra("standard_name");
+        final String subjectName = getIntent().getStringExtra("subject_name");
+        final int boardId = getIntent().getIntExtra("board_id", -1);
+        final int standardId = getIntent().getIntExtra("standard_id", -1);
+        final int subjectId = getIntent().getIntExtra("subject_id", -1);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,6 +66,11 @@ public class ResourceTypeActivity extends AppCompatActivity {
             }
         });
 
+        HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.lbl_breadcrumb_resource_type);
+        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + sectionName
+                + "</font></small> >> <small><font color=\"#12c48b\">" + standardName + "</font></small> >> <small><font color='red'>"
+                + subjectName + "</font></small>", new HtmlResImageGetter(htmlTextView));
+
         rvResourceType = findViewById(R.id.rv_resource_type);
         lblNoData = findViewById(R.id.lbl_no_data_type);
         progressBar = findViewById(R.id.progress_bar);
@@ -65,25 +78,48 @@ public class ResourceTypeActivity extends AppCompatActivity {
 
         ((PrepskoolApplication) getApplication()).getResourceTypeComponent().inject(this);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        getResourceTypes(apiInterface);
+        getResourceTypes(apiInterface, standardId, subjectId);
 
-        /*HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.tvBreadCrumbType);
-        // loads html from string and displays cat_pic.png from the app's drawable folder
-        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + SUBCATEGORY_HOME.replace(" BOARD", "")
-                + "</font></small> >> <small><font color=\"#12c48b\">" + standards.get(STANDARD) + "</font></small> >> <small><font color='red'>"
-                + SUBJECT + "</font></small>", new HtmlResImageGetter(htmlTextView));*/
+        rvResourceType.addOnItemTouchListener(new RecyclerTouchListener(this, rvResourceType, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                int resourceTypeId = resourceTypeList.get(position).getId();
+
+                Intent intent = new Intent(ResourceTypeActivity.this, ResourceActivity.class);
+                intent.putExtra("section_name", sectionName);
+                intent.putExtra("standard_name", standardName);
+                intent.putExtra("subject_name", subjectName);
+                intent.putExtra("resource_type_name", resourceTypeList.get(position).getName());
+                intent.putExtra("board_id", boardId);
+                intent.putExtra("standard_id", standardId);
+                intent.putExtra("subject_id", subjectId);
+                intent.putExtra("resource_type_id", resourceTypeId);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
     }
 
-    private void getResourceTypes(ApiInterface apiInterface) {
+
+    /**
+     * @param apiInterface
+     * @param standardId
+     * @param subjectId
+     */
+    private void getResourceTypes(ApiInterface apiInterface, int standardId, int subjectId) {
         progressBar.setVisibility(View.VISIBLE);
-        Call<ResourceTypeResponse> call = apiInterface.getResourceTypes();
+        Call<ResourceTypeResponse> call = apiInterface.getResourceTypes(standardId, subjectId);
         call.enqueue(new Callback<ResourceTypeResponse>() {
             @Override
             public void onResponse(@NonNull Call<ResourceTypeResponse> call, @NonNull Response<ResourceTypeResponse> response) {
                 progressBar.setVisibility(View.GONE);
                 Log.d(TAG, "onResponse: " + response.message());
                 if (response.isSuccessful()) {
-                    ArrayList<ResourceType> resourceTypeList = response.body().getResourceTypeList();
+                    resourceTypeList = response.body().getResourceTypeList();
                     rvResourceType.setLayoutManager(new LinearLayoutManager(ResourceTypeActivity.this));
                     rvResourceType.setAdapter(new ResourceTypeAdapter(ResourceTypeActivity.this, resourceTypeList));
 

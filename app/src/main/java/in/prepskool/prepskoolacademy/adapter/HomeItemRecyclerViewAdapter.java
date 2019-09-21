@@ -1,6 +1,7 @@
 package in.prepskool.prepskoolacademy.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,10 +13,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import in.prepskool.prepskoolacademy.R;
+import in.prepskool.prepskoolacademy.activities.StandardActivity;
 import in.prepskool.prepskoolacademy.retrofit_model.Home;
 
-public class HomeItemRecyclerViewAdapter
-        extends RecyclerView.Adapter<HomeItemRecyclerViewAdapter.HomeItemViewHolder> {
+public class HomeItemRecyclerViewAdapter extends RecyclerView.Adapter<HomeItemRecyclerViewAdapter.HomeItemViewHolder> {
 
     class HomeItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -40,8 +41,7 @@ public class HomeItemRecyclerViewAdapter
     @NonNull
     @Override
     public HomeItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_home_item,
-                parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_home_item, parent, false);
         return new HomeItemViewHolder(view);
     }
 

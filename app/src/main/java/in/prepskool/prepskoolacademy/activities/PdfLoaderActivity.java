@@ -26,7 +26,6 @@ public class PdfLoaderActivity extends AppCompatActivity {
 
         String pdfSlug = getIntent().getStringExtra("slug");
         String pdfName = getIntent().getStringExtra("name");
-        String title = getIntent().getStringExtra("title");
 
         WebView webView = (WebView) findViewById(R.id.webView);
         Context context = PdfLoaderActivity.this;
@@ -63,7 +62,6 @@ public class PdfLoaderActivity extends AppCompatActivity {
             intent.putExtra("link", pdfLink);
             intent.putExtra("slug", pdfSlug);
             intent.putExtra("name", pdfName);
-            intent.putExtra("title", title);
             context.startActivity(intent);
             finish();
         }

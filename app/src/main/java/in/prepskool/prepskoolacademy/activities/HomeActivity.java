@@ -495,15 +495,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     ArrayList<SectionedHome> homeArrayList = new ArrayList<>();
 
                     SectionedHome sectionedHome = new SectionedHome();
-                    sectionedHome.generateListByNcert(ncert.getLabel(), ncert.getNcertDataList());
+                    sectionedHome.generateListByNcert(ncert.getId(), ncert.getLabel(), ncert.getNcertDataList());
                     homeArrayList.add(sectionedHome);
 
                     SectionedHome sectionedHome1 = new SectionedHome();
-                    sectionedHome1.generateListByPracticePaper(practicePaper.getLabel(), practicePaper.getPracticePaperDataList());
+                    sectionedHome1.generateListByPracticePaper(practicePaper.getId(), practicePaper.getLabel(), practicePaper.getPracticePaperDataList());
                     homeArrayList.add(sectionedHome1);
 
                     SectionedHome sectionedHome2 = new SectionedHome();
-                    sectionedHome2.generateListByBoard(board.getLabel(), board.getBoardDataList());
+                    sectionedHome2.generateListByBoard(board.getId(), board.getLabel(), board.getBoardDataList());
                     homeArrayList.add(sectionedHome2);
 
                     HomeSectionRecyclerViewAdapter homeSectionRecyclerViewAdapter = new HomeSectionRecyclerViewAdapter(HomeActivity.this,

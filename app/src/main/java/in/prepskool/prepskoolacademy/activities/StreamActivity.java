@@ -15,6 +15,9 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
+import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
+import org.sufficientlysecure.htmltextview.HtmlTextView;
+
 import java.io.Serializable;
 
 import javax.inject.Inject;
@@ -37,14 +40,25 @@ public class StreamActivity extends AppCompatActivity {
     @Inject
     Retrofit retrofit;
 
-    private ProgressBar progressBar;
+    private String sectionName;
+    private String standardName;
 
+    private ProgressBar progressBar;
     private static final String TAG = "StreamActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stream);
+
+        sectionName = getIntent().getStringExtra("section_name");
+        standardName = getIntent().getStringExtra("standard_name");
+        int boardId = getIntent().getIntExtra("board_id", -1);
+        int standardId = getIntent().getIntExtra("standard_id", -1);
+
+        HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.bread_crumb_stream);
+        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + sectionName + "</font></small> >> <small><font color=\"#12c48b\">"
+                + standardName +"</font></small>", new HtmlResImageGetter(htmlTextView));
 
         MobileAds.initialize(this, getString(R.string.app_id));
 
@@ -56,11 +70,7 @@ public class StreamActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.title_subject);
         setSupportActionBar(toolbar);
 
-        AdView mAdView = findViewById(R.id.ad_banner_stream);
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("658CE1DF8EB039135583BF17C48E41D8").build();
-        mAdView.loadAd(adRequest);
-
-        getStreamsAndSubjects(apiInterface);
+        getStreamsAndSubjects(apiInterface, boardId, standardId);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -73,8 +83,15 @@ public class StreamActivity extends AppCompatActivity {
         });
     }
 
-    private void getStreamsAndSubjects(ApiInterface apiInterface) {
-        Call<StreamResponse> call = apiInterface.getStreams();
+
+    /**
+     *
+     * @param apiInterface
+     * @param boardId
+     * @param standardId
+     */
+    private void getStreamsAndSubjects(ApiInterface apiInterface, final int boardId, final int standardId) {
+        Call<StreamResponse> call = apiInterface.getStreams(standardId);
         call.enqueue(new Callback<StreamResponse>() {
             @Override
             public void onResponse(@NonNull Call<StreamResponse> call, @NonNull Response<StreamResponse> response) {
@@ -89,12 +106,21 @@ public class StreamActivity extends AppCompatActivity {
                 TabLayout tabLayout = findViewById(R.id.tablayout);
 
                 ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-                viewPagerAdapter.addFragment(getScienceFragmentWithBundle((Serializable) scienceStream.getSubjectsList()), scienceStream.getName());
-                viewPagerAdapter.addFragment(getCommerceFragmentWithBundle((Serializable) commerceStream.getSubjectsList()), commerceStream.getName());
-                viewPagerAdapter.addFragment(getArtFragmentWithBundle((Serializable) artStream.getSubjectsList()), artStream.getName());
+                viewPagerAdapter.addFragment(getScienceFragmentWithBundle((Serializable) scienceStream.getSubjectsList(), boardId, standardId),
+                        scienceStream.getName());
+
+                viewPagerAdapter.addFragment(getCommerceFragmentWithBundle((Serializable) commerceStream.getSubjectsList(), boardId, standardId),
+                        commerceStream.getName());
+
+                viewPagerAdapter.addFragment(getArtFragmentWithBundle((Serializable) artStream.getSubjectsList(), boardId, standardId),
+                        artStream.getName());
 
                 viewPager.setAdapter(viewPagerAdapter);
                 tabLayout.setupWithViewPager(viewPager);
+
+                AdView mAdView = findViewById(R.id.ad_banner_stream);
+                AdRequest adRequest = new AdRequest.Builder().addTestDevice("658CE1DF8EB039135583BF17C48E41D8").build();
+                mAdView.loadAd(adRequest);
             }
 
             @Override
@@ -102,30 +128,64 @@ public class StreamActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
                 Toast.makeText(StreamActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+                AdView mAdView = findViewById(R.id.ad_banner_stream);
+                AdRequest adRequest = new AdRequest.Builder().addTestDevice("658CE1DF8EB039135583BF17C48E41D8").build();
+                mAdView.loadAd(adRequest);
             }
         });
     }
 
-    private ScienceFragment getScienceFragmentWithBundle(Serializable subjectList) {
+
+    /**
+     *
+     * @param subjectList
+     * @return
+     */
+    private ScienceFragment getScienceFragmentWithBundle(Serializable subjectList, int boardId, int standardId) {
         ScienceFragment scienceFragment = new ScienceFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("list", subjectList);
+        bundle.putString("section_name", sectionName);
+        bundle.putString("standard_name", standardName);
+        bundle.putInt("board_id", boardId);
+        bundle.putInt("standard_id", standardId);
         scienceFragment.setArguments(bundle);
         return scienceFragment;
     }
 
-    private CommerceFragment getCommerceFragmentWithBundle(Serializable subjectList) {
+
+    /**
+     *
+     * @param subjectList
+     * @return
+     */
+    private CommerceFragment getCommerceFragmentWithBundle(Serializable subjectList, int boardId, int standardId) {
         CommerceFragment commerceFragment = new CommerceFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("list", subjectList);
+        bundle.putString("section_name", sectionName);
+        bundle.putString("standard_name", standardName);
+        bundle.putInt("board_id", boardId);
+        bundle.putInt("standard_id", standardId);
         commerceFragment.setArguments(bundle);
         return commerceFragment;
     }
 
-    private ArtFragment getArtFragmentWithBundle(Serializable subjectList) {
+
+    /**
+     *
+     * @param subjectList
+     * @return
+     */
+    private ArtFragment getArtFragmentWithBundle(Serializable subjectList, int boardId, int standardId) {
         ArtFragment artFragment = new ArtFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("list", subjectList);
+        bundle.putString("section_name", sectionName);
+        bundle.putString("standard_name", standardName);
+        bundle.putInt("board_id", boardId);
+        bundle.putInt("standard_id", standardId);
         artFragment.setArguments(bundle);
         return artFragment;
     }

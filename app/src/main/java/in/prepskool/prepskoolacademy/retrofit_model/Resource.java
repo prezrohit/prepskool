@@ -5,6 +5,7 @@ public class Resource {
     private String name;
     private String slug;
     private String url;
+    private String description;
     private String boardId;
     private String subjectId;
     private String resourceId;
@@ -31,6 +32,10 @@ public class Resource {
 
     public String getSlug() {
         return slug;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public String getUrl() {

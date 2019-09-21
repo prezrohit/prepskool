@@ -51,11 +51,9 @@ public class DownloadActivity extends AppCompatActivity {
 
         pdfUrl = getIntent().getStringExtra("link");
         pdfSlug = getIntent().getStringExtra("slug");
-        String title = getIntent().getStringExtra("title");
         String pdfName = getIntent().getStringExtra("name");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(title);
         setSupportActionBar(toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

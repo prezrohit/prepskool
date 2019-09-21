@@ -11,17 +11,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.formats.NativeAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
-import com.google.android.gms.ads.reward.RewardedVideoAd;
+
+import org.sufficientlysecure.htmltextview.HtmlResImageGetter;
+import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -29,7 +30,6 @@ import in.prepskool.prepskoolacademy.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.adapter.SectionRecyclerViewAdapter;
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
-import in.prepskool.prepskoolacademy.retrofit_model.Resource;
 import in.prepskool.prepskoolacademy.retrofit_model.ResourceList;
 import in.prepskool.prepskoolacademy.retrofit_model.ResourceResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.SectionedResource;
@@ -41,6 +41,9 @@ import retrofit2.Retrofit;
 public class ResourceActivity extends AppCompatActivity {
     @Inject
     Retrofit retrofit;
+
+    private String resourceTypeName = "!";
+    private int resourceTypeId;
 
     private TextView lblNoData;
     private ProgressBar progressBar;
@@ -63,7 +66,31 @@ public class ResourceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pdf_list);
+        setContentView(R.layout.activity_resource);
+
+        final String sectionName = getIntent().getStringExtra("section_name");
+        final String standardName = getIntent().getStringExtra("standard_name");
+        final String subjectName = getIntent().getStringExtra("subject_name");
+        int boardId = getIntent().getIntExtra("board_id", -1);
+        int standardId = getIntent().getIntExtra("standard_id", -1);
+        int subjectId = getIntent().getIntExtra("subject_id", -1);
+
+        if (boardId == 2) {
+            resourceTypeId = getIntent().getIntExtra("resource_type_id", -1);
+            resourceTypeName = getIntent().getStringExtra("resource_type_name");
+        }
+
+        HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.lbl_breadcrumb_resource);
+        if (boardId == 2) {
+            htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + sectionName + "</font></small> >> <small><font color=\"#12c48b\">"
+                    + standardName + "</font></small> >> <small><font color='#ff6347'>" + subjectName
+                    + "</font></small> >> <small><font color='#ffca28'>" + resourceTypeName + "</font></small>",
+                    new HtmlResImageGetter(htmlTextView));
+        } else {
+            htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + sectionName + "</font></small> >> <small><font color=\"#12c48b\">"
+                    + standardName + "</font></small> >> <small><font color='#ffca28'>" + subjectName + "</font></small>",
+                    new HtmlResImageGetter(htmlTextView));
+        }
 
         MobileAds.initialize(this, getString(R.string.app_id));
 
@@ -88,44 +115,81 @@ public class ResourceActivity extends AppCompatActivity {
 
         ((PrepskoolApplication) getApplication()).getResourceComponent().inject(this);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        getResources(apiInterface);
+        getResources(apiInterface, boardId, standardId, subjectId);
     }
 
     private void setUpRecyclerView() {
         sectionedResourceList = new ArrayList<>();
+        sectionRecyclerViewAdapter = new SectionRecyclerViewAdapter(ResourceActivity.this, sectionedResourceList);
         rvSectionedResource = (RecyclerView) findViewById(R.id.rv_sectioned_resource);
         rvSectionedResource.setHasFixedSize(true);
         rvSectionedResource.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void getResources(ApiInterface apiInterface) {
+    private void getResources(ApiInterface apiInterface, int boardId, int standardId, int subjectId) {
         progressBar.setVisibility(View.VISIBLE);
-        Call<ResourceResponse> call = apiInterface.getResources();
-        call.enqueue(new Callback<ResourceResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<ResourceResponse> call, @NonNull Response<ResourceResponse> response) {
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "onResponse: " + response.message());
-                if (response.isSuccessful()) {
-                    ArrayList<ResourceList> responseList = response.body().getResourceList();
-                    for (ResourceList resourceList : responseList) {
-                        sectionedResourceList.add(new SectionedResource(resourceList.getYear(), resourceList.getResourceList()));
+        Call<ResourceResponse> call;
+        if (boardId == 2) {
+
+            Log.d(TAG, "resourceTypeID: " + resourceTypeId);
+            Log.d(TAG, "boardId: " + boardId);
+            call = apiInterface.getBoardResources(boardId, standardId, subjectId, resourceTypeId);
+            call.enqueue(new Callback<ResourceResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<ResourceResponse> call, @NonNull Response<ResourceResponse> response) {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d(TAG, "onResponse: " + response.message());
+                    if (response.isSuccessful()) {
+                        ArrayList<ResourceList> responseList = response.body().getResourceList();
+                        for (ResourceList resourceList : responseList) {
+                            sectionedResourceList.add(new SectionedResource(resourceList.getYear(), resourceList.getResourceList()));
+                        }
+                        sectionRecyclerViewAdapter = new SectionRecyclerViewAdapter(ResourceActivity.this, sectionedResourceList);
+                        rvSectionedResource.setAdapter(sectionRecyclerViewAdapter);
+
+                    } else {
+                        lblNoData.setVisibility(View.VISIBLE);
+                        rvSectionedResource.setVisibility(View.GONE);
                     }
-                    sectionRecyclerViewAdapter = new SectionRecyclerViewAdapter(ResourceActivity.this, sectionedResourceList);
-                    rvSectionedResource.setAdapter(sectionRecyclerViewAdapter);
-
-                } else {
-                    lblNoData.setVisibility(View.VISIBLE);
-                    rvSectionedResource.setVisibility(View.GONE);
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<ResourceResponse> call, @NonNull Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
-            }
-        });
+                @Override
+                public void onFailure(@NonNull Call<ResourceResponse> call, @NonNull Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
+                    Toast.makeText(ResourceActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        } else {
+            call = apiInterface.getOtherResources(standardId, subjectId);
+            call.enqueue(new Callback<ResourceResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<ResourceResponse> call, @NonNull Response<ResourceResponse> response) {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d(TAG, "onResponse: " + response.message());
+                    if (response.isSuccessful()) {
+                        ArrayList<ResourceList> responseList = response.body().getResourceList();
+                        for (ResourceList resourceList : responseList) {
+                            sectionedResourceList.add(new SectionedResource(resourceList.getYear(), resourceList.getResourceList()));
+                        }
+                        sectionRecyclerViewAdapter = new SectionRecyclerViewAdapter(ResourceActivity.this, sectionedResourceList);
+                        rvSectionedResource.setAdapter(sectionRecyclerViewAdapter);
+
+                    } else {
+                        lblNoData.setVisibility(View.VISIBLE);
+                        rvSectionedResource.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResourceResponse> call, @NonNull Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
+                    Toast.makeText(ResourceActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     @Override
@@ -151,6 +215,7 @@ public class ResourceActivity extends AppCompatActivity {
                 if (!adLoader.isLoading()) {
                     insertAdsInMenuItems();
                 }
+
             }
         }).withAdListener(new AdListener() {
             @Override
