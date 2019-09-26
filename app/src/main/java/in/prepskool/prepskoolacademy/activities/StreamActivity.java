@@ -97,26 +97,30 @@ public class StreamActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<StreamResponse> call, @NonNull Response<StreamResponse> response) {
                 progressBar.setVisibility(View.GONE);
                 Log.d(TAG, "onResponse: " + response.isSuccessful());
+                if (response.isSuccessful()) {
 
-                Stream scienceStream = response.body().getStreamList().get(0);
-                Stream commerceStream = response.body().getStreamList().get(1);
-                Stream artStream = response.body().getStreamList().get(2);
+                    Stream scienceStream = response.body().getStreamList().get(0);
+                    Stream commerceStream = response.body().getStreamList().get(1);
+                    Stream artStream = response.body().getStreamList().get(2);
 
-                ViewPager viewPager = findViewById(R.id.pager);
-                TabLayout tabLayout = findViewById(R.id.tablayout);
+                    ViewPager viewPager = findViewById(R.id.pager);
+                    TabLayout tabLayout = findViewById(R.id.tablayout);
 
-                ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-                viewPagerAdapter.addFragment(getScienceFragmentWithBundle((Serializable) scienceStream.getSubjectsList(), boardId, standardId),
-                        scienceStream.getName());
+                    ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+                    viewPagerAdapter.addFragment(getScienceFragmentWithBundle((Serializable) scienceStream.getSubjectsList(), boardId, standardId),
+                            scienceStream.getName());
 
-                viewPagerAdapter.addFragment(getCommerceFragmentWithBundle((Serializable) commerceStream.getSubjectsList(), boardId, standardId),
-                        commerceStream.getName());
+                    viewPagerAdapter.addFragment(getCommerceFragmentWithBundle((Serializable) commerceStream.getSubjectsList(), boardId, standardId),
+                            commerceStream.getName());
 
-                viewPagerAdapter.addFragment(getArtFragmentWithBundle((Serializable) artStream.getSubjectsList(), boardId, standardId),
-                        artStream.getName());
+                    viewPagerAdapter.addFragment(getArtFragmentWithBundle((Serializable) artStream.getSubjectsList(), boardId, standardId),
+                            artStream.getName());
 
-                viewPager.setAdapter(viewPagerAdapter);
-                tabLayout.setupWithViewPager(viewPager);
+                    viewPager.setAdapter(viewPagerAdapter);
+                    tabLayout.setupWithViewPager(viewPager);
+                }
+                else
+                    Toast.makeText(StreamActivity.this, response.message(), Toast.LENGTH_SHORT).show();
 
                 AdView mAdView = findViewById(R.id.ad_banner_stream);
                 AdRequest adRequest = new AdRequest.Builder().addTestDevice("658CE1DF8EB039135583BF17C48E41D8").build();
