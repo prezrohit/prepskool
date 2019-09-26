@@ -35,13 +35,13 @@ public class PdfLoaderActivity extends AppCompatActivity {
 
         if (file.exists()) {
 
-            WebSettings settings = webView.getSettings();
-
-            settings.setJavaScriptEnabled(true);
-            settings.setAllowFileAccessFromFileURLs(true);
-            settings.setAllowUniversalAccessFromFileURLs(true);
-            settings.setBuiltInZoomControls(true);
             webView.setWebChromeClient(new WebChromeClient());
+            webView.getSettings().setBuiltInZoomControls(true);
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setAllowFileAccessFromFileURLs(true);
+            webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+            webView.getSettings().setSupportZoom(true);
+            webView.getSettings().setDisplayZoomControls(true);
 
             Uri path = Uri.parse(Environment.getExternalStorageDirectory().toString() + "/Prepskool/" + pdfSlug + ".pdf");
 

@@ -111,8 +111,6 @@ public class ResourceActivity extends AppCompatActivity {
         lblNoData.setVisibility(View.GONE);
         setUpRecyclerView();
 
-        loadNativeAds();
-
         ((PrepskoolApplication) getApplication()).getResourceComponent().inject(this);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
         getResources(apiInterface, boardId, standardId, subjectId);
@@ -137,6 +135,7 @@ public class ResourceActivity extends AppCompatActivity {
             call.enqueue(new Callback<ResourceResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<ResourceResponse> call, @NonNull Response<ResourceResponse> response) {
+                    loadNativeAds();
                     progressBar.setVisibility(View.GONE);
                     Log.d(TAG, "onResponse: " + response.message());
                     if (response.isSuccessful()) {
@@ -158,6 +157,7 @@ public class ResourceActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
                     Toast.makeText(ResourceActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    loadNativeAds();
                 }
             });
 
@@ -167,6 +167,7 @@ public class ResourceActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NonNull Call<ResourceResponse> call, @NonNull Response<ResourceResponse> response) {
                     progressBar.setVisibility(View.GONE);
+                    loadNativeAds();
                     Log.d(TAG, "onResponse: " + response.message());
                     if (response.isSuccessful()) {
                         ArrayList<ResourceList> responseList = response.body().getResourceList();
@@ -187,6 +188,7 @@ public class ResourceActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
                     Toast.makeText(ResourceActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                    loadNativeAds();
                 }
             });
         }
@@ -202,7 +204,6 @@ public class ResourceActivity extends AppCompatActivity {
 
     private void loadNativeAds() {
 
-        progressBar.setVisibility(View.VISIBLE);
         AdLoader.Builder builder = new AdLoader.Builder(this, getString(R.string.native_ad_unit_id));
         adLoader = builder.forUnifiedNativeAd(new UnifiedNativeAd.OnUnifiedNativeAdLoadedListener() {
             @Override
@@ -210,7 +211,6 @@ public class ResourceActivity extends AppCompatActivity {
                 // A native ad loaded successfully, check if the ad loader has finished loading
                 // and if so, insert the ads into the list.
                 Log.d(TAG, "onUnifiedNativeAdLoaded: loaded");
-                progressBar.setVisibility(View.GONE);
                 mNativeAds.add(unifiedNativeAd);
                 if (!adLoader.isLoading()) {
                     insertAdsInMenuItems();
@@ -228,7 +228,6 @@ public class ResourceActivity extends AppCompatActivity {
             public void onAdFailedToLoad(int errorCode) {
                 // A native ad failed to load, check if the ad loader has finished loading
                 // and if so, insert the ads into the list.
-                progressBar.setVisibility(View.GONE);
                 Log.d(TAG, "AD Failed error code: " + errorCode);
                 if (!adLoader.isLoading()) {
                     insertAdsInMenuItems();

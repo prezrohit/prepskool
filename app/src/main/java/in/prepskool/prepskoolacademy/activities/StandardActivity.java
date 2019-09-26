@@ -41,6 +41,8 @@ public class StandardActivity extends AppCompatActivity {
     @Inject
     Retrofit retrofit;
 
+    private AdView mAdView;
+    private InterstitialAd mInterstitialAd;
     private ProgressBar progressBar;
     private RecyclerView rvStandard;
     private ArrayList<Standard> standardsList;
@@ -56,11 +58,10 @@ public class StandardActivity extends AppCompatActivity {
         final int boardId = getIntent().getIntExtra("board_id", -1);
 
         MobileAds.initialize(this, getString(R.string.app_id));
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("658CE1DF8EB039135583BF17C48E41D8").build();
 
-        final InterstitialAd mInterstitialAd = new InterstitialAd(this);
+        mAdView = findViewById(R.id.ad_banner_standard);
+        mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_ad));
-        mInterstitialAd.loadAd(adRequest);
 
         ((PrepskoolApplication) getApplication()).getStandardComponent().inject(this);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
@@ -74,9 +75,6 @@ public class StandardActivity extends AppCompatActivity {
          //loads html from string and displays cat_pic.png from the app's drawable folder
         htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + sectionName + "</font></small>",
                 new HtmlResImageGetter(htmlTextView));
-
-        AdView mAdView = findViewById(R.id.ad_banner_standard);
-        mAdView.loadAd(adRequest);
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -131,6 +129,7 @@ public class StandardActivity extends AppCompatActivity {
      */
     private void getStandard(ApiInterface apiInterface) {
         progressBar.setVisibility(View.VISIBLE);
+        final AdRequest adRequest = new AdRequest.Builder().addTestDevice("658CE1DF8EB039135583BF17C48E41D8").build();
         Call<StandardResponse> call = apiInterface.getStandards();
         call.enqueue(new Callback<StandardResponse>() {
             @Override
@@ -143,6 +142,9 @@ public class StandardActivity extends AppCompatActivity {
                     StandardAdapter standardAdapter = new StandardAdapter(StandardActivity.this, standardsList);
                     rvStandard.setLayoutManager(new GridLayoutManager(StandardActivity.this, 3));
                     rvStandard.setAdapter(standardAdapter);
+
+                    mAdView.loadAd(adRequest);
+                    mInterstitialAd.loadAd(adRequest);
                 }
             }
 
@@ -150,6 +152,9 @@ public class StandardActivity extends AppCompatActivity {
             public void onFailure(@NonNull Call<StandardResponse> call, @NonNull Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
+                Toast.makeText(StandardActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                mAdView.loadAd(adRequest);
+                mInterstitialAd.loadAd(adRequest);
             }
         });
     }

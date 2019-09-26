@@ -310,9 +310,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                     case NCERT_BOOK:
                         Intent intent = new Intent(HomeActivity.this, StandardActivity.class);
-                        intent.putExtra("CATEGORY_HOME", "NCERT");
-                        intent.putExtra("SUBCATEGORY_HOME", "BOOKS");
-                        intent.putExtra("type", "0");
+                        intent.putExtra("board_id", -1);
+                        intent.putExtra("section_name", "NCERT Book");
                         startActivity(intent);
                         break;
 
@@ -377,27 +376,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 switch (menuId) {
 
                     case NCERT_NOTES:
-                        intent.putExtra("CATEGORY_HOME", "NCERT");
-                        intent.putExtra("SUBCATEGORY_HOME", "NOTES");
-                        intent.putExtra("type", "1");
+                        intent.putExtra("board_id", 2);
+                        intent.putExtra("section_name", "NCERT Notes");
                         startActivity(intent);
                         break;
 
                     case TOPPER_ANSWERS:
-                        intent.putExtra("CATEGORY_HOME", "SCHOOL BOARDS");
-                        intent.putExtra("SUBCATEGORY_HOME", "CBSE BOARD");
-                        intent.putExtra("TYPE", "Topper Answer Sheet");
-                        intent.putExtra("source", 1);
-                        intent.putExtra("type", "1");
+                        intent.putExtra("board_id", 2);
+                        intent.putExtra("section_name", "Topper Answer Sheet");
                         startActivity(intent);
                         break;
 
                     case CHAPTER_WISE_QUES:
-                        intent.putExtra("CATEGORY_HOME", "SCHOOL BOARDS");
-                        intent.putExtra("SUBCATEGORY_HOME", "CBSE BOARD");
-                        intent.putExtra("TYPE", "NCERT Chapterwise Important Questions");
-                        intent.putExtra("source", 1);
-                        intent.putExtra("type", "1");
+                        intent.putExtra("board_id", 2);
+                        intent.putExtra("section_name", "Chapter Wise Questions");
                         startActivity(intent);
                         break;
                 }
@@ -411,18 +403,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                         switch (headerMenuId) {
                             case ICSE:
-                                intent.putExtra("CATEGORY_HOME", "PRACTICE PAPERS");
-                                intent.putExtra("SUBCATEGORY_HOME", "Past Year Papers");
-                                intent.putExtra("BOARD", "ICSE BoardData");
-                                intent.putExtra("type", "1");
+                                intent.putExtra("board_id", 2);
+                                intent.putExtra("section_name", "Past Year Papers");
                                 startActivity(intent);
                                 break;
 
                             case DELHI:
-                                intent.putExtra("CATEGORY_HOME", "PRACTICE PAPERS");
-                                intent.putExtra("SUBCATEGORY_HOME", "Past Year Papers");
-                                intent.putExtra("BOARD", "DELHI BOARD");
-                                intent.putExtra("type", "1");
+                                intent.putExtra("board_id", 2);
+                                intent.putExtra("section_name", "Past Year Papers");
                                 startActivity(intent);
                                 break;
                         }
@@ -432,20 +420,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                         switch (headerMenuId) {
                             case ICSE:
-                                intent.putExtra("CATEGORY_HOME", "SCHOOL BOARDS");
-                                intent.putExtra("SUBCATEGORY_HOME", "ICSE BoardData");
-                                intent.putExtra("TYPE", "Marking Scheme");
-                                intent.putExtra("source", 1);
-                                intent.putExtra("type", "1");
+                                intent.putExtra("board_id", 2);
+                                intent.putExtra("section_name", "Marking Scheme");
                                 startActivity(intent);
                                 break;
 
                             case DELHI:
-                                intent.putExtra("CATEGORY_HOME", "SCHOOL BOARDS");
-                                intent.putExtra("SUBCATEGORY_HOME", "DELHI BOARD");
-                                intent.putExtra("TYPE", "Marking Scheme");
-                                intent.putExtra("source", 1);
-                                intent.putExtra("type", "1");
+                                intent.putExtra("board_id", 2);
+                                intent.putExtra("section_name", "Marking Scheme");
                                 startActivity(intent);
                                 break;
                         }
@@ -455,18 +437,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                         switch (headerMenuId) {
                             case ICSE:
-                                intent.putExtra("CATEGORY_HOME", "PRACTICE PAPERS");
-                                intent.putExtra("SUBCATEGORY_HOME", "Sample Papers");
-                                intent.putExtra("BOARD", "ICSE BoardData");
-                                intent.putExtra("type", "1");
+                                intent.putExtra("board_id", 2);
+                                intent.putExtra("section_name", "Sample Paper");
                                 startActivity(intent);
                                 break;
 
                             case DELHI:
-                                intent.putExtra("CATEGORY_HOME", "PRACTICE PAPERS");
-                                intent.putExtra("SUBCATEGORY_HOME", "Sample Papers");
-                                intent.putExtra("BOARD", "DELHI BOARD");
-                                intent.putExtra("type", "1");
+                                intent.putExtra("board_id", 2);
+                                intent.putExtra("section_name", "Sample Paper");
                                 startActivity(intent);
                                 break;
                         }
@@ -486,6 +464,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {
                 progressBar.setVisibility(View.GONE);
                 Log.d(TAG, "onResponse: " + response.message());
+                Log.d(TAG, "onResponse: " + response.isSuccessful());
 
                 if (response.isSuccessful()) {
                     HomeResponse homeResponse = response.body();
