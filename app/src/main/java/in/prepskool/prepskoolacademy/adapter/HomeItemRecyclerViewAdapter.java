@@ -49,7 +49,7 @@ public class HomeItemRecyclerViewAdapter extends RecyclerView.Adapter<HomeItemRe
     public void onBindViewHolder(@NonNull HomeItemViewHolder holder, int position) {
 
         Home home = arrayList.get(position);
-        holder.itemLabel.setText(home.getName());
+        holder.itemLabel.setText(home.getDisplayName());
         holder.imgHome.setImageResource(home.getIconId());
     }
 

@@ -1,11 +1,15 @@
 package in.prepskool.prepskoolacademy.retrofit_model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class SectionedHome {
     private int sectionId;
     private String sectionLabel;
     private ArrayList<Home> homeDataList;
+
+    private static final String TAG = "SectionedHome";
 
     public SectionedHome() {
         sectionLabel = "";
@@ -17,7 +21,6 @@ public class SectionedHome {
         this.sectionLabel = sectionLabel;
         this.homeDataList = homeDataList;
     }
-
 
     public int getSectionId() {
         return sectionId;
@@ -35,21 +38,27 @@ public class SectionedHome {
     public void generateListByNcert(int sectionId, String label, ArrayList<NcertData> ncertList) {
         this.sectionId = sectionId;
         this.sectionLabel = label;
-        for (NcertData ncertData : ncertList)
+        for (NcertData ncertData : ncertList) {
             this.homeDataList.add(new Home(ncertData));
+            Log.d(TAG, "NCERT: " + ncertData.getDisplayName());
+        }
     }
 
     public void generateListByPracticePaper(int sectionId, String label, ArrayList<PracticePaperData> practicePapersList) {
         this.sectionId = sectionId;
         this.sectionLabel = label;
-        for (PracticePaperData practicePaperData : practicePapersList)
+        for (PracticePaperData practicePaperData : practicePapersList) {
             homeDataList.add(new Home(practicePaperData));
+            Log.d(TAG, "PRACTICE: " + practicePaperData.getDisplayName());
+        }
     }
 
     public void generateListByBoard(int sectionId, String label, ArrayList<BoardData> boardsList) {
         this.sectionId = sectionId;
         this.sectionLabel = label;
-        for (BoardData boardData : boardsList)
+        for (BoardData boardData : boardsList) {
             homeDataList.add(new Home(boardData));
+            Log.d(TAG, "BOARD: " + boardData.getDisplayName());
+        }
     }
 }
