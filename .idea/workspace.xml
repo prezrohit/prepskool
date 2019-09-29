@@ -12,6 +12,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="standar" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
@@ -76,18 +77,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b138a9a4-3b6b-468f-9ccf-9de3c68e7c83" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/utils/EncryptionUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/DownloadActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/DownloadActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/NonBoardActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/NonBoardActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceTypeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceTypeActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StandardActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StandardActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StreamActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StreamActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/HomeItemRecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/HomeItemRecyclerViewAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/BoardData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/BoardData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Ncert.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Ncert.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/NcertData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/NcertData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/PracticePaper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/PracticePaper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/PracticePaperData.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/PracticePaperData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/SectionedHome.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/SectionedHome.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/HomeSectionRecyclerViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/HomeSectionRecyclerViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ArtFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ArtFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/CommerceFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/CommerceFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ScienceFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ScienceFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit/ApiInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit/ApiInterface.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -98,7 +103,7 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="7bb5e4877ce5" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Xiaomi_Redmi_5_API_27" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -124,55 +129,64 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/HomeItemRecyclerViewAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-130">
-              <caret line="469" column="27" lean-forward="true" selection-start-line="469" selection-start-column="27" selection-end-line="469" selection-end-column="27" />
+            <state relative-caret-position="40">
+              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/HomeResponse.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StandardActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="11" column="28" lean-forward="true" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
+            <state relative-caret-position="102">
+              <caret line="105" column="74" lean-forward="true" selection-start-line="105" selection-start-column="74" selection-end-line="105" selection-end-column="74" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/NonBoardActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="77">
+              <caret line="51" column="63" lean-forward="true" selection-start-line="51" selection-start-column="63" selection-end-line="51" selection-end-column="63" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit/ApiInterface.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="140">
+              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StreamActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="105" lean-forward="true" selection-start-line="105" selection-end-line="105" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/StreamResponse.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/BoardData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/PracticePaperData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/NcertData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/HomeItemRecyclerViewAdapter.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Stream.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
-              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
             </state>
           </provider>
         </entry>
@@ -196,8 +210,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_type.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/SectionRecyclerViewAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/row_unified_ad.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/components/StreamComponent.java" />
@@ -205,7 +217,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/components/SubjectComponent.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_science.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_arts.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/StreamResponse.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Subject.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Stream.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_commerce.xml" />
@@ -216,37 +227,40 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Resource.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/ItemRecyclerViewAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/DownloadActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Standard.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/StandardAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit/ApiInterface.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_standard.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/HomeSectionRecyclerViewAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_non_board.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/NonBoardActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/content_stream.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_stream.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ArtFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/CommerceFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_resource_type.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_resource.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceTypeActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ScienceFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/PdfLoaderActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/assets/pdfjs/web/viewer.html" />
-        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StandardActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StreamActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Ncert.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Board.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/PracticePaper.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/HomeItemRecyclerViewAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Home.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/SectionedHome.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/BoardData.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/NcertData.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/PracticePaperData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/utils/EncryptionUtils.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/DownloadActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit/ApiInterface.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/HomeSectionRecyclerViewAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceTypeActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StreamActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ScienceFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/CommerceFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ArtFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/HomeItemRecyclerViewAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StandardActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/NonBoardActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/StreamResponse.java" />
       </list>
     </option>
   </component>
@@ -263,70 +277,15 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
       <pane id="PackagesPane" />
       <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="pdfjs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="pdfjs" type="462c0819:PsiDirectoryNode" />
-              <item name="web" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="ProjectPane" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="7bb5e4877ce5" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-09-26T15:32:58.829Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Xiaomi_Redmi_5_API_27" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2019-09-29T17:39:24.663Z" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/project/AndroidStudioProjects/PrepskoolAcademy/app/src/main/res/layout/activity_about_us.xml&#10;about&#9;FILE&#9;file://D:/project/AndroidStudioProjects/PrepskoolAcademy/app/src/main/java/in/prepskool/prepskoolacademy/activities/AboutUsActivity.java&#10;home&#9;FILE&#9;file://D:/project/AndroidStudioProjects/PrepskoolAcademy/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java&#10;Hom&#9;FILE&#9;file://D:/project/AndroidStudioProjects/PrepskoolAcademy/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java&#10;pdfl&#9;FILE&#9;file://D:/project/AndroidStudioProjects/PrepskoolAcademy/app/src/main/java/in/prepskool/prepskoolacademy/activities/PdfListActivity.java&#10;standard&#9;FILE&#9;file://D:/project/AndroidStudioProjects/PrepskoolAcademy/app/src/main/java/in/prepskool/prepskoolacademy/activities/StandardActivity.java&#10;dow&#9;PSI&#9;JAVA://in.prepskool.prepskoolacademy.activities.DownloadedItemsActivity&#10;standa&#9;FILE&#9;file://D:/project/AndroidStudioProjects/PrepskoolAcademy/app/src/main/java/in/prepskool/prepskoolacademy/activities/StandardActivity.java&#10;pdfli&#9;FILE&#9;file://D:/project/AndroidStudioProjects/PrepskoolAcademy/app/src/main/java/in/prepskool/prepskoolacademy/activities/PdfListActivity.java&#10;non&#9;FILE&#9;file://D:/project/AndroidStudioProjects/PrepskoolAcademy/app/src/main/java/in/prepskool/prepskoolacademy/activities/NonBoardActivity.java&#10;stre&#9;FILE&#9;file://D:/project/AndroidStudioProjects/PrepskoolAcademy/app/src/main/java/in/prepskool/prepskoolacademy/activities/StreamActivity.java&#10;standar&#9;FILE&#9;file://D:/project/AndroidStudioProjects/PrepskoolAcademy/app/src/main/java/in/prepskool/prepskoolacademy/activities/StandardActivity.java" />
     <property name="ToolWindowBuild.ShowToolbar" value="false" />
@@ -334,7 +293,7 @@
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="E:/Sdk" />
     <property name="device.picker.selection" value="7bb5e4877ce5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../FileEncrypter" />
     <property name="project.structure.last.edited" value="Dependencies" />
     <property name="project.structure.proportion" value="0.17" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -365,6 +324,7 @@
       <recent name="D:\project\AndroidStudioProjects\PrepskoolAcademy\app\src\main\res\layout" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="in.prepskool.prepskoolacademy.utils" />
       <recent name="in.prepskool.prepskoolacademy.adapter" />
     </key>
     <key name="android.template.parentActivityClass">
@@ -533,10 +493,17 @@
       <option name="project" value="LOCAL" />
       <updated>1569513932361</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Minor Bug Fixes">
+      <created>1569598063710</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1569598063710</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
-  <component name="TodoView" selected-index="4">
+  <component name="TodoView">
     <todo-panel id="selected-file">
       <is-autoscroll-to-source value="true" />
     </todo-panel>
@@ -560,11 +527,11 @@
       <window_info content_ui="combo" id="Project" order="8" sideWeight="0.49399656" weight="0.26577288" />
       <window_info id="Resources Explorer" order="9" weight="0.329653" />
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.6429752" />
-      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.4960568" weight="0.52561986" />
+      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49526814" weight="0.52561986" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.3289256" />
       <window_info anchor="bottom" id="Terminal" order="3" weight="0.3289256" />
-      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.5039432" side_tool="true" weight="0.6264463" />
-      <window_info anchor="bottom" id="Build" order="5" sideWeight="0.4960568" weight="0.30247933" />
+      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50473183" side_tool="true" weight="0.52561986" />
+      <window_info anchor="bottom" id="Build" order="5" sideWeight="0.4960568" weight="0.30082646" />
       <window_info anchor="bottom" id="Android Profiler" order="6" weight="0.3298969" />
       <window_info anchor="bottom" id="Run" order="7" weight="0.3289256" />
       <window_info anchor="bottom" id="Debug" order="8" />
@@ -574,14 +541,14 @@
       <window_info anchor="bottom" id="Flutter Performance" order="12" side_tool="true" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
-      <window_info anchor="right" id="Gradle" order="2" weight="0.32575756" />
-      <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="right" id="Palette&#9;" order="4" />
-      <window_info anchor="right" id="Preview" order="5" weight="0.3241325" />
-      <window_info anchor="right" id="Assistant" order="6" weight="0.3280757" />
-      <window_info anchor="right" id="Codota" order="7" weight="0.32886437" />
-      <window_info anchor="right" id="Flutter Inspector" order="8" />
-      <window_info anchor="right" id="Flutter Outline" order="9" weight="0.329653" />
+      <window_info anchor="right" id="Theme Preview" order="2" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info anchor="right" id="Preview" order="4" weight="0.3241325" />
+      <window_info anchor="right" id="Assistant" order="5" weight="0.3280757" />
+      <window_info anchor="right" id="Codota" order="6" weight="0.32886437" />
+      <window_info anchor="right" id="Flutter Inspector" order="7" />
+      <window_info anchor="right" id="Flutter Outline" order="8" weight="0.329653" />
+      <window_info anchor="right" id="Gradle" order="9" weight="0.3257098" />
     </layout>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -634,138 +601,16 @@
     <MESSAGE value="Stream Fragments Merged" />
     <MESSAGE value="BreadCrumbs Reintroduced" />
     <MESSAGE value="WebView Zoom and Ads Improved" />
-    <option name="LAST_COMMIT_MESSAGE" value="WebView Zoom and Ads Improved" />
+    <MESSAGE value="Minor Bug Fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor Bug Fixes" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../Android SDK/Sdk/sources/android-28/android/content/Context.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="81" lean-forward="true" selection-start-line="81" selection-end-line="81" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1a297d6b3f5c737eff724cc196586aba/recyclerview-v7-28.0.0/jars/classes.jar!/android/support/v7/widget/RecyclerView.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="4290" column="26" selection-start-line="4290" selection-start-column="26" selection-end-line="4290" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/StreamResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="11" column="38" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="49" column="67" lean-forward="true" selection-start-line="49" selection-start-column="67" selection-end-line="49" selection-end-column="67" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/ResourceType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-          <folding>
-            <element signature="e#152#153#0" expanded="true" />
-            <element signature="e#177#178#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/ResourceTypeResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Resource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-85">
-          <caret line="13" column="24" lean-forward="true" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
-          <folding>
-            <element signature="e#1563#1564#0" expanded="true" />
-            <element signature="e#1592#1593#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/ResourceList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/ResourceResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/DownloadActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="55" column="53" selection-start-line="55" selection-start-column="53" selection-end-line="55" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/ItemRecyclerViewAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
-          <folding>
-            <element signature="e#1418#1966#0" expanded="true" />
-            <element signature="e#1965#1966#0" expanded="true" />
-            <element signature="e#1924#1925#0" expanded="true" />
-            <element signature="e#1963#1964#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/StandardAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="30" column="13" lean-forward="true" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/StandardResponse.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/PrepskoolApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="43" column="53" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/utils/Endpoints.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="78" selection-start-line="7" selection-start-column="78" selection-end-line="7" selection-end-column="78" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_standard.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="41" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="41" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_non_board.xml">
       <provider selected="true" editor-type-id="text-editor">
@@ -804,20 +649,6 @@
       </provider>
       <provider editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/CommerceFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="986">
-          <caret line="76" column="9" selection-start-line="76" selection-start-column="9" selection-end-line="76" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ArtFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="48" column="8" lean-forward="true" selection-start-line="48" selection-start-column="8" selection-end-line="48" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_resource.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -838,13 +669,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit/ApiInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
         </state>
       </provider>
     </entry>
@@ -880,69 +704,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="25" column="87" selection-start-line="25" selection-start-column="87" selection-end-line="25" selection-end-column="87" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/PdfLoaderActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="43" column="63" lean-forward="true" selection-start-line="43" selection-start-column="63" selection-end-line="43" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Standard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/NonBoardActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1241">
-          <caret line="34" column="11" lean-forward="true" selection-start-line="34" selection-start-column="11" selection-end-line="34" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="190" column="36" selection-start-line="190" selection-start-column="36" selection-end-line="190" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceTypeActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-595">
-          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ScienceFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="68" column="71" selection-start-line="68" selection-start-column="71" selection-end-line="68" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StandardActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="154" column="77" selection-start-line="154" selection-start-column="77" selection-end-line="154" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StreamActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="95" column="21" selection-start-line="95" selection-start-column="21" selection-end-line="95" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/HomeSectionRecyclerViewAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="50" column="22" selection-start-line="50" selection-start-column="22" selection-end-line="50" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -989,31 +750,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/HomeItemRecyclerViewAdapter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Standard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        <state relative-caret-position="255">
+          <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-106">
+          <caret line="43" column="58" selection-start-line="43" selection-start-column="58" selection-end-line="43" selection-end-column="58" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/HomeResponse.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="11" column="28" lean-forward="true" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
+        <state relative-caret-position="187">
+          <caret line="13" selection-start-line="13" selection-end-line="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/BoardData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-130">
-          <caret line="469" column="27" lean-forward="true" selection-start-line="469" selection-start-column="27" selection-end-line="469" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/NcertData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        <state relative-caret-position="187">
+          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -1024,10 +786,198 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/BoardData.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/NcertData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-manifest" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/SectionRecyclerViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="417">
+          <caret line="73" column="72" lean-forward="true" selection-start-line="73" selection-start-column="72" selection-end-line="73" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/ItemRecyclerViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="60" column="59" lean-forward="true" selection-start-line="60" selection-start-column="59" selection-end-line="60" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_standard.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="53" column="31" lean-forward="true" selection-start-line="53" selection-start-column="31" selection-end-line="53" selection-end-column="31" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Android SDK/Sdk/sources/android-28/java/io/File.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="227" column="31" selection-start-line="227" selection-start-column="31" selection-end-line="227" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/DownloadActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="270" column="56" lean-forward="true" selection-start-line="270" selection-start-column="56" selection-end-line="270" selection-end-column="56" />
+          <folding>
+            <element signature="method#requestStoragePermission#0;class#DownloadActivity#0" />
+            <element signature="method#checkPermission#0;class#DownloadActivity#0" />
+            <element signature="method#requestPermission#0;class#DownloadActivity#0" />
+            <element signature="method#onRequestPermissionsResult#0;class#DownloadActivity#0" />
+            <element signature="method#showMessageOKCancel#0;class#DownloadActivity#0" />
+            <element signature="method#createFolder#0;class#DownloadActivity#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/PdfLoaderActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-402">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/utils/EncryptionUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="74" column="9" selection-start-line="74" selection-start-column="9" selection-end-line="74" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-v21/styles.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2747d29aa772a6f37664a570c6356c5c/design-28.0.0/jars/classes.jar!/android/support/design/button/MaterialButton.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/row_resource_item.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="33" column="50" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-232">
+          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/model/Home.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="19" lean-forward="true" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceTypeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="56" lean-forward="true" selection-start-line="56" selection-end-line="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/HomeSectionRecyclerViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="49" lean-forward="true" selection-start-line="49" selection-end-line="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ArtFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="41" column="32" selection-start-line="41" selection-start-column="32" selection-end-line="41" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="373" column="45" selection-start-line="373" selection-start-column="45" selection-end-line="373" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/CommerceFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="48" lean-forward="true" selection-start-column="48" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ScienceFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="42" column="107" lean-forward="true" selection-start-line="42" selection-start-column="107" selection-end-line="43" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit/ApiInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/HomeItemRecyclerViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/NonBoardActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="51" column="63" lean-forward="true" selection-start-line="51" selection-start-column="63" selection-end-line="51" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StandardActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="105" column="74" lean-forward="true" selection-start-line="105" selection-start-column="74" selection-end-line="105" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StreamActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="105" lean-forward="true" selection-start-line="105" selection-end-line="105" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/StreamResponse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Stream.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>

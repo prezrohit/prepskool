@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,6 +31,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import in.prepskool.prepskoolacademy.utils.EncryptionUtils;
 import in.prepskool.prepskoolacademy.utils.Endpoints;
 import in.prepskool.prepskoolacademy.R;
 
@@ -41,8 +44,12 @@ public class DownloadActivity extends AppCompatActivity {
     private String pdfUrl;
     private String pdfSlug;
     private ProgressDialog mProgressDialog;
+
     private static final int PERMISSION_REQUEST_CODE = 200;
     private String TAG = DownloadActivity.class.getSimpleName();
+
+    private static final String RESOURCE_DIRECTORY_NAME = "Prepskool";
+    private static final File EXTERNAL_STORAGE_PATH = Environment.getExternalStorageDirectory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +91,6 @@ public class DownloadActivity extends AppCompatActivity {
         btnDownload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 downloadTask.execute(Endpoints.GOOGLEDRIVE + getPdfId(pdfUrl));
             }
         });
@@ -97,7 +103,7 @@ public class DownloadActivity extends AppCompatActivity {
             boolean folderExists = createFolder();
 
             if (folderExists) {
-                folderPath = new File(Environment.getExternalStorageDirectory() + File.separator + "Prepskool").getAbsolutePath();
+                folderPath = new File(EXTERNAL_STORAGE_PATH + File.separator + RESOURCE_DIRECTORY_NAME).getAbsolutePath();
             } else {
                 Log.v(TAG, "Error Creating Prepskool Directory");
             }
@@ -121,7 +127,7 @@ public class DownloadActivity extends AppCompatActivity {
         boolean folderExists = createFolder();
 
         if (folderExists) {
-            folderPath = new File(Environment.getExternalStorageDirectory() + File.separator + "Prepskool").getAbsolutePath();
+            folderPath = new File(EXTERNAL_STORAGE_PATH + File.separator + "Prepskool").getAbsolutePath();
         } else {
             Log.v(TAG, "Error Creating Prepskool Directory");
         }
@@ -165,7 +171,7 @@ public class DownloadActivity extends AppCompatActivity {
 
     private boolean createFolder() {
 
-        File folder = new File(Environment.getExternalStorageDirectory() + File.separator + "Prepskool");
+        File folder = new File(EXTERNAL_STORAGE_PATH + File.separator + "Prepskool");
         boolean success = true;
         if (!folder.exists()) {
             success = folder.mkdirs();
@@ -180,6 +186,7 @@ public class DownloadActivity extends AppCompatActivity {
         private PowerManager.WakeLock mWakeLock;
 
         DownloadTask(Context context) {
+            EncryptionUtils.generateKeys();
             this.context = context;
         }
 
@@ -205,7 +212,7 @@ public class DownloadActivity extends AppCompatActivity {
 
                 // download the file
                 input = connection.getInputStream();
-                output = new FileOutputStream(Environment.getExternalStorageDirectory().getPath() + "/Prepskool/" + pdfSlug + ".pdf");
+                output = new FileOutputStream(EXTERNAL_STORAGE_PATH + "/Prepskool/" + pdfSlug + ".pdf");
 
                 byte data[] = new byte[4096];
                 long total = 0;
@@ -263,12 +270,27 @@ public class DownloadActivity extends AppCompatActivity {
             if (result != null)
                 Log.v(TAG, "Download error: " + result);
             else {
+                Log.d(TAG, "onPostExecute: downloaded");
+                File inputFile = new File(EXTERNAL_STORAGE_PATH + File.separator + RESOURCE_DIRECTORY_NAME + pdfSlug + ".pdf");
+                File outputFile = new File(EXTERNAL_STORAGE_PATH + File.separator + RESOURCE_DIRECTORY_NAME + pdfSlug + ".enc");
 
+                try {
+                    EncryptionUtils.initEncryption(new FileInputStream(inputFile), new FileOutputStream(outputFile));
+                    if (inputFile.delete()) {
+                        Log.d(TAG, "onDownloaded: File Encrypted and deleted");
+
+                    } else {
+                        Log.d(TAG, "onDownloaded: File Encrypted and not deleted");
+                    }
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
                 Intent intent = new Intent(DownloadActivity.this, PdfLoaderActivity.class);
                 intent.putExtra("slug", pdfSlug);
                 intent.putExtra("link", pdfUrl);
-                startActivity(intent);
-                finish();
+                //startActivity(intent);
+                //finish();
             }
         }
     }

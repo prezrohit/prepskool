@@ -42,9 +42,10 @@ public class ArtFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_arts, container, false);
 
         final ArrayList<Subject> subjectList = (ArrayList<Subject>) getArguments().getSerializable("list");
+        final int homeItemId = getArguments().getInt("home_item_id", -1);
         final int boardId = getArguments().getInt("board_id", -1);
         final int standardId = getArguments().getInt("standard_id", -1);
-        final String sectionName = getArguments().getString("section_name");
+        final String homeItemName = getArguments().getString("home_item_name");
         final String standardName = getArguments().getString("standard_name");
 
         RecyclerView rvArts = (RecyclerView) view.findViewById(R.id.rv_arts);
@@ -72,7 +73,8 @@ public class ArtFragment extends Fragment {
                     } else {
                         intent = new Intent(getActivity(), ResourceActivity.class);
                     }
-                    intent.putExtra("section_name", sectionName);
+                    intent.putExtra("home_item_id", homeItemId);
+                    intent.putExtra("home_item_name", homeItemName);
                     intent.putExtra("standard_name", standardName);
                     intent.putExtra("subject_name", subjectList.get(position).getName());
                     intent.putExtra("board_id", boardId);
@@ -91,67 +93,3 @@ public class ArtFragment extends Fragment {
         return view;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*rvArts.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rvArts,
-                new RecyclerTouchListener.ClickListener() {
-
-                    @Override
-                    public void onClick(View view, int position) {
-
-                        SUBJECT = arrayList.get(position).getName();
-
-                        Intent intent = new Intent(getActivity(), ResourceActivity.class);
-                        intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
-                        intent.putExtra("SUBJECT", SUBJECT);
-                        intent.putExtra("STANDARD", STANDARD);
-                        intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
-
-                        if (CATEGORY_HOME.equals("SCHOOL BOARDS")) {
-
-                            if (sourceId == 1) {
-                                intent.putExtra("TYPE", TYPE);
-                                intent.putExtra("source", 1);
-                            }
-
-                            else {
-                                intent = new Intent(getActivity(), ResourceTypeActivity.class);
-                                intent.putExtra("SUBCATEGORY_HOME", SUBCATEGORY_HOME);
-                                intent.putExtra("SUBJECT", SUBJECT);
-                                intent.putExtra("STANDARD", STANDARD);
-                                intent.putExtra("CATEGORY_HOME", CATEGORY_HOME);
-                            }
-                        }
-                        else if (CATEGORY_HOME.equals("CBSE PRACTICE PAPERS"))
-                            intent.putExtra("BOARD", BOARD);
-
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onLongClick(View view, int position) {
-
-                    }
-                }));*/
-
-

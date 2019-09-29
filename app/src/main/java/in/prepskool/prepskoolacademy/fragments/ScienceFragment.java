@@ -41,9 +41,10 @@ public class ScienceFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_science, container, false);
 
         final ArrayList<Subject> subjectList = (ArrayList<Subject>) getArguments().getSerializable("list");
+        final int homeItemId = getArguments().getInt("home_item_id", -1);
         final int boardId = getArguments().getInt("board_id", -1);
         final int standardId = getArguments().getInt("standard_id", -1);
-        final String sectionName = getArguments().getString("section_name");
+        final String homeItemName = getArguments().getString("home_item_name");
         final String standardName = getArguments().getString("standard_name");
 
         RecyclerView rvScience = view.findViewById(R.id.rv_science);
@@ -71,7 +72,8 @@ public class ScienceFragment extends Fragment {
                     } else {
                         intent = new Intent(getActivity(), ResourceActivity.class);
                     }
-                    intent.putExtra("section_name", sectionName);
+                    intent.putExtra("home_item_id", homeItemId);
+                    intent.putExtra("home_item_name", homeItemName);
                     intent.putExtra("standard_name", standardName);
                     intent.putExtra("subject_name", subjectList.get(position).getName());
                     intent.putExtra("board_id", boardId);

@@ -42,7 +42,7 @@ public class ResourceActivity extends AppCompatActivity {
     @Inject
     Retrofit retrofit;
 
-    private String resourceTypeName = "!";
+    private String resourceTypeName;
     private int resourceTypeId;
 
     private TextView lblNoData;
@@ -68,7 +68,8 @@ public class ResourceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resource);
 
-        final String sectionName = getIntent().getStringExtra("section_name");
+        final int homeItemId = getIntent().getIntExtra("home_item_id", -1);
+        final String homeItemName = getIntent().getStringExtra("home_item_name");
         final String standardName = getIntent().getStringExtra("standard_name");
         final String subjectName = getIntent().getStringExtra("subject_name");
         int boardId = getIntent().getIntExtra("board_id", -1);
@@ -82,12 +83,12 @@ public class ResourceActivity extends AppCompatActivity {
 
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.lbl_breadcrumb_resource);
         if (boardId == 2) {
-            htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + sectionName + "</font></small> >> <small><font color=\"#12c48b\">"
+            htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + homeItemName + "</font></small> >> <small><font color=\"#12c48b\">"
                     + standardName + "</font></small> >> <small><font color='#ff6347'>" + subjectName
                     + "</font></small> >> <small><font color='#ffca28'>" + resourceTypeName + "</font></small>",
                     new HtmlResImageGetter(htmlTextView));
         } else {
-            htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + sectionName + "</font></small> >> <small><font color=\"#12c48b\">"
+            htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + homeItemName + "</font></small> >> <small><font color=\"#12c48b\">"
                     + standardName + "</font></small> >> <small><font color='#ffca28'>" + subjectName + "</font></small>",
                     new HtmlResImageGetter(htmlTextView));
         }
@@ -113,7 +114,7 @@ public class ResourceActivity extends AppCompatActivity {
 
         ((PrepskoolApplication) getApplication()).getResourceComponent().inject(this);
         ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-        getResources(apiInterface, boardId, standardId, subjectId);
+        getResources(apiInterface, homeItemId, boardId, standardId, subjectId);
     }
 
     private void setUpRecyclerView() {
@@ -124,7 +125,7 @@ public class ResourceActivity extends AppCompatActivity {
         rvSectionedResource.setLayoutManager(new LinearLayoutManager(this));
     }
 
-    private void getResources(ApiInterface apiInterface, int boardId, int standardId, int subjectId) {
+    private void getResources(ApiInterface apiInterface, int homeItemId, int boardId, int standardId, int subjectId) {
         progressBar.setVisibility(View.VISIBLE);
         Call<ResourceResponse> call;
         if (boardId == 2) {
@@ -162,7 +163,7 @@ public class ResourceActivity extends AppCompatActivity {
             });
 
         } else {
-            call = apiInterface.getOtherResources(standardId, subjectId);
+            call = apiInterface.getOtherResources(homeItemId, standardId, subjectId);
             call.enqueue(new Callback<ResourceResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<ResourceResponse> call, @NonNull Response<ResourceResponse> response) {

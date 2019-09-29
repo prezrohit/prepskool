@@ -54,8 +54,9 @@ public class StandardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_standard);
 
-        final String sectionName = getIntent().getStringExtra("section_name");
+        final String homeItemName = getIntent().getStringExtra("home_item_name");
         final int boardId = getIntent().getIntExtra("board_id", -1);
+        final int homeItemId = getIntent().getIntExtra("home_item_id", -1);
 
         MobileAds.initialize(this, getString(R.string.app_id));
 
@@ -73,7 +74,7 @@ public class StandardActivity extends AppCompatActivity {
 
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.bread_crumb_standard);
          //loads html from string and displays cat_pic.png from the app's drawable folder
-        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + sectionName + "</font></small>",
+        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + homeItemName + "</font></small>",
                 new HtmlResImageGetter(htmlTextView));
 
         setSupportActionBar(toolbar);
@@ -107,10 +108,12 @@ public class StandardActivity extends AppCompatActivity {
                     } else {
                         intent = new Intent(StandardActivity.this, NonBoardActivity.class);
                     }
+                    Log.d(TAG, "standard id: " + standardId);
                     intent.putExtra("standard_id", standardId);
-                    intent.putExtra("section_name", sectionName);
+                    intent.putExtra("home_item_name", homeItemName);
                     intent.putExtra("standard_name", standardsList.get(position).getName());
                     intent.putExtra("board_id", boardId);
+                    intent.putExtra("home_item_id", homeItemId);
                     startActivity(intent);
                 }
             }

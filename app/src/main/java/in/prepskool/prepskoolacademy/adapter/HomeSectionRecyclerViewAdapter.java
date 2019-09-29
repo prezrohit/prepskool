@@ -51,16 +51,18 @@ public class HomeSectionRecyclerViewAdapter extends RecyclerView.Adapter<HomeSec
         HomeItemRecyclerViewAdapter adapter = new HomeItemRecyclerViewAdapter(context, sectionHome.getHomeDataList());
         holder.itemRecyclerView.setAdapter(adapter);
 
-        final int sectionPosition = position;
-        final int sectionId = sectionHome.getSectionLabel().equals("Boards") ? 2 : -1;
+        final int boardId = sectionHome.getSectionLabel().equals("Boards") ? 2 : -1;
 
-        holder.itemRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(context, holder.itemRecyclerView, new RecyclerTouchListener.ClickListener() {
+        holder.itemRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(context, holder.itemRecyclerView,
+                new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Log.d(TAG, "boardId: " + sectionId);
+                int homeItemId = sectionHome.getHomeDataList().get(position).getId();
+                String homeItemName = sectionHome.getHomeDataList().get(position).getName();
                 Intent intent = new Intent(context, StandardActivity.class);
-                intent.putExtra("board_id", sectionId);
-                intent.putExtra("section_name", sectionHomeArrayList.get(sectionPosition).getHomeDataList().get(position).getName());
+                intent.putExtra("home_item_id", homeItemId);
+                intent.putExtra("board_id", boardId);
+                intent.putExtra("home_item_name", homeItemName);
                 context.startActivity(intent);
             }
 

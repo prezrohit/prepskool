@@ -58,4 +58,3 @@ public class HomeItemRecyclerViewAdapter extends RecyclerView.Adapter<HomeItemRe
         return arrayList.size();
     }
 }
-

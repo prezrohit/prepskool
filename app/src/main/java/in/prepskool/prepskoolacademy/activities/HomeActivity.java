@@ -29,6 +29,9 @@ import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -46,6 +49,7 @@ import in.prepskool.prepskoolacademy.retrofit_model.Ncert;
 import in.prepskool.prepskoolacademy.retrofit_model.PracticePaper;
 import in.prepskool.prepskoolacademy.retrofit_model.SectionedHome;
 import in.prepskool.prepskoolacademy.services.CheckNetworkService;
+import in.prepskool.prepskoolacademy.utils.EncryptionUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,6 +73,9 @@ import static in.prepskool.prepskoolacademy.model.NavigationMenu.Menu.SAMPLE_PAP
 import static in.prepskool.prepskoolacademy.model.NavigationMenu.Menu.SAVED_FILES;
 import static in.prepskool.prepskoolacademy.model.NavigationMenu.Menu.SHARE;
 import static in.prepskool.prepskoolacademy.model.NavigationMenu.Menu.TOPPER_ANSWERS;
+
+//TODO: Display Name in Home
+//TODO: Encryption of Resources
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @Inject
@@ -124,6 +131,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -363,6 +371,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+        //TODO: NavigationView intent passing
+
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, 
@@ -403,10 +413,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                         switch (headerMenuId) {
                             case ICSE:
-                                intent.putExtra("board_id", 2);
-                                intent.putExtra("section_name", "Past Year Papers");
-                                startActivity(intent);
-                                break;
 
                             case DELHI:
                                 intent.putExtra("board_id", 2);
@@ -420,10 +426,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                         switch (headerMenuId) {
                             case ICSE:
-                                intent.putExtra("board_id", 2);
-                                intent.putExtra("section_name", "Marking Scheme");
-                                startActivity(intent);
-                                break;
 
                             case DELHI:
                                 intent.putExtra("board_id", 2);
@@ -437,10 +439,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                         switch (headerMenuId) {
                             case ICSE:
-                                intent.putExtra("board_id", 2);
-                                intent.putExtra("section_name", "Sample Paper");
-                                startActivity(intent);
-                                break;
 
                             case DELHI:
                                 intent.putExtra("board_id", 2);
@@ -501,3 +499,76 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*switch (menuId) {
+
+        case PAST_YEAR_PAPER:
+
+        switch (headerMenuId) {
+        case ICSE:
+        intent.putExtra("board_id", 2);
+        intent.putExtra("section_name", "Past Year Papers");
+        startActivity(intent);
+        break;
+
+        case DELHI:
+        intent.putExtra("board_id", 2);
+        intent.putExtra("section_name", "Past Year Papers");
+        startActivity(intent);
+        break;
+        }
+        break;
+
+        case MARKING_SCHEME:
+
+        switch (headerMenuId) {
+        case ICSE:
+        intent.putExtra("board_id", 2);
+        intent.putExtra("section_name", "Marking Scheme");
+        startActivity(intent);
+        break;
+
+        case DELHI:
+        intent.putExtra("board_id", 2);
+        intent.putExtra("section_name", "Marking Scheme");
+        startActivity(intent);
+        break;
+        }
+        break;
+
+        case SAMPLE_PAPER:
+
+        switch (headerMenuId) {
+        case ICSE:
+        intent.putExtra("board_id", 2);
+        intent.putExtra("section_name", "Sample Paper");
+        startActivity(intent);
+        break;
+
+        case DELHI:
+        intent.putExtra("board_id", 2);
+        intent.putExtra("section_name", "Sample Paper");
+        startActivity(intent);
+        break;
+        }
+        break;
+        }*/

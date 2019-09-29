@@ -40,7 +40,7 @@ public class StreamActivity extends AppCompatActivity {
     @Inject
     Retrofit retrofit;
 
-    private String sectionName;
+    private String homeItemName;
     private String standardName;
 
     private ProgressBar progressBar;
@@ -51,13 +51,14 @@ public class StreamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stream);
 
-        sectionName = getIntent().getStringExtra("section_name");
+        int homeItemId = getIntent().getIntExtra("home_item_name", -1);
+        homeItemName = getIntent().getStringExtra("home_item_name");
         standardName = getIntent().getStringExtra("standard_name");
         int boardId = getIntent().getIntExtra("board_id", -1);
         int standardId = getIntent().getIntExtra("standard_id", -1);
 
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.bread_crumb_stream);
-        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + sectionName + "</font></small> >> <small><font color=\"#12c48b\">"
+        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + homeItemName + "</font></small> >> <small><font color=\"#12c48b\">"
                 + standardName +"</font></small>", new HtmlResImageGetter(htmlTextView));
 
         MobileAds.initialize(this, getString(R.string.app_id));
@@ -70,7 +71,7 @@ public class StreamActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.title_subject);
         setSupportActionBar(toolbar);
 
-        getStreamsAndSubjects(apiInterface, boardId, standardId);
+        getStreamsAndSubjects(apiInterface, homeItemId, boardId, standardId);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -90,7 +91,7 @@ public class StreamActivity extends AppCompatActivity {
      * @param boardId
      * @param standardId
      */
-    private void getStreamsAndSubjects(ApiInterface apiInterface, final int boardId, final int standardId) {
+    private void getStreamsAndSubjects(ApiInterface apiInterface, final int homeItemId, final int boardId, final int standardId) {
         Call<StreamResponse> call = apiInterface.getStreams(standardId);
         call.enqueue(new Callback<StreamResponse>() {
             @Override
@@ -107,13 +108,13 @@ public class StreamActivity extends AppCompatActivity {
                     TabLayout tabLayout = findViewById(R.id.tablayout);
 
                     ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-                    viewPagerAdapter.addFragment(getScienceFragmentWithBundle((Serializable) scienceStream.getSubjectsList(), boardId, standardId),
+                    viewPagerAdapter.addFragment(getScienceFragmentWithBundle((Serializable) scienceStream.getSubjectsList(), homeItemId, boardId, standardId),
                             scienceStream.getName());
 
-                    viewPagerAdapter.addFragment(getCommerceFragmentWithBundle((Serializable) commerceStream.getSubjectsList(), boardId, standardId),
+                    viewPagerAdapter.addFragment(getCommerceFragmentWithBundle((Serializable) commerceStream.getSubjectsList(), homeItemId, boardId, standardId),
                             commerceStream.getName());
 
-                    viewPagerAdapter.addFragment(getArtFragmentWithBundle((Serializable) artStream.getSubjectsList(), boardId, standardId),
+                    viewPagerAdapter.addFragment(getArtFragmentWithBundle((Serializable) artStream.getSubjectsList(), boardId, homeItemId, standardId),
                             artStream.getName());
 
                     viewPager.setAdapter(viewPagerAdapter);
@@ -146,11 +147,12 @@ public class StreamActivity extends AppCompatActivity {
      * @param subjectList
      * @return
      */
-    private ScienceFragment getScienceFragmentWithBundle(Serializable subjectList, int boardId, int standardId) {
+    private ScienceFragment getScienceFragmentWithBundle(Serializable subjectList, int homeItemId, int boardId, int standardId) {
         ScienceFragment scienceFragment = new ScienceFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("list", subjectList);
-        bundle.putString("section_name", sectionName);
+        bundle.putInt("home_item_id", homeItemId);
+        bundle.putString("home_item_name", homeItemName);
         bundle.putString("standard_name", standardName);
         bundle.putInt("board_id", boardId);
         bundle.putInt("standard_id", standardId);
@@ -164,11 +166,12 @@ public class StreamActivity extends AppCompatActivity {
      * @param subjectList
      * @return
      */
-    private CommerceFragment getCommerceFragmentWithBundle(Serializable subjectList, int boardId, int standardId) {
+    private CommerceFragment getCommerceFragmentWithBundle(Serializable subjectList, int homeItemId, int boardId, int standardId) {
         CommerceFragment commerceFragment = new CommerceFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("list", subjectList);
-        bundle.putString("section_name", sectionName);
+        bundle.putInt("home_item_id", homeItemId);
+        bundle.putString("home_item_name", homeItemName);
         bundle.putString("standard_name", standardName);
         bundle.putInt("board_id", boardId);
         bundle.putInt("standard_id", standardId);
@@ -182,11 +185,12 @@ public class StreamActivity extends AppCompatActivity {
      * @param subjectList
      * @return
      */
-    private ArtFragment getArtFragmentWithBundle(Serializable subjectList, int boardId, int standardId) {
+    private ArtFragment getArtFragmentWithBundle(Serializable subjectList, int homeItemId, int boardId, int standardId) {
         ArtFragment artFragment = new ArtFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("list", subjectList);
-        bundle.putString("section_name", sectionName);
+        bundle.putInt("home_item_id", homeItemId);
+        bundle.putString("home_item_name", homeItemName);
         bundle.putString("standard_name", standardName);
         bundle.putInt("board_id", boardId);
         bundle.putInt("standard_id", standardId);

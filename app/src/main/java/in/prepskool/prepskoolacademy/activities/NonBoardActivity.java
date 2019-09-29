@@ -47,10 +47,13 @@ public class NonBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_non_board);
 
-        final String sectionName = getIntent().getStringExtra("section_name");
+        final int homeItemId = getIntent().getIntExtra("home_item_id", -1);
+        final String homeItemName = getIntent().getStringExtra("home_item_name");
         final String standardName = getIntent().getStringExtra("standard_name");
         final int boardId = getIntent().getIntExtra("board_id", -1);
         final int standardId = getIntent().getIntExtra("standard_id", -1);
+
+        Log.d(TAG, "standard_id: " + standardId);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_subject);
@@ -66,7 +69,7 @@ public class NonBoardActivity extends AppCompatActivity {
         });
 
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.bread_crumb_non_board);
-        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + sectionName + "</font></small> >> <small><font color=\"#12c48b\">"
+        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + homeItemName + "</font></small> >> <small><font color=\"#12c48b\">"
                 + standardName + "</font></small>", new HtmlResImageGetter(htmlTextView));
 
         lblNoData = (TextView) findViewById(R.id.lbl_no_data_non_board);
@@ -92,7 +95,8 @@ public class NonBoardActivity extends AppCompatActivity {
                     intent = new Intent(NonBoardActivity.this, ResourceActivity.class);
                 }
 
-                intent.putExtra("section_name", sectionName);
+                intent.putExtra("home_item_id", homeItemId);
+                intent.putExtra("home_item_name", homeItemName);
                 intent.putExtra("standard_name", standardName);
                 intent.putExtra("subject_name", subjectList.get(position).getName());
                 intent.putExtra("board_id", boardId);
@@ -121,7 +125,7 @@ public class NonBoardActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call<SubjectResponse> call, @NonNull Response<SubjectResponse> response) {
                 progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "onResponse: " + response.message());
+                Log.d(TAG, "onResponse: " + response.body());
                 if (response.isSuccessful()) {
                     subjectList = response.body().getSubjectList();
                     rvNonBoard.setAdapter(new SubjectAdapter(NonBoardActivity.this, subjectList));

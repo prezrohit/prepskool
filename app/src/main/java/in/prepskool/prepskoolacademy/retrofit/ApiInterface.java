@@ -23,7 +23,8 @@ public interface ApiInterface {
 
 
     @GET("resources")
-    Call<ResourceResponse> getOtherResources(@Query("standard_id") int standardId, @Query("subject_id") int subjectId);
+    Call<ResourceResponse> getOtherResources(@Query("resource_type_id") int resourceTypeId, @Query("standard_id") int standardId,
+                                             @Query("subject_id") int subjectId);
 
 
     @GET("subjects")

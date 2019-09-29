@@ -47,7 +47,8 @@ public class ResourceTypeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resource_type);
 
-        final String sectionName = getIntent().getStringExtra("section_name");
+        final int homeItemId = getIntent().getIntExtra("home_item_id", -1);
+        final String homeItemName = getIntent().getStringExtra("home_item_name");
         final String standardName = getIntent().getStringExtra("standard_name");
         final String subjectName = getIntent().getStringExtra("subject_name");
         final int boardId = getIntent().getIntExtra("board_id", -1);
@@ -67,7 +68,7 @@ public class ResourceTypeActivity extends AppCompatActivity {
         });
 
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.lbl_breadcrumb_resource_type);
-        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + sectionName
+        htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + homeItemName
                 + "</font></small> >> <small><font color=\"#12c48b\">" + standardName + "</font></small> >> <small><font color='red'>"
                 + subjectName + "</font></small>", new HtmlResImageGetter(htmlTextView));
 
@@ -86,7 +87,8 @@ public class ResourceTypeActivity extends AppCompatActivity {
                 int resourceTypeId = resourceTypeList.get(position).getId();
 
                 Intent intent = new Intent(ResourceTypeActivity.this, ResourceActivity.class);
-                intent.putExtra("section_name", sectionName);
+                intent.putExtra("home_item_id", homeItemId);
+                intent.putExtra("home_item_name", homeItemName);
                 intent.putExtra("standard_name", standardName);
                 intent.putExtra("subject_name", subjectName);
                 intent.putExtra("resource_type_name", resourceTypeList.get(position).getName());
