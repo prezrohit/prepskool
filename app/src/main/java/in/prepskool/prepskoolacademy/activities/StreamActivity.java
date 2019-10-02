@@ -51,11 +51,13 @@ public class StreamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stream);
 
-        int homeItemId = getIntent().getIntExtra("home_item_name", -1);
+        int homeItemId = getIntent().getIntExtra("home_item_id", -1);
         homeItemName = getIntent().getStringExtra("home_item_name");
         standardName = getIntent().getStringExtra("standard_name");
         int boardId = getIntent().getIntExtra("board_id", -1);
         int standardId = getIntent().getIntExtra("standard_id", -1);
+
+        Log.d(TAG, "onCreate: " + homeItemId);
 
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.bread_crumb_stream);
         htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + homeItemName + "</font></small> >> <small><font color=\"#12c48b\">"

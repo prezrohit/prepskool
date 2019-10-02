@@ -8,7 +8,7 @@ public class ResourceTypeResponse {
     @SerializedName("status")
     private String status;
 
-    @SerializedName("resourceTypes")
+    @SerializedName("resource_types")
     private ArrayList<ResourceType> resourceTypeList;
 
     public String getStatus() {

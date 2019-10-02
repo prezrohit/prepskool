@@ -19,6 +19,11 @@ import in.prepskool.prepskoolacademy.R;
 
 public class PdfLoaderActivity extends AppCompatActivity {
 
+    private static final String RESOURCE_DIRECTORY = "Prepskool";
+    private static final String EXTERNAL_STORAGE_PATH = Environment.getExternalStorageDirectory().toString();
+
+    private static final String TAG = "PdfLoaderActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +35,7 @@ public class PdfLoaderActivity extends AppCompatActivity {
         WebView webView = (WebView) findViewById(R.id.webView);
         Context context = PdfLoaderActivity.this;
 
-        File file = new File(new File(Environment.getExternalStorageDirectory() + File.separator + "Prepskool").getAbsolutePath(),
-                pdfSlug + ".pdf");
+        File file = new File(EXTERNAL_STORAGE_PATH + File.separator + RESOURCE_DIRECTORY + File.separator + pdfSlug + ".pdf");
 
         if (file.exists()) {
 
@@ -43,7 +47,7 @@ public class PdfLoaderActivity extends AppCompatActivity {
             webView.getSettings().setSupportZoom(true);
             webView.getSettings().setDisplayZoomControls(true);
 
-            Uri path = Uri.parse(Environment.getExternalStorageDirectory().toString() + "/Prepskool/" + pdfSlug + ".pdf");
+            Uri path = Uri.parse(EXTERNAL_STORAGE_PATH + File.separator + RESOURCE_DIRECTORY + File.separator + pdfSlug + ".pdf");
 
             webView.loadUrl("file:///android_asset/pdfjs/web/viewer.html?file=file://" + path);
 

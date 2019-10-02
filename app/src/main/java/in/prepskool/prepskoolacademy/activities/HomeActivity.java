@@ -29,9 +29,6 @@ import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
@@ -49,7 +46,6 @@ import in.prepskool.prepskoolacademy.retrofit_model.Ncert;
 import in.prepskool.prepskoolacademy.retrofit_model.PracticePaper;
 import in.prepskool.prepskoolacademy.retrofit_model.SectionedHome;
 import in.prepskool.prepskoolacademy.services.CheckNetworkService;
-import in.prepskool.prepskoolacademy.utils.EncryptionUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,9 +69,6 @@ import static in.prepskool.prepskoolacademy.model.NavigationMenu.Menu.SAMPLE_PAP
 import static in.prepskool.prepskoolacademy.model.NavigationMenu.Menu.SAVED_FILES;
 import static in.prepskool.prepskoolacademy.model.NavigationMenu.Menu.SHARE;
 import static in.prepskool.prepskoolacademy.model.NavigationMenu.Menu.TOPPER_ANSWERS;
-
-//TODO: Display Name in Home
-//TODO: Encryption of Resources
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @Inject
@@ -319,7 +312,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     case NCERT_BOOK:
                         Intent intent = new Intent(HomeActivity.this, StandardActivity.class);
                         intent.putExtra("board_id", -1);
-                        intent.putExtra("section_name", "NCERT Book");
+                        intent.putExtra("home_item_name", "NCERT Book");
                         startActivity(intent);
                         break;
 
@@ -387,19 +380,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                     case NCERT_NOTES:
                         intent.putExtra("board_id", 2);
-                        intent.putExtra("section_name", "NCERT Notes");
+                        intent.putExtra("home_item_id", 5);
+                        intent.putExtra("home_item_name", "NCERT Notes");
                         startActivity(intent);
                         break;
 
                     case TOPPER_ANSWERS:
                         intent.putExtra("board_id", 2);
-                        intent.putExtra("section_name", "Topper Answer Sheet");
+                        intent.putExtra("home_item_id", 11);
+                        intent.putExtra("home_item_name", "Topper Answer Sheet");
                         startActivity(intent);
                         break;
 
                     case CHAPTER_WISE_QUES:
                         intent.putExtra("board_id", 2);
-                        intent.putExtra("section_name", "Chapter Wise Questions");
+                        intent.putExtra("home_item_id", 12);
+                        intent.putExtra("home_item_name", "Chapter Wise Questions");
                         startActivity(intent);
                         break;
                 }
@@ -416,7 +412,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                             case DELHI:
                                 intent.putExtra("board_id", 2);
-                                intent.putExtra("section_name", "Past Year Papers");
+                                intent.putExtra("home_item_id", 7);
+                                intent.putExtra("home_item_name", "Past Year Papers");
                                 startActivity(intent);
                                 break;
                         }
@@ -429,7 +426,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                             case DELHI:
                                 intent.putExtra("board_id", 2);
-                                intent.putExtra("section_name", "Marking Scheme");
+                                intent.putExtra("home_item_id", 14);
+                                intent.putExtra("home_item_name", "Marking Scheme");
                                 startActivity(intent);
                                 break;
                         }
@@ -442,7 +440,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                             case DELHI:
                                 intent.putExtra("board_id", 2);
-                                intent.putExtra("section_name", "Sample Paper");
+                                intent.putExtra("home_item_id", 9);
+                                intent.putExtra("home_item_name", "Sample Paper");
                                 startActivity(intent);
                                 break;
                         }
@@ -526,7 +525,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         switch (headerMenuId) {
         case ICSE:
         intent.putExtra("board_id", 2);
-        intent.putExtra("section_name", "Past Year Papers");
+        intent.putExtra("home_item_name", "Past Year Papers");
         startActivity(intent);
         break;
 

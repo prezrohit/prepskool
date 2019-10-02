@@ -8,7 +8,7 @@ import in.prepskool.prepskoolacademy.retrofit_model.StreamResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.SubjectResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Query;
+import retrofit2.http.Path;
 
 public interface ApiInterface {
 
@@ -17,32 +17,26 @@ public interface ApiInterface {
     Call<StandardResponse> getStandards();
 
 
-    @GET("resources")
-    Call<ResourceResponse> getBoardResources(@Query("board_id") int categoryId, @Query("standard_id") int standardId,
-                                        @Query("subject_id") int subjectId, @Query("resource_type_id") int resourceTypeId);
+    @GET("resources/{board_id}/{standard_id}/{subject_id}/{resource_type_id}")
+    Call<ResourceResponse> getBoardResources(@Path("board_id") int categoryId, @Path("standard_id") int standardId, @Path("subject_id") int subjectId, @Path("resource_type_id") int resourceTypeId);
 
 
-    @GET("resources")
-    Call<ResourceResponse> getOtherResources(@Query("resource_type_id") int resourceTypeId, @Query("standard_id") int standardId,
-                                             @Query("subject_id") int subjectId);
+    @GET("resources/{resource_type_id}/{standard_id}/{subject_id}")
+    Call<ResourceResponse> getOtherResources(@Path("resource_type_id") int resourceTypeId, @Path("standard_id") int standardId, @Path("subject_id") int subjectId);
 
 
-    @GET("subjects")
-    Call<SubjectResponse> getSubjects(@Query("standard_id") int standardId);
+    @GET("subjects/{standard_id}")
+    Call<SubjectResponse> getSubjects(@Path("standard_id") int standardId);
+
+
+    @GET("subjects/{standard_id}")
+    Call<StreamResponse> getStreams(@Path("standard_id") int standardId);
 
 
     @GET("home")
     Call<HomeResponse> getHomeResponse();
 
 
-    @GET("streams")
-    Call<StreamResponse> getStreams(@Query("standard_id") int standardId);
-
-
-    @GET("resourceTypes")
-    Call<ResourceTypeResponse> getResourceTypes(@Query("standard_id") int standardId, @Query("subject_id") int subjectId);
-
-
-    @GET("boards")
-    Call getBoards();
+    @GET("resourceTypes/{standard_id}/{subject_id}")
+    Call<ResourceTypeResponse> getResourceTypes(@Path("standard_id") int standardId, @Path("subject_id") int subjectId);
 }

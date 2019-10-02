@@ -3,12 +3,12 @@ package in.prepskool.prepskoolacademy.activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -20,18 +20,28 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.AlgorithmParameterSpec;
 
-import in.prepskool.prepskoolacademy.utils.EncryptionUtils;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+
 import in.prepskool.prepskoolacademy.utils.Endpoints;
 import in.prepskool.prepskoolacademy.R;
 
@@ -186,7 +196,6 @@ public class DownloadActivity extends AppCompatActivity {
         private PowerManager.WakeLock mWakeLock;
 
         DownloadTask(Context context) {
-            EncryptionUtils.generateKeys();
             this.context = context;
         }
 
@@ -212,7 +221,7 @@ public class DownloadActivity extends AppCompatActivity {
 
                 // download the file
                 input = connection.getInputStream();
-                output = new FileOutputStream(EXTERNAL_STORAGE_PATH + "/Prepskool/" + pdfSlug + ".pdf");
+                output = new FileOutputStream(EXTERNAL_STORAGE_PATH + File.separator + RESOURCE_DIRECTORY_NAME + File.separator + pdfSlug + ".pdf");
 
                 byte data[] = new byte[4096];
                 long total = 0;
@@ -270,27 +279,15 @@ public class DownloadActivity extends AppCompatActivity {
             if (result != null)
                 Log.v(TAG, "Download error: " + result);
             else {
+
+                Toast.makeText(context, "resource downloaded", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onPostExecute: downloaded");
-                File inputFile = new File(EXTERNAL_STORAGE_PATH + File.separator + RESOURCE_DIRECTORY_NAME + pdfSlug + ".pdf");
-                File outputFile = new File(EXTERNAL_STORAGE_PATH + File.separator + RESOURCE_DIRECTORY_NAME + pdfSlug + ".enc");
 
-                try {
-                    EncryptionUtils.initEncryption(new FileInputStream(inputFile), new FileOutputStream(outputFile));
-                    if (inputFile.delete()) {
-                        Log.d(TAG, "onDownloaded: File Encrypted and deleted");
-
-                    } else {
-                        Log.d(TAG, "onDownloaded: File Encrypted and not deleted");
-                    }
-
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                Intent intent = new Intent(DownloadActivity.this, PdfLoaderActivity.class);
+                /*Intent intent = new Intent(DownloadActivity.this, PdfLoaderActivity.class);
                 intent.putExtra("slug", pdfSlug);
                 intent.putExtra("link", pdfUrl);
-                //startActivity(intent);
-                //finish();
+                startActivity(intent);
+                finish();*/
             }
         }
     }

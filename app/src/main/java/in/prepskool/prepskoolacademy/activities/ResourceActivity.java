@@ -84,12 +84,12 @@ public class ResourceActivity extends AppCompatActivity {
         HtmlTextView htmlTextView = (HtmlTextView) findViewById(R.id.lbl_breadcrumb_resource);
         if (boardId == 2) {
             htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + homeItemName + "</font></small> >> <small><font color=\"#12c48b\">"
-                    + standardName + "</font></small> >> <small><font color='#ff6347'>" + subjectName
-                    + "</font></small> >> <small><font color='#ffca28'>" + resourceTypeName + "</font></small>",
+                            + standardName + "</font></small> >> <small><font color='#ff6347'>" + subjectName
+                            + "</font></small> >> <small><font color='#ffca28'>" + resourceTypeName + "</font></small>",
                     new HtmlResImageGetter(htmlTextView));
         } else {
             htmlTextView.setHtml("<small><font color=\"#29b6f6\">" + homeItemName + "</font></small> >> <small><font color=\"#12c48b\">"
-                    + standardName + "</font></small> >> <small><font color='#ffca28'>" + subjectName + "</font></small>",
+                            + standardName + "</font></small> >> <small><font color='#ffca28'>" + subjectName + "</font></small>",
                     new HtmlResImageGetter(htmlTextView));
         }
 
@@ -132,15 +132,18 @@ public class ResourceActivity extends AppCompatActivity {
 
             Log.d(TAG, "resourceTypeID: " + resourceTypeId);
             Log.d(TAG, "boardId: " + boardId);
-            call = apiInterface.getBoardResources(boardId, standardId, subjectId, resourceTypeId);
+            Log.d(TAG, "homeItemId: " + homeItemId);
+            call = apiInterface.getBoardResources(homeItemId, standardId, subjectId, resourceTypeId);
             call.enqueue(new Callback<ResourceResponse>() {
+
                 @Override
                 public void onResponse(@NonNull Call<ResourceResponse> call, @NonNull Response<ResourceResponse> response) {
-                    loadNativeAds();
                     progressBar.setVisibility(View.GONE);
-                    Log.d(TAG, "onResponse: " + response.message());
-                    if (response.isSuccessful()) {
-                        ArrayList<ResourceList> responseList = response.body().getResourceList();
+                    Log.d(TAG, "onResponse: " + response.isSuccessful());
+                    Log.d(TAG, "onResponse: status: " + response.body().getStatus());
+                    ArrayList<ResourceList> responseList = response.body().getResourceList();
+                    if (!responseList.toString().equals("[]")) {
+                        loadNativeAds();
                         for (ResourceList resourceList : responseList) {
                             sectionedResourceList.add(new SectionedResource(resourceList.getYear(), resourceList.getResourceList()));
                         }
@@ -168,10 +171,11 @@ public class ResourceActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NonNull Call<ResourceResponse> call, @NonNull Response<ResourceResponse> response) {
                     progressBar.setVisibility(View.GONE);
-                    loadNativeAds();
-                    Log.d(TAG, "onResponse: " + response.message());
-                    if (response.isSuccessful()) {
-                        ArrayList<ResourceList> responseList = response.body().getResourceList();
+                    Log.d(TAG, "onResponse: status: " + response.body().getStatus());
+                    Log.d(TAG, "onResponse: " + response.isSuccessful());
+                    ArrayList<ResourceList> responseList = response.body().getResourceList();
+                    if (!responseList.toString().equals("[]")) {
+                        loadNativeAds();
                         for (ResourceList resourceList : responseList) {
                             sectionedResourceList.add(new SectionedResource(resourceList.getYear(), resourceList.getResourceList()));
                         }
