@@ -20,11 +20,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.AboutUsActivity"/>
+        <activity android:name=".activities.ResetPasswordActivity"/>
+        <activity android:name=".activities.RegisterActivity"/>
+        <activity android:name=".activities.LoginActivity"/>
+        <activity android:name=".activities.AboutUsActivity" />
         <activity android:name=".activities.PrivacyPolicyActivity" />
-
         <activity android:name=".activities.SavedFilesActivity" />
-        <activity android:name=".activities.SplashActivity"
+        <activity
+            android:name=".activities.SplashActivity"
             android:theme="@style/AppTheme.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".activities.HomeActivity" />
         <activity android:name=".activities.StandardActivity" />
         <activity android:name=".activities.StreamActivity" />
@@ -42,7 +44,6 @@
         <activity android:name=".activities.ResourceActivity" />
         <activity android:name=".activities.DownloadActivity" />
         <activity android:name=".activities.PdfLoaderActivity" />
-
         <activity android:name=".activities.WebViewActivity">
             <intent-filter>
                 <action android:name="in.prepskoolacademy.activities.WebViewActiviy" />
@@ -50,16 +51,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.DialogActivity"
+            android:excludeFromRecents="true" />
 
-        <activity android:name=".activities.DialogActivity"
-            android:excludeFromRecents="true"/>
-
-        <service android:name=".services.CheckNetworkService"/>
+        <service android:name=".services.CheckNetworkService" />
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-9962192841456948~7213251824" />
-
     </application>
 
 </manifest>
