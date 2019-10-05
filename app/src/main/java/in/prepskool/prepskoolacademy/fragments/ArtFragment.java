@@ -2,35 +2,24 @@ package in.prepskool.prepskoolacademy.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
-import in.prepskool.prepskoolacademy.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.activities.NonBoardActivity;
 import in.prepskool.prepskoolacademy.activities.ResourceActivity;
 import in.prepskool.prepskoolacademy.activities.ResourceTypeActivity;
 import in.prepskool.prepskoolacademy.adapter.SubjectAdapter;
-import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
 import in.prepskool.prepskoolacademy.retrofit_model.Subject;
-import in.prepskool.prepskoolacademy.retrofit_model.SubjectResponse;
 import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class ArtFragment extends Fragment {
 
