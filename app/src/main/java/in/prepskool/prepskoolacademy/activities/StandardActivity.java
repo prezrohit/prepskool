@@ -24,12 +24,14 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import in.prepskool.prepskoolacademy.PrepskoolApplication;
+import in.prepskool.prepskoolacademy.app.AppSharedPreferences;
+import in.prepskool.prepskoolacademy.app.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.adapter.StandardAdapter;
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
 import in.prepskool.prepskoolacademy.retrofit_model.Standard;
 import in.prepskool.prepskoolacademy.retrofit_model.StandardResponse;
+import in.prepskool.prepskoolacademy.utils.ApiHeaders;
 import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -132,8 +134,9 @@ public class StandardActivity extends AppCompatActivity {
      */
     private void getStandard(ApiInterface apiInterface) {
         progressBar.setVisibility(View.VISIBLE);
+        AppSharedPreferences appSharedPreferences = new AppSharedPreferences(this);
         final AdRequest adRequest = new AdRequest.Builder().addTestDevice("658CE1DF8EB039135583BF17C48E41D8").build();
-        Call<StandardResponse> call = apiInterface.getStandards();
+        Call<StandardResponse> call = apiInterface.getStandards(ApiHeaders.ACCEPT_VALUE, ApiHeaders.BEARER + appSharedPreferences.getToken());
         call.enqueue(new Callback<StandardResponse>() {
             @Override
             public void onResponse(@NonNull Call<StandardResponse> call, @NonNull Response<StandardResponse> response) {

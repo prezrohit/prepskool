@@ -19,12 +19,14 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import in.prepskool.prepskoolacademy.PrepskoolApplication;
+import in.prepskool.prepskoolacademy.app.AppSharedPreferences;
+import in.prepskool.prepskoolacademy.app.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.adapter.SubjectAdapter;
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
 import in.prepskool.prepskoolacademy.retrofit_model.Subject;
 import in.prepskool.prepskoolacademy.retrofit_model.SubjectResponse;
+import in.prepskool.prepskoolacademy.utils.ApiHeaders;
 import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -119,8 +121,9 @@ public class NonBoardActivity extends AppCompatActivity {
      * @param standardId
      */
     private void getNonBoardSubjects(ApiInterface apiInterface, int standardId) {
+        AppSharedPreferences appSharedPreferences = new AppSharedPreferences(this);
         progressBar.setVisibility(View.VISIBLE);
-        Call<SubjectResponse> call = apiInterface.getSubjects(standardId);
+        Call<SubjectResponse> call = apiInterface.getSubjects(ApiHeaders.ACCEPT_VALUE, ApiHeaders.BEARER + appSharedPreferences.getToken(), standardId);
         call.enqueue(new Callback<SubjectResponse>() {
             @Override
             public void onResponse(@NonNull Call<SubjectResponse> call, @NonNull Response<SubjectResponse> response) {

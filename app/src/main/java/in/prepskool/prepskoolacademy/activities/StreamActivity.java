@@ -22,7 +22,8 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 
-import in.prepskool.prepskoolacademy.PrepskoolApplication;
+import in.prepskool.prepskoolacademy.app.AppSharedPreferences;
+import in.prepskool.prepskoolacademy.app.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.adapter.ViewPagerAdapter;
 import in.prepskool.prepskoolacademy.fragments.ArtFragment;
@@ -31,6 +32,7 @@ import in.prepskool.prepskoolacademy.fragments.ScienceFragment;
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
 import in.prepskool.prepskoolacademy.retrofit_model.Stream;
 import in.prepskool.prepskoolacademy.retrofit_model.StreamResponse;
+import in.prepskool.prepskoolacademy.utils.ApiHeaders;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -94,7 +96,8 @@ public class StreamActivity extends AppCompatActivity {
      * @param standardId
      */
     private void getStreamsAndSubjects(ApiInterface apiInterface, final int homeItemId, final int boardId, final int standardId) {
-        Call<StreamResponse> call = apiInterface.getStreams(standardId);
+        AppSharedPreferences appSharedPreferences = new AppSharedPreferences(this);
+        Call<StreamResponse> call = apiInterface.getStreams(ApiHeaders.ACCEPT_VALUE, ApiHeaders.BEARER + appSharedPreferences.getToken(), standardId);
         call.enqueue(new Callback<StreamResponse>() {
             @Override
             public void onResponse(@NonNull Call<StreamResponse> call, @NonNull Response<StreamResponse> response) {

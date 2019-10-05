@@ -40,7 +40,6 @@ public class SectionedHome {
         this.sectionLabel = label;
         for (NcertData ncertData : ncertList) {
             this.homeDataList.add(new Home(ncertData));
-            Log.d(TAG, "NCERT: " + ncertData.getDisplayName());
         }
     }
 
@@ -49,7 +48,6 @@ public class SectionedHome {
         this.sectionLabel = label;
         for (PracticePaperData practicePaperData : practicePapersList) {
             homeDataList.add(new Home(practicePaperData));
-            Log.d(TAG, "PRACTICE: " + practicePaperData.getDisplayName());
         }
     }
 
@@ -58,7 +56,6 @@ public class SectionedHome {
         this.sectionLabel = label;
         for (BoardData boardData : boardsList) {
             homeDataList.add(new Home(boardData));
-            Log.d(TAG, "BOARD: " + boardData.getDisplayName());
         }
     }
 }
