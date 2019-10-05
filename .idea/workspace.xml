@@ -149,8 +149,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StreamActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="98" column="21" lean-forward="true" selection-start-line="98" selection-start-column="21" selection-end-line="98" selection-end-column="21" />
+            <state relative-caret-position="204">
+              <caret line="103" lean-forward="true" selection-start-line="103" selection-end-line="103" />
             </state>
           </provider>
         </entry>
@@ -561,7 +561,14 @@
       <option name="project" value="LOCAL" />
       <updated>1569782927947</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Initialising Notifications">
+      <created>1570271667918</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1570271667918</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TodoView">
@@ -575,7 +582,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1314" height="741" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="DB Browser" order="0" weight="0.32980332" />
       <window_info id="Captures" order="1" sideWeight="0.50600344" side_tool="true" weight="0.2324159" />
@@ -590,9 +596,9 @@
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.6429752" />
       <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49526814" weight="0.6942149" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.3289256" />
-      <window_info anchor="bottom" id="Terminal" order="3" weight="0.3289256" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="3" visible="true" weight="0.3289256" />
       <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.50473183" side_tool="true" weight="0.52561986" />
-      <window_info anchor="bottom" id="Build" order="5" sideWeight="0.4960568" visible="true" weight="0.29917356" />
+      <window_info anchor="bottom" id="Build" order="5" sideWeight="0.4960568" weight="0.29917356" />
       <window_info anchor="bottom" id="Android Profiler" order="6" weight="0.3298969" />
       <window_info anchor="bottom" id="Run" order="7" weight="0.3289256" />
       <window_info anchor="bottom" id="Debug" order="8" />
@@ -665,7 +671,8 @@
     <MESSAGE value="Minor Bug Fixes" />
     <MESSAGE value="Future Build" />
     <MESSAGE value="Subject Fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Subject Fix" />
+    <MESSAGE value="Initialising Notifications" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initialising Notifications" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Home.java">
@@ -1052,8 +1059,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StreamActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="98" column="21" lean-forward="true" selection-start-line="98" selection-start-column="21" selection-end-line="98" selection-end-column="21" />
+        <state relative-caret-position="204">
+          <caret line="103" lean-forward="true" selection-start-line="103" selection-end-line="103" />
         </state>
       </provider>
     </entry>
