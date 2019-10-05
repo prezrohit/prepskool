@@ -19,6 +19,7 @@
         android:roundIcon="@drawable/ic_application"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".activities.ResetPasswordActivity"/>
         <activity android:name=".activities.RegisterActivity"/>
