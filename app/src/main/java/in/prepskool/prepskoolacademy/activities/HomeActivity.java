@@ -28,13 +28,16 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.common.api.Api;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import javax.inject.Inject;
 
-import in.prepskool.prepskoolacademy.PrepskoolApplication;
+import in.prepskool.prepskoolacademy.app.AppSharedPreferences;
+import in.prepskool.prepskoolacademy.app.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.adapter.ExpandableListAdapter;
 import in.prepskool.prepskoolacademy.adapter.HomeSectionRecyclerViewAdapter;
@@ -46,6 +49,7 @@ import in.prepskool.prepskoolacademy.retrofit_model.Ncert;
 import in.prepskool.prepskoolacademy.retrofit_model.PracticePaper;
 import in.prepskool.prepskoolacademy.retrofit_model.SectionedHome;
 import in.prepskool.prepskoolacademy.services.CheckNetworkService;
+import in.prepskool.prepskoolacademy.utils.ApiHeaders;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -124,7 +128,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
-
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -455,12 +458,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void getHomeResponse(ApiInterface apiInterface) {
         progressBar.setVisibility(View.VISIBLE);
-        Call<HomeResponse> call = apiInterface.getHomeResponse();
+        AppSharedPreferences appSharedPreferences = new AppSharedPreferences(this);
+        Log.d(TAG, "getHomeResponse: " + ApiHeaders.ACCEPT_VALUE);
+        Log.d(TAG, "getHomeResponse: " + ApiHeaders.BEARER + appSharedPreferences.getToken());
+        Call<HomeResponse> call = apiInterface.getHomeResponse(ApiHeaders.ACCEPT_VALUE, ApiHeaders.BEARER + appSharedPreferences.getToken());
         call.enqueue(new Callback<HomeResponse>() {
             @Override
             public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {
                 progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "onResponse: " + response.message());
+                Log.d(TAG, "onResponse: " + response.code());
                 Log.d(TAG, "onResponse: " + response.isSuccessful());
 
                 if (response.isSuccessful()) {

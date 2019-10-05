@@ -23,7 +23,7 @@ public class ApiClient {
     @Provides
     Gson provideGson() {
         GsonBuilder builder = new GsonBuilder();
-        return builder.create();
+        return builder.setLenient().create();
     }
 
     @Singleton

@@ -19,12 +19,14 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import in.prepskool.prepskoolacademy.PrepskoolApplication;
+import in.prepskool.prepskoolacademy.app.AppSharedPreferences;
+import in.prepskool.prepskoolacademy.app.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.adapter.ResourceTypeAdapter;
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
 import in.prepskool.prepskoolacademy.retrofit_model.ResourceType;
 import in.prepskool.prepskoolacademy.retrofit_model.ResourceTypeResponse;
+import in.prepskool.prepskoolacademy.utils.ApiHeaders;
 import in.prepskool.prepskoolacademy.utils.RecyclerTouchListener;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -113,8 +115,9 @@ public class ResourceTypeActivity extends AppCompatActivity {
      * @param subjectId
      */
     private void getResourceTypes(ApiInterface apiInterface, int standardId, int subjectId) {
+        AppSharedPreferences appSharedPreferences = new AppSharedPreferences(this);
         progressBar.setVisibility(View.VISIBLE);
-        Call<ResourceTypeResponse> call = apiInterface.getResourceTypes(standardId, subjectId);
+        Call<ResourceTypeResponse> call = apiInterface.getResourceTypes(ApiHeaders.ACCEPT_VALUE, ApiHeaders.BEARER + appSharedPreferences.getToken(), standardId, subjectId);
         call.enqueue(new Callback<ResourceTypeResponse>() {
             @Override
             public void onResponse(@NonNull Call<ResourceTypeResponse> call, @NonNull Response<ResourceTypeResponse> response) {

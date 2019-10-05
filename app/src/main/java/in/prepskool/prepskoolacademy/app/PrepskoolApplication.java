@@ -1,4 +1,4 @@
-package in.prepskool.prepskoolacademy;
+package in.prepskool.prepskoolacademy.app;
 
 import android.app.Application;
 

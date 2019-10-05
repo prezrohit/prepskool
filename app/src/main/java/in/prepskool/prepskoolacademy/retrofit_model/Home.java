@@ -1,7 +1,5 @@
 package in.prepskool.prepskoolacademy.retrofit_model;
 
-import android.util.Log;
-
 import in.prepskool.prepskoolacademy.R;
 
 public class Home {
@@ -17,7 +15,6 @@ public class Home {
         this.name = ncertData.getName();
         this.iconId = R.mipmap.ic_launcher;
         this.displayName = ncertData.getDisplayName();
-        Log.d(TAG, "Home NCERT: " + ncertData.getDisplayName());
     }
 
     public Home(PracticePaperData practicePaperData) {
@@ -25,7 +22,6 @@ public class Home {
         this.name = practicePaperData.getName();
         this.iconId = R.mipmap.ic_launcher;
         this.displayName = practicePaperData.getDisplayName();
-        Log.d(TAG, "Home PRACTICE: " + practicePaperData.getDisplayName());
     }
 
     public Home(BoardData boardData) {
@@ -33,7 +29,6 @@ public class Home {
         this.name = boardData.getName();
         this.iconId = R.mipmap.ic_launcher;
         this.displayName = boardData.getDisplayName();
-        Log.d(TAG, "Home BOARD: " + boardData.getDisplayName());
     }
 
     public int getId() {

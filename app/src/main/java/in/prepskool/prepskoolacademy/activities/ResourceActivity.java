@@ -26,13 +26,15 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import in.prepskool.prepskoolacademy.PrepskoolApplication;
+import in.prepskool.prepskoolacademy.app.AppSharedPreferences;
+import in.prepskool.prepskoolacademy.app.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.adapter.SectionRecyclerViewAdapter;
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
 import in.prepskool.prepskoolacademy.retrofit_model.ResourceList;
 import in.prepskool.prepskoolacademy.retrofit_model.ResourceResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.SectionedResource;
+import in.prepskool.prepskoolacademy.utils.ApiHeaders;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -126,6 +128,7 @@ public class ResourceActivity extends AppCompatActivity {
     }
 
     private void getResources(ApiInterface apiInterface, int homeItemId, int boardId, int standardId, int subjectId) {
+        AppSharedPreferences appSharedPreferences = new AppSharedPreferences(this);
         progressBar.setVisibility(View.VISIBLE);
         Call<ResourceResponse> call;
         if (boardId == 2) {
@@ -133,7 +136,7 @@ public class ResourceActivity extends AppCompatActivity {
             Log.d(TAG, "resourceTypeID: " + resourceTypeId);
             Log.d(TAG, "boardId: " + boardId);
             Log.d(TAG, "homeItemId: " + homeItemId);
-            call = apiInterface.getBoardResources(homeItemId, standardId, subjectId, resourceTypeId);
+            call = apiInterface.getBoardResources(ApiHeaders.ACCEPT_VALUE, ApiHeaders.BEARER + appSharedPreferences.getToken(), homeItemId, standardId, subjectId, resourceTypeId);
             call.enqueue(new Callback<ResourceResponse>() {
 
                 @Override
@@ -166,7 +169,7 @@ public class ResourceActivity extends AppCompatActivity {
             });
 
         } else {
-            call = apiInterface.getOtherResources(homeItemId, standardId, subjectId);
+            call = apiInterface.getOtherResources(ApiHeaders.ACCEPT_VALUE, ApiHeaders.BEARER + appSharedPreferences.getToken(), homeItemId, standardId, subjectId);
             call.enqueue(new Callback<ResourceResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<ResourceResponse> call, @NonNull Response<ResourceResponse> response) {

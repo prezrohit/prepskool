@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import in.prepskool.prepskoolacademy.R;
+import in.prepskool.prepskoolacademy.app.AppSharedPreferences;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -13,15 +14,20 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_SplashActivity);
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_splash);
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                AppSharedPreferences appSharedPreferences = new AppSharedPreferences(SplashActivity.this);
+                if (appSharedPreferences.getEmail() != null) {
+                    startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+                    finish();
+
+                } else {
+                    startActivity(new Intent(SplashActivity.this, RegisterActivity.class));
+                    finish();
+                }
             }
         },1000);
     }
