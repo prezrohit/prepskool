@@ -13,6 +13,9 @@ import com.payumoney.core.PayUmoneySdkInitializer;
 import com.payumoney.core.entity.TransactionResponse;
 import com.payumoney.sdkui.ui.utils.PayUmoneyFlowManager;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import javax.inject.Inject;
 
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
@@ -71,9 +74,17 @@ public class TestPaymentActivity extends AppCompatActivity {
 
         try {
             paymentParam = builder.build();
-            PaymentParams paymentParams = new PaymentParams("4xCiKohu", "txn_ps", "20", "prepskool",
-                    "prezrohit", "prezrohit@gmail.com", "1nAqMe8r4d", "", "", "" ,"" ,"");
-            getHashKey(apiInterface, paymentParams);
+            //PaymentParams paymentParams = new PaymentParams("4xCiKohu", "txn_ps", "20", "prepskool", "prezrohit", "prezrohit@gmail.com", "1nAqMe8r4d", "", "", "" ,"" ,"");
+
+            String hashSequence = "4xCiKohu|txn_ps|20|prepskool|prezrohit|prezrohit@gmail.com|" + "" + "|" + "" + "|" + "" + "|" + "" + "|" + "" +  "||||||1nAqMe8r4d";
+            String serverCalculatedHash= calculateHash("SHA-512", hashSequence);
+            paymentParam.setMerchantHash(serverCalculatedHash);
+            PayUmoneyFlowManager.startPayUMoneyFlow(paymentParam, TestPaymentActivity.this, R.style.AppTheme_default, false);
+
+
+
+
+            //getHashKey(apiInterface, paymentParams);
 
         } catch (Exception e) {
             Log.e(TAG, " error s: " + e.toString());
@@ -103,6 +114,22 @@ public class TestPaymentActivity extends AppCompatActivity {
                 Toast.makeText(TestPaymentActivity.this, "error communicating the server", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private static String calculateHash(String type, String hashString) {
+        StringBuilder hash = new StringBuilder();
+        MessageDigest messageDigest = null;
+        try {
+            messageDigest = MessageDigest.getInstance(type);
+            messageDigest.update(hashString.getBytes());
+            byte[] mdbytes = messageDigest.digest();
+            for (byte hashByte : mdbytes) {
+                hash.append(Integer.toString((hashByte & 0xff) + 0x100, 16).substring(1));
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return hash.toString();
     }
 
     @Override
