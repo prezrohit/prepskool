@@ -10,6 +10,7 @@ import in.prepskool.prepskoolacademy.retrofit_model.SubjectResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -45,5 +46,5 @@ public interface ApiInterface {
 
 
     @POST("payumoney")
-    Call<String> getServerHash(@Body PaymentParams params);
+    Call<String> getServerHash(@Header("Accept") String accept, @Header("Authorization") String auth, @Body PaymentParams params);
 }

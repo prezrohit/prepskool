@@ -72,7 +72,7 @@ public class TestPaymentActivity extends AppCompatActivity {
         try {
             paymentParam = builder.build();
             PaymentParams paymentParams = new PaymentParams("4xCiKohu", "txn_ps", "20", "prepskool",
-                    "prezrohit", "prezrohit@gmail.com", "1nAqMe8r4d");
+                    "prezrohit", "prezrohit@gmail.com", "1nAqMe8r4d", "", "", "" ,"" ,"");
             getHashKey(apiInterface, paymentParams);
 
         } catch (Exception e) {
@@ -81,7 +81,7 @@ public class TestPaymentActivity extends AppCompatActivity {
     }
 
     private void getHashKey(ApiInterface apiInterface, final PaymentParams paymentParams) {
-        Call<String> call = apiInterface.getServerHash(paymentParams);
+        Call<String> call = apiInterface.getServerHash("application/json", "", paymentParams);
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
