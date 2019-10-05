@@ -28,6 +28,10 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -104,6 +108,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         setToolbar();
 
+        FirebaseMessaging.getInstance().subscribeToTopic("prepskool")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Successfull";
+                        if (!task.isSuccessful()) {
+                            msg = "Failed";
+                        }
+                        Log.d(TAG, msg);
+                    }
+                });
+
+
         final FloatingActionButton fab = findViewById(R.id.fab_notifications);
         drawer = findViewById(R.id.drawer_layout);
         progressBar = findViewById(R.id.progress_bar);
@@ -150,6 +167,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 setToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
     }
 
     private Toolbar setToolbar() {
