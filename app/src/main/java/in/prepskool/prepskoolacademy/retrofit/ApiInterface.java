@@ -1,13 +1,16 @@
 package in.prepskool.prepskoolacademy.retrofit;
 
 import in.prepskool.prepskoolacademy.retrofit_model.HomeResponse;
+import in.prepskool.prepskoolacademy.retrofit_model.PaymentParams;
 import in.prepskool.prepskoolacademy.retrofit_model.ResourceResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.ResourceTypeResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.StandardResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.StreamResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.SubjectResponse;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ApiInterface {
@@ -39,4 +42,8 @@ public interface ApiInterface {
 
     @GET("resourceTypes/{standard_id}/{subject_id}")
     Call<ResourceTypeResponse> getResourceTypes(@Path("standard_id") int standardId, @Path("subject_id") int subjectId);
+
+
+    @POST("payumoney")
+    Call<String> getServerHash(@Body PaymentParams params);
 }

@@ -40,6 +40,7 @@ import javax.inject.Inject;
 
 import in.prepskool.prepskoolacademy.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.R;
+import in.prepskool.prepskoolacademy.TestPaymentActivity;
 import in.prepskool.prepskoolacademy.adapter.ExpandableListAdapter;
 import in.prepskool.prepskoolacademy.adapter.HomeSectionRecyclerViewAdapter;
 import in.prepskool.prepskoolacademy.model.NavigationMenu;
@@ -146,7 +147,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent notificationIntent = new Intent(HomeActivity.this, NotificationActivity.class);
+                Intent notificationIntent = new Intent(HomeActivity.this, TestPaymentActivity.class);
                 startActivity(notificationIntent);
             }
         });
