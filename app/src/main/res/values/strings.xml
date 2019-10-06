@@ -81,5 +81,8 @@ By accessing or using the Service you agree to be bound by these Terms. If you d
     <string name="string_send_otp">Send OTP</string>
     <string name="string_login_instead">Login Instead?</string>
     <string name="string_create_account">Create Account</string>
+    <string name="string_pay">PAY</string>
+    <string name="string_number">Phone Number</string>
+    <string name="string_amount">Amount</string>
 
 </resources>

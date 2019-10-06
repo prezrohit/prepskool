@@ -12,6 +12,7 @@ import in.prepskool.prepskoolacademy.components.DaggerBoardComponent;
 import in.prepskool.prepskoolacademy.components.DaggerHomeComponent;
 import in.prepskool.prepskoolacademy.components.DaggerLoginComponent;
 import in.prepskool.prepskoolacademy.components.DaggerRegisterComponent;
+import in.prepskool.prepskoolacademy.components.DaggerPaymentComponent;
 import in.prepskool.prepskoolacademy.components.DaggerResourceComponent;
 import in.prepskool.prepskoolacademy.components.DaggerResourceTypeComponent;
 import in.prepskool.prepskoolacademy.components.DaggerStandardComponent;
@@ -20,6 +21,7 @@ import in.prepskool.prepskoolacademy.components.DaggerSubjectComponent;
 import in.prepskool.prepskoolacademy.components.HomeComponent;
 import in.prepskool.prepskoolacademy.components.LoginComponent;
 import in.prepskool.prepskoolacademy.components.RegisterComponent;
+import in.prepskool.prepskoolacademy.components.PaymentComponent;
 import in.prepskool.prepskoolacademy.components.ResourceComponent;
 import in.prepskool.prepskoolacademy.components.ResourceTypeComponent;
 import in.prepskool.prepskoolacademy.components.StandardComponent;
@@ -35,6 +37,7 @@ public class PrepskoolApplication extends Application {
     private RegisterComponent registerComponent;
     private StandardComponent standardComponent;
     private ResourceComponent resourceComponent;
+    private PaymentComponent paymentComponent;
     private SubjectComponent subjectComponent;
     private StreamComponent streamComponent;
     private LoginComponent loginComponent;
@@ -58,6 +61,10 @@ public class PrepskoolApplication extends Application {
                 .build();
 
         resourceComponent = DaggerResourceComponent.builder()
+                .apiClient(new ApiClient(Endpoints.BASE_URL))
+                .build();
+
+        paymentComponent = DaggerPaymentComponent.builder()
                 .apiClient(new ApiClient(Endpoints.BASE_URL))
                 .build();
 
@@ -100,6 +107,11 @@ public class PrepskoolApplication extends Application {
     @Inject
     public ResourceComponent getResourceComponent() {
         return resourceComponent;
+    }
+
+    @Inject
+    public PaymentComponent getPaymentComponent() {
+        return paymentComponent;
     }
 
     @Inject

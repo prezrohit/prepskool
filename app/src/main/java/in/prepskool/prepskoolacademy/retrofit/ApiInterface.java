@@ -5,6 +5,7 @@ import in.prepskool.prepskoolacademy.retrofit_model.Login;
 import in.prepskool.prepskoolacademy.retrofit_model.LoginResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.Register;
 import in.prepskool.prepskoolacademy.retrofit_model.RegisterResponse;
+import in.prepskool.prepskoolacademy.retrofit_model.PaymentParams;
 import in.prepskool.prepskoolacademy.retrofit_model.ResourceResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.ResourceTypeResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.StandardResponse;
@@ -14,6 +15,8 @@ import in.prepskool.prepskoolacademy.utils.ApiHeaders;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -53,6 +56,12 @@ public interface ApiInterface {
     @POST("login")
     Call<LoginResponse> login(@Body Login login);
 
+    @GET("resourceTypes/{standard_id}/{subject_id}")
+    Call<ResourceTypeResponse> getResourceTypes(@Path("standard_id") int standardId, @Path("subject_id") int subjectId);
+
+
+    @POST("payumoney")
+    Call<String> getServerHash(@Header("Accept") String accept, @Header("Authorization") String auth, @Body PaymentParams params);
 
     @POST("register")
     Call<RegisterResponse> register(@Body Register register);
