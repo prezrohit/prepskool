@@ -76,32 +76,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b138a9a4-3b6b-468f-9ccf-9de3c68e7c83" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/app/AppSharedPreferences.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/utils/ApiHeaders.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/PrepskoolApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/app/PrepskoolApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/LoginActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/NonBoardActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/NonBoardActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/RegisterActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceTypeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResourceTypeActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/SplashActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/SplashActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StandardActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StandardActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StreamActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/StreamActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ArtFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ArtFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ScienceFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/fragments/ScienceFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit/ApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit/ApiClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit/ApiInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit/ApiInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Home.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/SectionedHome.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/SectionedHome.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -124,19 +99,6 @@
         <projects_view />
       </state>
     </system>
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6">
-              <caret line="112" lean-forward="true" selection-start-line="112" selection-end-line="112" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -227,8 +189,19 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Non-Source Files'; set:Project Non-Source Files; class com.jetbrains.cidr.lang.search.scopes.ProjectSourcesScopeProvider$NonSourceFilesScope">
+          <expand>
+            <path>
+              <item name="PrepskoolAcademy" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/workspace/AndroidStudioProjects/PrepskoolAcademy" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -280,17 +253,6 @@
               <item name="assets" type="462c0819:PsiDirectoryNode" />
               <item name="pdfjs" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Non-Source Files'; set:Project Non-Source Files; class com.jetbrains.cidr.lang.search.scopes.ProjectSourcesScopeProvider$NonSourceFilesScope">
-          <expand>
-            <path>
-              <item name="PrepskoolAcademy" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="~/workspace/AndroidStudioProjects/PrepskoolAcademy" type="442cc68d:ScopeViewTreeModel$RootNode" />
             </path>
           </expand>
           <select />
@@ -544,7 +506,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1314" height="741" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="DB Browser" order="0" weight="0.32980332" />
       <window_info id="Captures" order="1" sideWeight="0.50600344" side_tool="true" weight="0.2324159" />
@@ -704,12 +665,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_downloaded_items.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
           <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/SavedFilesActivity.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -746,8 +707,8 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_group_child.xml">
-      <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/ResetPasswordActivity.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -757,12 +718,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_reset_password.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="15" column="51" selection-start-line="15" selection-start-column="51" selection-end-line="15" selection-end-column="51" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/components/LoginComponent.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -853,7 +814,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="489">
           <caret line="98" column="32" selection-start-line="98" selection-start-column="32" selection-end-line="98" selection-end-column="32" />
@@ -868,6 +828,7 @@
           </folding>
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/Login.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -877,7 +838,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="472">
           <caret line="74" column="20" selection-start-line="74" selection-start-column="20" selection-end-line="74" selection-end-column="20" />
@@ -890,6 +850,7 @@
           </folding>
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/app/PrepskoolApplication.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -981,13 +942,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AndroidStudio/DeviceExplorer/xiaomi-redmi_5-7bb5e4877ce5/data/data/in.prepskool.prepskoolacademy/shared_prefs/PrepskoolAcademy.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/AndroidStudio/DeviceExplorer/xiaomi-redmi_5-7bb5e4877ce5/data/data/in.prepskool.prepskoolacademy/shared_prefs/PrepskoolAcademy.xml" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/HomeResponse.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
