@@ -2,8 +2,10 @@ package in.prepskool.prepskoolacademy;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,6 +32,11 @@ public class TestPaymentActivity extends AppCompatActivity {
     @Inject
     Retrofit retrofit;
 
+    private EditText edtName;
+    private EditText edtEmail;
+    private EditText edtNumber;
+    private EditText edtAmount;
+
     PayUmoneySdkInitializer.PaymentParam.Builder builder = new PayUmoneySdkInitializer.PaymentParam.Builder();
 
     PayUmoneySdkInitializer.PaymentParam paymentParam = null;
@@ -44,26 +51,44 @@ public class TestPaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_payment);
 
-        txnId = "txnid" + System.currentTimeMillis();
+        edtAmount = findViewById(R.id.edt_amount);
+        edtEmail = findViewById(R.id.edt_email);
+        edtName = findViewById(R.id.edt_name);
+        edtNumber = findViewById(R.id.edt_number);
 
         ((PrepskoolApplication) getApplication()).getPaymentComponent().inject(this);
         apiInterface = retrofit.create(ApiInterface.class);
     }
 
     public void startPayment(View view) {
-        initPaymentHandler();
+        String name = edtName.getText().toString();
+        String email = edtEmail.getText().toString();
+        String amount = edtAmount.getText().toString();
+        String number = edtNumber.getText().toString();
+
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(amount) || TextUtils.isEmpty(number) || !email.contains("@")
+                || Integer.parseInt(amount) < 1) {
+            Toast.makeText(this, "inputs invalid", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "startPayment: " + name);
+            Log.d(TAG, "startPayment: " + email);
+            Log.d(TAG, "startPayment: " + Integer.parseInt(amount));
+            Log.d(TAG, "startPayment: " + number);
+
+        } else {
+            initPaymentHandler(name, email, amount, number);
+        }
     }
 
-    private void initPaymentHandler() {
+    private void initPaymentHandler(String name, String email, String amount, String number) {
         builder.setKey("4xCiKohu")
                 .setMerchantId("6814167")
-                .setAmount("20")
-                .setPhone("8126374588")
+                .setAmount(amount)
+                .setPhone(number)
                 .setIsDebug(true)
                 .setTxnId("txn_ps")
                 .setProductName("prepskool")
-                .setFirstName("prezrohit")
-                .setEmail("prezrohit@gmail.com")
+                .setFirstName(name)
+                .setEmail(email)
                 .setsUrl("https://google.com")
                 .setfUrl("https://gmail.com")
                 .setUdf1("")
@@ -76,13 +101,10 @@ public class TestPaymentActivity extends AppCompatActivity {
             paymentParam = builder.build();
             //PaymentParams paymentParams = new PaymentParams("4xCiKohu", "txn_ps", "20", "prepskool", "prezrohit", "prezrohit@gmail.com", "1nAqMe8r4d", "", "", "" ,"" ,"");
 
-            String hashSequence = "4xCiKohu|txn_ps|20|prepskool|prezrohit|prezrohit@gmail.com|" + "" + "|" + "" + "|" + "" + "|" + "" + "|" + "" +  "||||||1nAqMe8r4d";
-            String serverCalculatedHash= calculateHash("SHA-512", hashSequence);
+            String hashSequence = "4xCiKohu|txn_ps|" + amount + "|prepskool|" + name + "|" + email + "|" + "" + "|" + "" + "|" + "" + "|" + "" + "|" + "" + "||||||1nAqMe8r4d";
+            String serverCalculatedHash = calculateHash("SHA-512", hashSequence);
             paymentParam.setMerchantHash(serverCalculatedHash);
             PayUmoneyFlowManager.startPayUMoneyFlow(paymentParam, TestPaymentActivity.this, R.style.AppTheme_default, false);
-
-
-
 
             //getHashKey(apiInterface, paymentParams);
 

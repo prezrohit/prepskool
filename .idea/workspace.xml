@@ -79,6 +79,8 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/TestPaymentActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/TestPaymentActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_test_payment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_test_payment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -107,8 +109,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_test_payment.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="795">
+              <caret line="49" column="39" selection-start-line="49" selection-start-column="39" selection-end-line="49" selection-end-column="39" />
+              <folding>
+                <element signature="e#462#481#0" expanded="true" />
+                <element signature="e#516#535#0" expanded="true" />
+                <element signature="e#598#618#0" expanded="true" />
+                <element signature="e#804#823#0" expanded="true" />
+                <element signature="e#857#876#0" expanded="true" />
+                <element signature="e#944#963#0" expanded="true" />
+                <element signature="e#985#1000#0" expanded="true" />
+                <element signature="e#1145#1164#0" expanded="true" />
+                <element signature="e#1198#1217#0" expanded="true" />
+                <element signature="e#1320#1343#0" expanded="true" />
+                <element signature="e#1486#1505#0" expanded="true" />
+                <element signature="e#1539#1558#0" expanded="true" />
+                <element signature="e#1666#1689#0" expanded="true" />
+                <element signature="e#1858#1877#0" expanded="true" />
+                <element signature="e#1911#1930#0" expanded="true" />
+                <element signature="e#1971#1990#0" expanded="true" />
+              </folding>
             </state>
           </provider>
           <provider editor-type-id="android-designer2" />
@@ -117,31 +137,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/TestPaymentActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
+            <state relative-caret-position="281">
+              <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
               <folding>
                 <element signature="method#getHashKey#0;class#TestPaymentActivity#0" />
                 <element signature="method#calculateHash#0;class#TestPaymentActivity#0" />
                 <element signature="method#onActivityResult#0;class#TestPaymentActivity#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit/ApiInterface.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="27" column="67" selection-start-line="27" selection-start-column="67" selection-end-line="27" selection-end-column="67" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1292">
-              <caret line="149" column="93" selection-start-line="149" selection-start-column="93" selection-end-line="149" selection-end-column="93" />
             </state>
           </provider>
         </entry>
@@ -212,7 +214,6 @@
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_about_us.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/services/MyFirebaseMessagingService.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_test_payment.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/components/PaymentComponent.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/PrepskoolApplication.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java" />
@@ -220,6 +221,7 @@
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/PaymentParams.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit/ApiInterface.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_test_payment.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/TestPaymentActivity.java" />
       </list>
     </option>
@@ -236,7 +238,77 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Non-Source Files'; set:Project Non-Source Files; class com.jetbrains.cidr.lang.search.scopes.ProjectSourcesScopeProvider$NonSourceFilesScope">
+          <expand>
+            <path>
+              <item name="PrepskoolAcademy" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/workspace/AndroidStudioProjects/PrepskoolAcademy" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="pdfjs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="pdfjs" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Xiaomi_Redmi_5_API_27" />
@@ -827,14 +899,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_test_payment.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/components/PaymentComponent.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -880,25 +944,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1292">
-          <caret line="149" column="93" selection-start-line="149" selection-start-column="93" selection-end-line="149" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/TestPaymentActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="73" lean-forward="true" selection-start-line="73" selection-end-line="73" />
-          <folding>
-            <element signature="method#getHashKey#0;class#TestPaymentActivity#0" />
-            <element signature="method#calculateHash#0;class#TestPaymentActivity#0" />
-            <element signature="method#onActivityResult#0;class#TestPaymentActivity#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.6.1/c049bb9eef2d3870a41a7be3d5aa3ba12cd2277d/retrofit-2.6.1-sources.jar!/retrofit2/http/Header.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -906,10 +951,55 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/HomeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="149" column="93" selection-start-line="149" selection-start-column="93" selection-end-line="149" selection-end-column="93" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit/ApiInterface.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="27" column="67" selection-start-line="27" selection-start-column="67" selection-end-line="27" selection-end-column="67" />
+        <state relative-caret-position="51">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_test_payment.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="795">
+          <caret line="49" column="39" selection-start-line="49" selection-start-column="39" selection-end-line="49" selection-end-column="39" />
+          <folding>
+            <element signature="e#462#481#0" expanded="true" />
+            <element signature="e#516#535#0" expanded="true" />
+            <element signature="e#598#618#0" expanded="true" />
+            <element signature="e#804#823#0" expanded="true" />
+            <element signature="e#857#876#0" expanded="true" />
+            <element signature="e#944#963#0" expanded="true" />
+            <element signature="e#985#1000#0" expanded="true" />
+            <element signature="e#1145#1164#0" expanded="true" />
+            <element signature="e#1198#1217#0" expanded="true" />
+            <element signature="e#1320#1343#0" expanded="true" />
+            <element signature="e#1486#1505#0" expanded="true" />
+            <element signature="e#1539#1558#0" expanded="true" />
+            <element signature="e#1666#1689#0" expanded="true" />
+            <element signature="e#1858#1877#0" expanded="true" />
+            <element signature="e#1911#1930#0" expanded="true" />
+            <element signature="e#1971#1990#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/TestPaymentActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
+          <folding>
+            <element signature="method#getHashKey#0;class#TestPaymentActivity#0" />
+            <element signature="method#calculateHash#0;class#TestPaymentActivity#0" />
+            <element signature="method#onActivityResult#0;class#TestPaymentActivity#0" />
+          </folding>
         </state>
       </provider>
     </entry>
