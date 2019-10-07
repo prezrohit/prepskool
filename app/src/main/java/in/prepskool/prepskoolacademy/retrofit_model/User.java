@@ -5,6 +5,7 @@ public class User {
     private String name;
     private String email;
     private String role;
+    private String phone;
 
     public int getId() {
         return id;
@@ -20,5 +21,9 @@ public class User {
 
     public String getRole() {
         return role;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 }

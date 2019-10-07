@@ -86,5 +86,6 @@ By accessing or using the Service you agree to be bound by these Terms. If you d
     <string name="string_amount">Amount</string>
     <string name="string_hint_resource">Resource Name</string>
     <string name="string_resource_price">Resource Price</string>
+    <string name="string_phone">Phone (without country code)</string>
 
 </resources>

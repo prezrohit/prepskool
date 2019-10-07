@@ -9,6 +9,7 @@ public class AppSharedPreferences {
     private static String KEY_NAME = "name";
     private static String KEY_EMAIL = "email";
     private static String KEY_TOKEN = "token";
+    private static String KEY_PHONE = "phone";
 
     private SharedPreferences.Editor editor;
 
@@ -35,6 +36,15 @@ public class AppSharedPreferences {
 
     public String getEmail() {
         return sharedPreferences.getString(KEY_EMAIL, null);
+    }
+
+    public void setPhone(String phone) {
+        editor.putString(KEY_PHONE, phone);
+        editor.apply();
+    }
+
+    public String getPhone() {
+        return sharedPreferences.getString(KEY_PHONE, null);
     }
 
     public void setToken(String token) {

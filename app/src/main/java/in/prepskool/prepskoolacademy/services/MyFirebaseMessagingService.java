@@ -17,6 +17,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import in.prepskool.prepskoolacademy.activities.HomeActivity;
+import in.prepskool.prepskoolacademy.activities.SplashActivity;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
@@ -39,8 +40,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             setupChannels(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
         }
 
-        Intent notificationIntent = new Intent(this, HomeActivity.class);
-        notificationIntent.putExtra("body", remoteMessage.getNotification().getBody());
+        Intent notificationIntent = new Intent(this, SplashActivity.class);
+        notificationIntent.putExtra("body", "1");
         notificationIntent.setAction(Intent.ACTION_MAIN);
         notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
