@@ -18,8 +18,10 @@ import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.app.AppSharedPreferences;
 import in.prepskool.prepskoolacademy.app.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
+import in.prepskool.prepskoolacademy.retrofit_model.LoginResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.Register;
 import in.prepskool.prepskoolacademy.retrofit_model.RegisterResponse;
+import in.prepskool.prepskoolacademy.retrofit_model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -27,7 +29,8 @@ import retrofit2.Retrofit;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    @Inject Retrofit retrofit;
+    @Inject
+    Retrofit retrofit;
 
     private EditText edtName;
     private EditText edtEmail;
@@ -109,12 +112,15 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(@NonNull Call<RegisterResponse> call, @NonNull Response<RegisterResponse> response) {
                     progressBar.setVisibility(View.GONE);
+                    Log.d(TAG, "onResponse: " + response.code());
                     Log.d(TAG, "onResponse: " + response.isSuccessful());
+                    RegisterResponse registerResponse = response.body();
                     if (response.isSuccessful()) {
-                        if (response.body().getStatus().equals(SUCCESS)) {
+                        if (registerResponse.getStatus().equals(SUCCESS)) {
                             AppSharedPreferences appSharedPreferences = new AppSharedPreferences(RegisterActivity.this);
-                            appSharedPreferences.setToken(response.body().getToken());
+                            appSharedPreferences.setToken(registerResponse.getToken());
                             appSharedPreferences.setEmail(email);
+                            appSharedPreferences.setName(registerResponse.getUser().getName());
                             startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
                             finish();
 

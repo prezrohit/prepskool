@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,56 +21,61 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.inject.Inject;
 
-import in.prepskool.prepskoolacademy.app.PrepskoolApplication;
+import in.prepskool.prepskoolacademy.activities.DownloadActivity;
+import in.prepskool.prepskoolacademy.app.AppSharedPreferences;
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
 import in.prepskool.prepskoolacademy.retrofit_model.PaymentParams;
+import in.prepskool.prepskoolacademy.utils.ApiHeaders;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class TestPaymentActivity extends AppCompatActivity {
+public class PaymentActivity extends AppCompatActivity {
 
     @Inject
     Retrofit retrofit;
 
-    private EditText edtName;
-    private EditText edtEmail;
+    private PayUmoneySdkInitializer.PaymentParam.Builder builder = new PayUmoneySdkInitializer.PaymentParam.Builder();
+    private PayUmoneySdkInitializer.PaymentParam paymentParam = null;
+
+    private AppSharedPreferences appSharedPreferences;
     private EditText edtNumber;
-    private EditText edtAmount;
 
-    PayUmoneySdkInitializer.PaymentParam.Builder builder = new PayUmoneySdkInitializer.PaymentParam.Builder();
+    private String amount;
+    private String resourceName;
+    private String link;
+    private String slug;
 
-    PayUmoneySdkInitializer.PaymentParam paymentParam = null;
-
-    private String txnId;
-    private ApiInterface apiInterface;
-
-    private static final String TAG = "TestPaymentActivity";
+    private static final String TAG = "PaymentActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_payment);
+        setContentView(R.layout.activity_payment);
 
-        edtAmount = findViewById(R.id.edt_amount);
-        edtEmail = findViewById(R.id.edt_email);
-        edtName = findViewById(R.id.edt_name);
+        amount = getIntent().getStringExtra("price");
+        resourceName = getIntent().getStringExtra("name");
+        link = getIntent().getStringExtra("link");
+        slug = getIntent().getStringExtra("slug");
+
         edtNumber = findViewById(R.id.edt_number);
+        TextView lblResourceName = findViewById(R.id.lbl_resource_name);
+        TextView lblResourcePrice = findViewById(R.id.lbl_resource_price);
+        lblResourceName.setText(resourceName);
+        lblResourcePrice.setText("Price: Rs. " + amount);
 
-        ((PrepskoolApplication) getApplication()).getPaymentComponent().inject(this);
-        apiInterface = retrofit.create(ApiInterface.class);
+        appSharedPreferences = new AppSharedPreferences(this);
     }
 
     public void startPayment(View view) {
-        String name = edtName.getText().toString();
-        String email = edtEmail.getText().toString();
-        String amount = edtAmount.getText().toString();
+        String name = "prepskool";
+        String email = appSharedPreferences.getEmail();
         String number = edtNumber.getText().toString();
 
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(amount) || TextUtils.isEmpty(number) || !email.contains("@")
-                || Integer.parseInt(amount) < 1) {
-            Toast.makeText(this, "inputs invalid", Toast.LENGTH_SHORT).show();
+                || Integer.parseInt(amount) < 1 || number.length() != 10) {
+            Toast.makeText(this, "input invalid", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "startPayment: " + name);
             Log.d(TAG, "startPayment: " + email);
             Log.d(TAG, "startPayment: " + Integer.parseInt(amount));
@@ -81,8 +87,8 @@ public class TestPaymentActivity extends AppCompatActivity {
     }
 
     private void initPaymentHandler(String name, String email, String amount, String number) {
-        builder.setKey("4xCiKohu")
-                .setMerchantId("6814167")
+        builder.setKey("ve3teDmQ")
+                .setMerchantId("6782572")
                 .setAmount(amount)
                 .setPhone(number)
                 .setIsDebug(true)
@@ -100,43 +106,15 @@ public class TestPaymentActivity extends AppCompatActivity {
 
         try {
             paymentParam = builder.build();
-            //PaymentParams paymentParams = new PaymentParams("4xCiKohu", "txn_ps", "20", "prepskool", "prezrohit", "prezrohit@gmail.com", "1nAqMe8r4d", "", "", "" ,"" ,"");
 
-            String hashSequence = "4xCiKohu|txn_ps|" + amount + "|prepskool|" + name + "|" + email + "|" + "" + "|" + "" + "|" + "" + "|" + "" + "|" + "" + "||||||1nAqMe8r4d";
+            String hashSequence = "ve3teDmQ|txn_ps|" + amount + "|prepskool|" + name + "|" + email + "|" + "" + "|" + "" + "|" + "" + "|" + "" + "|" + "" + "||||||ZCT4YegoGu";
             String serverCalculatedHash = calculateHash("SHA-512", hashSequence);
             paymentParam.setMerchantHash(serverCalculatedHash);
-            PayUmoneyFlowManager.startPayUMoneyFlow(paymentParam, TestPaymentActivity.this, R.style.AppTheme_default, false);
-
-            //getHashKey(apiInterface, paymentParams);
+            PayUmoneyFlowManager.startPayUMoneyFlow(paymentParam, PaymentActivity.this, R.style.AppTheme_default, false);
 
         } catch (Exception e) {
             Log.e(TAG, " error s: " + e.toString());
         }
-    }
-
-    private void getHashKey(ApiInterface apiInterface, final PaymentParams paymentParams) {
-        Call<String> call = apiInterface.getServerHash("application/json", "", paymentParams);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                if (response.body() != null) {
-                    Log.d(TAG, "hash: " + response.body());
-                    String hash = response.body();
-                    paymentParam.setMerchantHash(hash);
-                    PayUmoneyFlowManager.startPayUMoneyFlow(paymentParam, TestPaymentActivity.this, R.style.AppTheme_default, false);
-
-                } else {
-                    Log.d(TAG, "onResponse: server hash empty: " + response.body());
-                    Toast.makeText(TestPaymentActivity.this, "some error occurred", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
-                Toast.makeText(TestPaymentActivity.this, "error communicating the server", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private static String calculateHash(String type, String hashString) {
@@ -158,9 +136,9 @@ public class TestPaymentActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-// PayUMoneySdk: Success -- payuResponse{"id":225642,"mode":"CC","status":"success","unmappedstatus":"captured","key":"9yrcMzso","txnid":"223013","transaction_fee":"20.00","amount":"20.00","cardCategory":"domestic","discount":"0.00","addedon":"2018-12-31 09:09:43","productinfo":"a2z shop","firstname":"kamal","email":"kamal.bunkar07@gmail.com","phone":"9144040888","hash":"b22172fcc0ab6dbc0a52925ebbd0297cca6793328a8dd1e61ef510b9545d9c851600fdbdc985960f803412c49e4faa56968b3e70c67fe62eaed7cecacdfdb5b3","field1":"562178","field2":"823386","field3":"2061","field4":"MC","field5":"167227964249","field6":"00","field7":"0","field8":"3DS","field9":" Verification of Secure Hash Failed: E700 -- Approved -- Transaction Successful -- Unable to be determined--E000","payment_source":"payu","PG_TYPE":"AXISPG","bank_ref_no":"562178","ibibo_code":"VISA","error_code":"E000","Error_Message":"No Error","name_on_card":"payu","card_no":"401200XXXXXX1112","is_seamless":1,"surl":"https://www.payumoney.com/sandbox/payment/postBackParam.do","furl":"https://www.payumoney.com/sandbox/payment/postBackParam.do"}
-        // Result Code is -1 send from Payumoney activity
-        Log.e("StartPaymentActivity", "request code " + requestCode + " resultcode " + resultCode);
+
+        Log.v("StartPaymentActivity", "request code: " + requestCode + " resultcode: " + resultCode);
+
         if (requestCode == PayUmoneyFlowManager.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK && data != null) {
             TransactionResponse transactionResponse = data.getParcelableExtra(PayUmoneyFlowManager.INTENT_EXTRA_TRANSACTION_RESPONSE);
             if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
@@ -168,6 +146,11 @@ public class TestPaymentActivity extends AppCompatActivity {
                     //Success Transaction
                     Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Payment Status: success");
+                    Intent intent = new Intent(PaymentActivity.this, DownloadActivity.class);
+                    intent.putExtra("name", resourceName);
+                    intent.putExtra("link", link);
+                    intent.putExtra("slug", slug);
+                    startActivity(intent);
 
                 } else {
                     //Failure Transaction
@@ -186,5 +169,30 @@ public class TestPaymentActivity extends AppCompatActivity {
                 Log.d(TAG, "Both objects are null!");
             }*/
         }
+    }
+
+    private void getHashKey(ApiInterface apiInterface, final PaymentParams paymentParams) {
+        Call<String> call = apiInterface.getServerHash(ApiHeaders.BEARER + appSharedPreferences.getToken(), paymentParams);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                if (response.body() != null) {
+                    Log.d(TAG, "hash: " + response.body());
+                    String hash = response.body();
+                    paymentParam.setMerchantHash(hash);
+                    PayUmoneyFlowManager.startPayUMoneyFlow(paymentParam, PaymentActivity.this, R.style.AppTheme_default, false);
+
+                } else {
+                    Log.d(TAG, "onResponse: server hash empty: " + response.body());
+                    Toast.makeText(PaymentActivity.this, "some error occurred", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
+                Toast.makeText(PaymentActivity.this, "error communicating the server", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

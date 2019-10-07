@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 public class AppSharedPreferences {
 
     private SharedPreferences sharedPreferences;
+    private static String KEY_NAME = "name";
     private static String KEY_EMAIL = "email";
     private static String KEY_TOKEN = "token";
 
@@ -16,6 +17,15 @@ public class AppSharedPreferences {
         sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         editor.apply();
+    }
+
+    public void setName(String name) {
+        editor.putString(KEY_NAME, name);
+        editor.apply();
+    }
+
+    public String getName() {
+        return sharedPreferences.getString(KEY_NAME, null);
     }
 
     public void setEmail(String email) {

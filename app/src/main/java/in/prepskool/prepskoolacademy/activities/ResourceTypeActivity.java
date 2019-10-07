@@ -117,7 +117,7 @@ public class ResourceTypeActivity extends AppCompatActivity {
     private void getResourceTypes(ApiInterface apiInterface, int standardId, int subjectId) {
         AppSharedPreferences appSharedPreferences = new AppSharedPreferences(this);
         progressBar.setVisibility(View.VISIBLE);
-        Call<ResourceTypeResponse> call = apiInterface.getResourceTypes(ApiHeaders.ACCEPT_VALUE, ApiHeaders.BEARER + appSharedPreferences.getToken(), standardId, subjectId);
+        Call<ResourceTypeResponse> call = apiInterface.getResourceTypes(ApiHeaders.BEARER + appSharedPreferences.getToken(), standardId, subjectId);
         call.enqueue(new Callback<ResourceTypeResponse>() {
             @Override
             public void onResponse(@NonNull Call<ResourceTypeResponse> call, @NonNull Response<ResourceTypeResponse> response) {

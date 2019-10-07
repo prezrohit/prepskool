@@ -136,7 +136,7 @@ public class StandardActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         AppSharedPreferences appSharedPreferences = new AppSharedPreferences(this);
         final AdRequest adRequest = new AdRequest.Builder().addTestDevice("658CE1DF8EB039135583BF17C48E41D8").build();
-        Call<StandardResponse> call = apiInterface.getStandards(ApiHeaders.ACCEPT_VALUE, ApiHeaders.BEARER + appSharedPreferences.getToken());
+        Call<StandardResponse> call = apiInterface.getStandards(ApiHeaders.BEARER + appSharedPreferences.getToken());
         call.enqueue(new Callback<StandardResponse>() {
             @Override
             public void onResponse(@NonNull Call<StandardResponse> call, @NonNull Response<StandardResponse> response) {

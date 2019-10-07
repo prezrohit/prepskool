@@ -8,28 +8,31 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import androidx.annotation.NonNull;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
@@ -38,12 +41,12 @@ import java.util.LinkedHashMap;
 
 import javax.inject.Inject;
 
-import in.prepskool.prepskoolacademy.app.AppSharedPreferences;
-import in.prepskool.prepskoolacademy.app.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.R;
-import in.prepskool.prepskoolacademy.TestPaymentActivity;
+import in.prepskool.prepskoolacademy.PaymentActivity;
 import in.prepskool.prepskoolacademy.adapter.ExpandableListAdapter;
 import in.prepskool.prepskoolacademy.adapter.HomeSectionRecyclerViewAdapter;
+import in.prepskool.prepskoolacademy.app.AppSharedPreferences;
+import in.prepskool.prepskoolacademy.app.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.model.NavigationMenu;
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
 import in.prepskool.prepskoolacademy.retrofit_model.Board;
@@ -91,6 +94,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private static final int PERMISSION_REQUEST_CODE = 200;
     private String TAG = HomeActivity.class.getSimpleName();
+
+    private boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +154,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent notificationIntent = new Intent(HomeActivity.this, TestPaymentActivity.class);
+                Intent notificationIntent = new Intent(HomeActivity.this, NotificationActivity.class);
                 startActivity(notificationIntent);
             }
         });
@@ -261,7 +266,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce=false;
+                }
+            }, 2000);
         }
     }
 
@@ -384,8 +403,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-        //TODO: NavigationView intent passing
-
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, 
@@ -478,7 +495,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         AppSharedPreferences appSharedPreferences = new AppSharedPreferences(this);
         Log.d(TAG, "getHomeResponse: " + ApiHeaders.ACCEPT_VALUE);
         Log.d(TAG, "getHomeResponse: " + ApiHeaders.BEARER + appSharedPreferences.getToken());
-        Call<HomeResponse> call = apiInterface.getHomeResponse(ApiHeaders.ACCEPT_VALUE, ApiHeaders.BEARER + appSharedPreferences.getToken());
+        Call<HomeResponse> call = apiInterface.getHomeResponse(ApiHeaders.BEARER + appSharedPreferences.getToken());
         call.enqueue(new Callback<HomeResponse>() {
             @Override
             public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {

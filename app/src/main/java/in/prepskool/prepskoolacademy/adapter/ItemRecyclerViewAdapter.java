@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 
 import java.util.ArrayList;
+import java.util.Objects;
 
+import in.prepskool.prepskoolacademy.PaymentActivity;
 import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.activities.DownloadActivity;
 import in.prepskool.prepskoolacademy.activities.PdfLoaderActivity;
@@ -43,10 +45,13 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
         holder.lblResourceName.setText(resource.getName());
 
+        final String price = resource.getPrice();
+
         holder.btnViewResource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, PdfLoaderActivity.class);
+                intent.putExtra("price", price);
                 intent.putExtra("name", resource.getName());
                 intent.putExtra("link", resource.getUrl());
                 intent.putExtra("slug", resource.getSlug());
@@ -57,10 +62,27 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         holder.btnDownloadResource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DownloadActivity.class);
-                intent.putExtra("name", resource.getName());
-                intent.putExtra("link", resource.getUrl());
-                intent.putExtra("slug", resource.getSlug());
+                Intent intent;
+                if (price == null) {
+                    intent = new Intent(context, DownloadActivity.class);
+                    intent.putExtra("name", resource.getName());
+                    intent.putExtra("link", resource.getUrl());
+                    intent.putExtra("slug", resource.getSlug());
+
+                } else if (Objects.equals(price, "")) {
+                    intent = new Intent(context, DownloadActivity.class);
+                    intent.putExtra("name", resource.getName());
+                    intent.putExtra("link", resource.getUrl());
+                    intent.putExtra("slug", resource.getSlug());
+
+                } else {
+                    intent = new Intent(context, PaymentActivity.class);
+                    intent.putExtra("price", price);
+                    intent.putExtra("name", resource.getName());
+                    intent.putExtra("link", resource.getUrl());
+                    intent.putExtra("slug", resource.getSlug());
+                }
+
                 context.startActivity(intent);
             }
         });

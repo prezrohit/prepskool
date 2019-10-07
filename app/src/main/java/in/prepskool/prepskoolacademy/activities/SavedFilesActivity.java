@@ -21,7 +21,9 @@ import in.prepskool.prepskoolacademy.model.Home;
 
 public class SavedFilesActivity extends AppCompatActivity {
 
+    private static final String RESOURCE_DIRECTORY_NAME = ".Prepskool";
     private static final String TAG = "SavedFilesActivity";
+    private static final File EXTERNAL_STORAGE_PATH = Environment.getExternalStorageDirectory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class SavedFilesActivity extends AppCompatActivity {
             }
         });
 
-        final String path = Environment.getExternalStorageDirectory().toString() + "/Prepskool";
+        final String path = EXTERNAL_STORAGE_PATH + File.separator + "Android" + File.separator + "data" + File.separator + RESOURCE_DIRECTORY_NAME;
 
         File directory = new File(path);
         final File[] files = directory.listFiles();

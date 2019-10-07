@@ -20,6 +20,7 @@ import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
 import in.prepskool.prepskoolacademy.retrofit_model.Login;
 import in.prepskool.prepskoolacademy.retrofit_model.LoginResponse;
+import in.prepskool.prepskoolacademy.retrofit_model.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -83,11 +84,13 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                     progressBar.setVisibility(View.GONE);
                     Log.d(TAG, "onResponse: " + response.code());
+                    LoginResponse loginResponse = response.body();
                     if (response.isSuccessful()) {
-                        if (response.body().getStatus().equals(SUCCESS)) {
+                        if (loginResponse.getStatus().equals(SUCCESS)) {
                             AppSharedPreferences appSharedPreferences = new AppSharedPreferences(LoginActivity.this);
                             appSharedPreferences.setEmail(email);
-                            appSharedPreferences.setToken(response.body().getToken());
+                            appSharedPreferences.setToken(loginResponse.getToken());
+                            appSharedPreferences.setName(loginResponse.getUser().getName());
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                             finish();
 

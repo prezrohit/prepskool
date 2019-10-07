@@ -45,7 +45,7 @@ public class DownloadActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 200;
     private String TAG = DownloadActivity.class.getSimpleName();
 
-    private static final String RESOURCE_DIRECTORY_NAME = "Prepskool";
+    private static final String RESOURCE_DIRECTORY_NAME = ".Prepskool";
     private static final File EXTERNAL_STORAGE_PATH = Environment.getExternalStorageDirectory();
 
     @Override
@@ -58,7 +58,6 @@ public class DownloadActivity extends AppCompatActivity {
         String pdfName = getIntent().getStringExtra("name");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -100,7 +99,7 @@ public class DownloadActivity extends AppCompatActivity {
             boolean folderExists = createFolder();
 
             if (folderExists) {
-                folderPath = new File(EXTERNAL_STORAGE_PATH + File.separator + RESOURCE_DIRECTORY_NAME).getAbsolutePath();
+                folderPath = new File(EXTERNAL_STORAGE_PATH + File.separator + "Android" + File.separator + "data" + File.separator + RESOURCE_DIRECTORY_NAME).getAbsolutePath();
             } else {
                 Log.v(TAG, "Error Creating Prepskool Directory");
             }
@@ -124,7 +123,7 @@ public class DownloadActivity extends AppCompatActivity {
         boolean folderExists = createFolder();
 
         if (folderExists) {
-            folderPath = new File(EXTERNAL_STORAGE_PATH + File.separator + "Prepskool").getAbsolutePath();
+            folderPath = new File(EXTERNAL_STORAGE_PATH + File.separator + "Android" + File.separator + "data" + File.separator + RESOURCE_DIRECTORY_NAME).getAbsolutePath();
         } else {
             Log.v(TAG, "Error Creating Prepskool Directory");
         }
@@ -168,7 +167,7 @@ public class DownloadActivity extends AppCompatActivity {
 
     private boolean createFolder() {
 
-        File folder = new File(EXTERNAL_STORAGE_PATH + File.separator + "Prepskool");
+        File folder = new File(EXTERNAL_STORAGE_PATH + File.separator + "Android" + File.separator + "data" + File.separator + RESOURCE_DIRECTORY_NAME);
         boolean success = true;
         if (!folder.exists()) {
             success = folder.mkdirs();
@@ -208,7 +207,7 @@ public class DownloadActivity extends AppCompatActivity {
 
                 // download the file
                 input = connection.getInputStream();
-                output = new FileOutputStream(EXTERNAL_STORAGE_PATH + File.separator + RESOURCE_DIRECTORY_NAME + File.separator + pdfSlug + ".pdf");
+                output = new FileOutputStream(EXTERNAL_STORAGE_PATH + File.separator + "Android" + File.separator + "data" + File.separator + RESOURCE_DIRECTORY_NAME + File.separator + pdfSlug + ".pdf");
 
                 byte data[] = new byte[4096];
                 long total = 0;

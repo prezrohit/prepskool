@@ -18,9 +18,10 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_application"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".TestPaymentActivity"></activity>
+        <activity android:name=".PaymentActivity"></activity>
         <activity android:name=".activities.ResetPasswordActivity"/>
         <activity android:name=".activities.RegisterActivity"/>
         <activity android:name=".activities.LoginActivity"/>
@@ -70,6 +71,8 @@
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-9962192841456948~7213251824" />
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
     </application>
 
 </manifest>

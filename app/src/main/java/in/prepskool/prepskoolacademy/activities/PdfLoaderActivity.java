@@ -14,11 +14,12 @@ import android.webkit.WebView;
 
 import java.io.File;
 
+import in.prepskool.prepskoolacademy.PaymentActivity;
 import in.prepskool.prepskoolacademy.R;
 
 public class PdfLoaderActivity extends AppCompatActivity {
 
-    private static final String RESOURCE_DIRECTORY = "Prepskool";
+    private static final String RESOURCE_DIRECTORY = ".Prepskool";
     private static final String EXTERNAL_STORAGE_PATH = Environment.getExternalStorageDirectory().toString();
 
     private static final String TAG = "PdfLoaderActivity";
@@ -34,7 +35,7 @@ public class PdfLoaderActivity extends AppCompatActivity {
         WebView webView = (WebView) findViewById(R.id.webView);
         Context context = PdfLoaderActivity.this;
 
-        File file = new File(EXTERNAL_STORAGE_PATH + File.separator + RESOURCE_DIRECTORY + File.separator + pdfSlug + ".pdf");
+        File file = new File(EXTERNAL_STORAGE_PATH + File.separator + "Android" + File.separator + "data" + File.separator + RESOURCE_DIRECTORY + File.separator + pdfSlug + ".pdf");
 
         if (file.exists()) {
 
@@ -46,7 +47,7 @@ public class PdfLoaderActivity extends AppCompatActivity {
             webView.getSettings().setSupportZoom(true);
             webView.getSettings().setDisplayZoomControls(true);
 
-            Uri path = Uri.parse(EXTERNAL_STORAGE_PATH + File.separator + RESOURCE_DIRECTORY + File.separator + pdfSlug + ".pdf");
+            Uri path = Uri.parse(EXTERNAL_STORAGE_PATH + File.separator + "Android" + File.separator + "data" + File.separator + RESOURCE_DIRECTORY + File.separator + pdfSlug + ".pdf");
 
             webView.loadUrl("file:///android_asset/pdfjs/web/viewer.html?file=file://" + path);
 
@@ -60,11 +61,24 @@ public class PdfLoaderActivity extends AppCompatActivity {
 
         } else {
 
+            String price = getIntent().getStringExtra("price");
             String pdfLink = getIntent().getStringExtra("link");
-            Intent intent = new Intent(context, DownloadActivity.class);
-            intent.putExtra("link", pdfLink);
-            intent.putExtra("slug", pdfSlug);
-            intent.putExtra("name", pdfName);
+
+            Intent intent;
+            if (price == null || Integer.valueOf(price) == 0) {
+                intent = new Intent(context, DownloadActivity.class);
+                intent.putExtra("link", pdfLink);
+                intent.putExtra("slug", pdfSlug);
+                intent.putExtra("name", pdfName);
+
+            } else {
+                intent = new Intent(context, PaymentActivity.class);
+                intent.putExtra("price", price);
+                intent.putExtra("link", pdfLink);
+                intent.putExtra("slug", pdfSlug);
+                intent.putExtra("name", pdfName);
+            }
+
             context.startActivity(intent);
             finish();
         }

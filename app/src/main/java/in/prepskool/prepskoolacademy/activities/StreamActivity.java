@@ -97,7 +97,7 @@ public class StreamActivity extends AppCompatActivity {
      */
     private void getStreamsAndSubjects(ApiInterface apiInterface, final int homeItemId, final int boardId, final int standardId) {
         AppSharedPreferences appSharedPreferences = new AppSharedPreferences(this);
-        Call<StreamResponse> call = apiInterface.getStreams(ApiHeaders.ACCEPT_VALUE, ApiHeaders.BEARER + appSharedPreferences.getToken(), standardId);
+        Call<StreamResponse> call = apiInterface.getStreams(ApiHeaders.BEARER + appSharedPreferences.getToken(), standardId);
         call.enqueue(new Callback<StreamResponse>() {
             @Override
             public void onResponse(@NonNull Call<StreamResponse> call, @NonNull Response<StreamResponse> response) {

@@ -1,6 +1,6 @@
 package in.prepskool.prepskoolacademy.retrofit_model;
 
-//TODO: price field in resource API
+//TODO: get name in login API from server
 
 import com.google.gson.annotations.SerializedName;
 

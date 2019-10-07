@@ -84,5 +84,7 @@ By accessing or using the Service you agree to be bound by these Terms. If you d
     <string name="string_pay">PAY</string>
     <string name="string_number">Phone Number</string>
     <string name="string_amount">Amount</string>
+    <string name="string_hint_resource">Resource Name</string>
+    <string name="string_resource_price">Resource Price</string>
 
 </resources>

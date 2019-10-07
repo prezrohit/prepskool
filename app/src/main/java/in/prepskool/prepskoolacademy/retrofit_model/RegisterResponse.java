@@ -4,6 +4,7 @@ public class RegisterResponse {
 
     private String status;
     private String token;
+    private User user;
 
     public String getStatus() {
         return status;
@@ -11,5 +12,9 @@ public class RegisterResponse {
 
     public String getToken() {
         return token;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

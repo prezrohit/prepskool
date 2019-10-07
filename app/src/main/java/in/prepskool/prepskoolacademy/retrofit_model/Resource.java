@@ -16,6 +16,7 @@ public class Resource {
     private String userId;
     private String linkType;
     private String isPaid;
+    private String price;
     private Board board;
     private Stream stream;
     private Subject subject;
@@ -96,6 +97,10 @@ public class Resource {
 
     public Standard getStandard() {
         return standard;
+    }
+
+    public String getPrice() {
+        return price;
     }
 
     public ResourceType getResourceType() {
