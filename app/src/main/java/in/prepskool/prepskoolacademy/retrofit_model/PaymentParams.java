@@ -1,7 +1,5 @@
 package in.prepskool.prepskoolacademy.retrofit_model;
 
-//TODO: get name in login API from server
-
 import com.google.gson.annotations.SerializedName;
 
 public class PaymentParams {
