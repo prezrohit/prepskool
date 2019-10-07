@@ -2,17 +2,14 @@ package in.prepskool.prepskoolacademy.app;
 
 import android.app.Application;
 
-import com.google.android.gms.common.api.Api;
-
 import javax.inject.Inject;
 
-import in.prepskool.prepskoolacademy.activities.StreamActivity;
 import in.prepskool.prepskoolacademy.components.BoardComponent;
 import in.prepskool.prepskoolacademy.components.DaggerBoardComponent;
 import in.prepskool.prepskoolacademy.components.DaggerHomeComponent;
 import in.prepskool.prepskoolacademy.components.DaggerLoginComponent;
-import in.prepskool.prepskoolacademy.components.DaggerRegisterComponent;
 import in.prepskool.prepskoolacademy.components.DaggerPaymentComponent;
+import in.prepskool.prepskoolacademy.components.DaggerRegisterComponent;
 import in.prepskool.prepskoolacademy.components.DaggerResourceComponent;
 import in.prepskool.prepskoolacademy.components.DaggerResourceTypeComponent;
 import in.prepskool.prepskoolacademy.components.DaggerStandardComponent;
@@ -20,15 +17,14 @@ import in.prepskool.prepskoolacademy.components.DaggerStreamComponent;
 import in.prepskool.prepskoolacademy.components.DaggerSubjectComponent;
 import in.prepskool.prepskoolacademy.components.HomeComponent;
 import in.prepskool.prepskoolacademy.components.LoginComponent;
-import in.prepskool.prepskoolacademy.components.RegisterComponent;
 import in.prepskool.prepskoolacademy.components.PaymentComponent;
+import in.prepskool.prepskoolacademy.components.RegisterComponent;
 import in.prepskool.prepskoolacademy.components.ResourceComponent;
 import in.prepskool.prepskoolacademy.components.ResourceTypeComponent;
 import in.prepskool.prepskoolacademy.components.StandardComponent;
 import in.prepskool.prepskoolacademy.components.StreamComponent;
 import in.prepskool.prepskoolacademy.components.SubjectComponent;
 import in.prepskool.prepskoolacademy.retrofit.ApiClient;
-import in.prepskool.prepskoolacademy.retrofit_model.Login;
 import in.prepskool.prepskoolacademy.utils.Endpoints;
 
 public class PrepskoolApplication extends Application {
