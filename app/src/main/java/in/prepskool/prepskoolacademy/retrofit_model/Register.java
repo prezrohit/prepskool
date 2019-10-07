@@ -4,10 +4,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class Register {
 
-    public Register(String name, String email, String password) {
+    public Register(String name, String email, String password, String phone) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.phone = phone;
     }
 
     @SerializedName("name")
@@ -18,4 +19,7 @@ public class Register {
 
     @SerializedName("password")
     private String password;
+
+    @SerializedName("phone")
+    private String phone;
 }

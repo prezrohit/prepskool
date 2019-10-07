@@ -28,25 +28,6 @@
         android:hint="@string/string_resource_price"
         android:textSize="@dimen/dimen_18dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/dimen_30dp"
-        android:textSize="15sp"
-        android:text="Enter Phone Number to Continue"
-        />
-
-    <EditText
-        android:id="@+id/edt_number"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_50dp"
-        android:layout_marginEnd="@dimen/dimen_50dp"
-        android:layout_marginTop="@dimen/dimen_20dp"
-        android:hint="Phone Number"
-        android:inputType="numberSigned"/>
-
     <Button
         android:id="@+id/btn_pay"
         android:layout_width="match_parent"

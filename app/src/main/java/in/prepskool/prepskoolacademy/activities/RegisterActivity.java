@@ -34,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText edtName;
     private EditText edtEmail;
+    private EditText edtPhone;
     private EditText edtPassword;
     private EditText edtConfirmPassword;
 
@@ -48,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         edtName = findViewById(R.id.edt_name);
+        edtPhone = findViewById(R.id.ed_phone);
         edtEmail = findViewById(R.id.edt_email);
         edtPassword = findViewById(R.id.edt_password);
         edtConfirmPassword = findViewById(R.id.edt_confirm_password);
@@ -58,10 +60,22 @@ public class RegisterActivity extends AppCompatActivity {
     public void onClickRegister(View view) {
         boolean isInvalid = false;
 
+        final String phone = edtPhone.getText().toString();
         final String name = edtName.getText().toString().trim();
         final String email = edtEmail.getText().toString().trim();
         String password = edtPassword.getText().toString().trim();
         String confirmPassword = edtConfirmPassword.getText().toString().trim();
+
+
+        if (TextUtils.isEmpty(phone)) {
+            isInvalid = true;
+            edtPhone.setError("this cannot be empty");
+
+        } else if (!phone.matches("[-+]?\\d*\\.?\\d+") || phone.length() != 10) {
+            isInvalid = true;
+            edtPhone.setError("this doesn't look like a phone number");
+        }
+
 
         if (TextUtils.isEmpty(name)) {
             isInvalid = true;
@@ -107,20 +121,21 @@ public class RegisterActivity extends AppCompatActivity {
 
             ((PrepskoolApplication) getApplication()).getRegisterComponent().inject(this);
             ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-            Call<RegisterResponse> call = apiInterface.register(new Register(name, email, password));
+            Call<RegisterResponse> call = apiInterface.register(new Register(name, email, password, phone));
             call.enqueue(new Callback<RegisterResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<RegisterResponse> call, @NonNull Response<RegisterResponse> response) {
                     progressBar.setVisibility(View.GONE);
-                    Log.d(TAG, "onResponse: " + response.code());
                     Log.d(TAG, "onResponse: " + response.isSuccessful());
+                    Log.d(TAG, "onResponse: " + response.code());
                     RegisterResponse registerResponse = response.body();
                     if (response.isSuccessful()) {
                         if (registerResponse.getStatus().equals(SUCCESS)) {
                             AppSharedPreferences appSharedPreferences = new AppSharedPreferences(RegisterActivity.this);
+                            appSharedPreferences.setPhone(registerResponse.getUser().getPhone());
+                            appSharedPreferences.setName(registerResponse.getUser().getName());
                             appSharedPreferences.setToken(registerResponse.getToken());
                             appSharedPreferences.setEmail(email);
-                            appSharedPreferences.setName(registerResponse.getUser().getName());
                             startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
                             finish();
 

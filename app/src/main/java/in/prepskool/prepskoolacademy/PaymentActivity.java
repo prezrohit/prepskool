@@ -40,7 +40,6 @@ public class PaymentActivity extends AppCompatActivity {
     private PayUmoneySdkInitializer.PaymentParam paymentParam = null;
 
     private AppSharedPreferences appSharedPreferences;
-    private EditText edtNumber;
 
     private String amount;
     private String resourceName;
@@ -59,7 +58,6 @@ public class PaymentActivity extends AppCompatActivity {
         link = getIntent().getStringExtra("link");
         slug = getIntent().getStringExtra("slug");
 
-        edtNumber = findViewById(R.id.edt_number);
         TextView lblResourceName = findViewById(R.id.lbl_resource_name);
         TextView lblResourcePrice = findViewById(R.id.lbl_resource_price);
         lblResourceName.setText(resourceName);
@@ -71,7 +69,7 @@ public class PaymentActivity extends AppCompatActivity {
     public void startPayment(View view) {
         String name = "prepskool";
         String email = appSharedPreferences.getEmail();
-        String number = edtNumber.getText().toString();
+        String number = appSharedPreferences.getPhone();
 
         if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(amount) || TextUtils.isEmpty(number) || !email.contains("@")
                 || Integer.parseInt(amount) < 1 || number.length() != 10) {
