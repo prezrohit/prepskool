@@ -142,6 +142,3 @@ public class PdfLoaderActivity extends AppCompatActivity {
         }
     }
 }
-
-
-//TODO: delete file onDestroy
