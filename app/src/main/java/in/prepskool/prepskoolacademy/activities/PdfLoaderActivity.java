@@ -7,10 +7,17 @@ import android.os.Bundle;
 import android.os.Environment;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+
+import com.pvryan.easycrypt.ECResultListener;
+import com.pvryan.easycrypt.symmetric.ECSymmetric;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
@@ -19,6 +26,8 @@ import in.prepskool.prepskoolacademy.R;
 
 public class PdfLoaderActivity extends AppCompatActivity {
 
+    private String decResourceFilePath;
+    private String encResourceFilePath;
     private static final String RESOURCE_DIRECTORY = ".Prepskool";
     private static final String EXTERNAL_STORAGE_PATH = Environment.getExternalStorageDirectory().toString();
 
@@ -32,32 +41,67 @@ public class PdfLoaderActivity extends AppCompatActivity {
         String pdfSlug = getIntent().getStringExtra("slug");
         String pdfName = getIntent().getStringExtra("name");
 
-        WebView webView = (WebView) findViewById(R.id.webView);
+        Log.d(TAG, "onCreate: " + pdfSlug);
+
         Context context = PdfLoaderActivity.this;
 
-        File file = new File(EXTERNAL_STORAGE_PATH + File.separator + "Android" + File.separator + "data" + File.separator + RESOURCE_DIRECTORY + File.separator + pdfSlug + ".pdf");
+        decResourceFilePath = EXTERNAL_STORAGE_PATH + File.separator + "Android" + File.separator + "data" + File.separator + RESOURCE_DIRECTORY + File.separator + pdfSlug + ".pdf";
+        encResourceFilePath = EXTERNAL_STORAGE_PATH + File.separator + "Android" + File.separator + "data" + File.separator + RESOURCE_DIRECTORY + File.separator + pdfSlug + ".pdf.ecrypt";
+
+        final File file = new File(encResourceFilePath);
 
         if (file.exists()) {
 
-            webView.setWebChromeClient(new WebChromeClient());
-            webView.getSettings().setBuiltInZoomControls(true);
-            webView.getSettings().setJavaScriptEnabled(true);
-            webView.getSettings().setAllowFileAccessFromFileURLs(true);
-            webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
-            webView.getSettings().setSupportZoom(true);
-            webView.getSettings().setDisplayZoomControls(true);
+            Log.d(TAG, "onCreate: file exists");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ECSymmetric ecSymmetric = new ECSymmetric();
+                    ecSymmetric.decrypt(file, getString(R.string.string_resource_encryption_password), new ECResultListener() {
+                        @Override
+                        public void onProgress(int i, long l, long l1) {
+                        }
 
-            Uri path = Uri.parse(EXTERNAL_STORAGE_PATH + File.separator + "Android" + File.separator + "data" + File.separator + RESOURCE_DIRECTORY + File.separator + pdfSlug + ".pdf");
+                        @Override
+                        public <T> void onSuccess(T t) {
+                            Log.d(TAG, "result: " + t.toString());
+                            Log.d(TAG, "onSuccess: file decrypted");
 
-            webView.loadUrl("file:///android_asset/pdfjs/web/viewer.html?file=file://" + path);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    WebView webView = (WebView) findViewById(R.id.webView);
+                                    webView.setWebChromeClient(new WebChromeClient());
+                                    webView.getSettings().setBuiltInZoomControls(true);
+                                    webView.getSettings().setJavaScriptEnabled(true);
+                                    webView.getSettings().setAllowFileAccessFromFileURLs(true);
+                                    webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+                                    webView.getSettings().setSupportZoom(true);
+                                    webView.getSettings().setDisplayZoomControls(true);
 
-            Window window = getWindow();
+                                    Uri path = Uri.parse(decResourceFilePath);
 
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                                    webView.loadUrl("file:///android_asset/pdfjs/web/viewer.html?file=file://" + path);
 
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                                    Window window = getWindow();
 
-            window.setStatusBarColor(ContextCompat.getColor(PdfLoaderActivity.this, R.color.black));
+                                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+                                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+                                    window.setStatusBarColor(ContextCompat.getColor(PdfLoaderActivity.this, R.color.black));
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(@NotNull String s, @NotNull Exception e) {
+                            Log.d(TAG, "onFailure: " + s);
+                            Log.d(TAG, "message: " + e.getLocalizedMessage());
+                        }
+                    });
+                }
+            });
 
         } else {
 
@@ -83,4 +127,21 @@ public class PdfLoaderActivity extends AppCompatActivity {
             finish();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        File file = new File(decResourceFilePath);
+        boolean isDeleted = file.delete();
+        if (isDeleted) {
+            Log.d(TAG, "onDestroy: file deleted");
+
+        } else {
+            Log.d(TAG, "onDestroy: file not deleted");
+        }
+    }
 }
+
+
+//TODO: delete file onDestroy

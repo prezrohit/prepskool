@@ -41,11 +41,6 @@ public interface ApiInterface {
 
 
     @Headers({"Accept: application/json"})
-    @POST("payumoney")
-    Call<String> getServerHash(@Header("Authorization") String auth, @Body PaymentParams params);
-
-
-    @Headers({"Accept: application/json"})
     @GET("subjects/{standard_id}")
     Call<SubjectResponse> getSubjects(@Header("Authorization") String auth, @Path("standard_id") int standardId);
 

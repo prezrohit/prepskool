@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         edtName = findViewById(R.id.edt_name);
-        edtPhone = findViewById(R.id.ed_phone);
+        edtPhone = findViewById(R.id.edt_phone);
         edtEmail = findViewById(R.id.edt_email);
         edtPassword = findViewById(R.id.edt_password);
         edtConfirmPassword = findViewById(R.id.edt_confirm_password);
@@ -81,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
             isInvalid = true;
             edtName.setError("this cannot be empty");
 
-        } else if (!name.matches("^[a-zA-Z]*$")) {
+        } else if (!name.matches("^[\\p{L} .'-]+$")) {
             isInvalid = true;
             edtName.setError("this doesn't look like a name");
         }

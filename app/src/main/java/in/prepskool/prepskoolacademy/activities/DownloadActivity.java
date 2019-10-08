@@ -9,17 +9,24 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.PowerManager;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.pvryan.easycrypt.ECResultListener;
+import com.pvryan.easycrypt.symmetric.ECSymmetric;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,6 +49,8 @@ public class DownloadActivity extends AppCompatActivity {
     private String pdfSlug;
     private ProgressDialog mProgressDialog;
 
+    private String resourceFilePath;
+
     private static final int PERMISSION_REQUEST_CODE = 200;
     private String TAG = DownloadActivity.class.getSimpleName();
 
@@ -56,6 +65,8 @@ public class DownloadActivity extends AppCompatActivity {
         pdfUrl = getIntent().getStringExtra("link");
         pdfSlug = getIntent().getStringExtra("slug");
         String pdfName = getIntent().getStringExtra("name");
+
+        resourceFilePath = EXTERNAL_STORAGE_PATH + File.separator + "Android" + File.separator + "data" + File.separator + RESOURCE_DIRECTORY_NAME + File.separator + pdfSlug + ".pdf";
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -154,7 +165,6 @@ public class DownloadActivity extends AppCompatActivity {
                             return;
                         }
                     }
-
                 }
             }
         }
@@ -207,9 +217,9 @@ public class DownloadActivity extends AppCompatActivity {
 
                 // download the file
                 input = connection.getInputStream();
-                output = new FileOutputStream(EXTERNAL_STORAGE_PATH + File.separator + "Android" + File.separator + "data" + File.separator + RESOURCE_DIRECTORY_NAME + File.separator + pdfSlug + ".pdf");
+                output = new FileOutputStream(resourceFilePath);
 
-                byte data[] = new byte[4096];
+                byte[] data = new byte[4096];
                 long total = 0;
                 int count;
                 while ((count = input.read(data)) != -1) {
@@ -269,17 +279,37 @@ public class DownloadActivity extends AppCompatActivity {
                 Toast.makeText(context, "resource downloaded", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onPostExecute: downloaded");
 
-                /*Intent intent = new Intent(DownloadActivity.this, PdfLoaderActivity.class);
-                intent.putExtra("slug", pdfSlug);
-                intent.putExtra("link", pdfUrl);
-                startActivity(intent);
-                finish();*/
+                final File file = new File(resourceFilePath);
+                ECSymmetric ecSymmetric = new ECSymmetric();
+                ecSymmetric.encrypt(file, getString(R.string.string_resource_encryption_password), new ECResultListener() {
+                    @Override
+                    public void onProgress(int i, long l, long l1) {
+                    }
+
+                    @Override
+                    public <T> void onSuccess(T t) {
+                        Log.d(TAG, "onSuccess: file encrypted");
+                        Log.d(TAG, "result: " + t.toString());
+                        boolean isDeleted = file.delete();
+                        if (isDeleted) {
+                            Log.d(TAG, "Original File Deleted");
+
+                        } else {
+                            Log.d(TAG, "Couldn't Delete File");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NotNull String s, @NotNull Exception e) {
+                        Log.d(TAG, "onFailure: " + s);
+                        Log.d(TAG, "message: " + e.getLocalizedMessage());
+                    }
+                });
             }
         }
     }
 
     private String getPdfId(String pdfLink) {
-
         return pdfLink.substring(pdfLink.lastIndexOf("=") + 1);
     }
 }

@@ -36,9 +36,6 @@ public class PaymentActivity extends AppCompatActivity {
     @Inject
     Retrofit retrofit;
 
-    private PayUmoneySdkInitializer.PaymentParam.Builder builder = new PayUmoneySdkInitializer.PaymentParam.Builder();
-    private PayUmoneySdkInitializer.PaymentParam paymentParam = null;
-
     private AppSharedPreferences appSharedPreferences;
 
     private String amount;
@@ -85,6 +82,7 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private void initPaymentHandler(String name, String email, String amount, String number) {
+        PayUmoneySdkInitializer.PaymentParam.Builder builder = new PayUmoneySdkInitializer.PaymentParam.Builder();
         builder.setKey("ve3teDmQ")
                 .setMerchantId("6782572")
                 .setAmount(amount)
@@ -103,7 +101,7 @@ public class PaymentActivity extends AppCompatActivity {
                 .setUdf5("");
 
         try {
-            paymentParam = builder.build();
+            PayUmoneySdkInitializer.PaymentParam paymentParam = builder.build();
 
             String hashSequence = "ve3teDmQ|txn_ps|" + amount + "|prepskool|" + name + "|" + email + "|" + "" + "|" + "" + "|" + "" + "|" + "" + "|" + "" + "||||||ZCT4YegoGu";
             String serverCalculatedHash = calculateHash("SHA-512", hashSequence);
@@ -149,6 +147,7 @@ public class PaymentActivity extends AppCompatActivity {
                     intent.putExtra("link", link);
                     intent.putExtra("slug", slug);
                     startActivity(intent);
+                    finish();
 
                 } else {
                     //Failure Transaction
@@ -167,30 +166,5 @@ public class PaymentActivity extends AppCompatActivity {
                 Log.d(TAG, "Both objects are null!");
             }*/
         }
-    }
-
-    private void getHashKey(ApiInterface apiInterface, final PaymentParams paymentParams) {
-        Call<String> call = apiInterface.getServerHash(ApiHeaders.BEARER + appSharedPreferences.getToken(), paymentParams);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                if (response.body() != null) {
-                    Log.d(TAG, "hash: " + response.body());
-                    String hash = response.body();
-                    paymentParam.setMerchantHash(hash);
-                    PayUmoneyFlowManager.startPayUMoneyFlow(paymentParam, PaymentActivity.this, R.style.AppTheme_default, false);
-
-                } else {
-                    Log.d(TAG, "onResponse: server hash empty: " + response.body());
-                    Toast.makeText(PaymentActivity.this, "some error occurred", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
-                Toast.makeText(PaymentActivity.this, "error communicating the server", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }
