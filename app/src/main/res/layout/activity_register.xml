@@ -1,103 +1,285 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activities.RegisterActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/lbl_register_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="60dp"
-                android:fontFamily="@font/galada"
-                android:text="@string/string_register"
-                android:textSize="40sp" />
-
-            <EditText
-                android:id="@+id/edt_name"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="50dp"
-                android:hint="@string/string_name"
-                android:inputType="textPersonName" />
+                android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/edt_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="50dp"
-                android:hint="@string/string_email"
-                android:inputType="textEmailAddress" />
+                <TextView
+                    android:id="@+id/lbl_register_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/string_create_account"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/edt_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="50dp"
-                android:hint="@string/string_password"
-                android:inputType="textPassword" />
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginEnd="50dp"
+                    android:elevation="6dp"
+                    app:cardCornerRadius="@dimen/dimen_20dp">
 
-            <EditText
-                android:id="@+id/edt_confirm_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="50dp"
-                android:hint="@string/confirm_password"
-                android:inputType="textPassword" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-            <in.prepskool.prepskoolacademy.utils.PrefixEditText
-                android:id="@+id/edt_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="50dp"
-                android:inputType="phone"
-                android:maxLength="10"
-                android:tag="+91 "
-                android:hint="@string/string_phone"/>
+                        <ImageView
+                            android:layout_width="@dimen/dimen_40dp"
+                            android:layout_height="@dimen/dimen_40dp"
+                            android:padding="6dp"
+                            android:src="@mipmap/ic_user" />
 
-            <Button
-                android:id="@+id/btn_register"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="70dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="70dp"
-                android:onClick="onClickRegister"
-                android:text="@string/string_register" />
+                        <EditText
+                            android:id="@+id/edt_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginStart="@dimen/dimen_15dp"
+                            android:layout_marginEnd="@dimen/dimen_15dp"
+                            android:textSize="@dimen/dimen_16sp"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/string_name"
+                            android:inputType="textPersonName" />
 
-            <Button
-                android:id="@+id/btn_login_instead"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="70dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="70dp"
-                android:layout_marginBottom="100dp"
-                android:onClick="onClickLoginInstead"
-                android:text="@string/string_login_instead" />
+                    </LinearLayout>
 
-        </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="50dp"
+                    android:elevation="6dp"
+                    app:cardCornerRadius="@dimen/dimen_20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen_40dp"
+                            android:layout_height="@dimen/dimen_40dp"
+                            android:padding="6dp"
+                            android:src="@mipmap/ic_smartphone" />
+
+                        <in.prepskool.prepskoolacademy.utils.PrefixEditText
+                            android:id="@+id/edt_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/dimen_16sp"
+                            android:layout_marginStart="@dimen/dimen_15dp"
+                            android:layout_marginEnd="@dimen/dimen_15dp"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/string_phone"
+                            android:inputType="phone"
+                            android:maxLength="10"
+                            android:tag="+91 " />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="50dp"
+                    android:elevation="6dp"
+                    app:cardCornerRadius="@dimen/dimen_20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen_40dp"
+                            android:layout_height="@dimen/dimen_40dp"
+                            android:padding="6dp"
+                            android:src="@mipmap/ic_email" />
+
+                        <EditText
+                            android:id="@+id/edt_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/dimen_16sp"
+                            android:layout_marginStart="@dimen/dimen_15dp"
+                            android:layout_marginEnd="@dimen/dimen_15dp"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/string_email"
+                            android:inputType="textEmailAddress" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="50dp"
+                    android:elevation="6dp"
+                    app:cardCornerRadius="@dimen/dimen_20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen_40dp"
+                            android:layout_height="@dimen/dimen_40dp"
+                            android:padding="8dp"
+                            android:src="@mipmap/ic_lock" />
+
+                        <EditText
+                            android:id="@+id/edt_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/dimen_16sp"
+                            android:layout_marginStart="@dimen/dimen_15dp"
+                            android:layout_marginEnd="@dimen/dimen_15dp"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/string_password"
+                            android:inputType="textPassword" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="50dp"
+                    android:elevation="6dp"
+                    app:cardCornerRadius="@dimen/dimen_20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen_40dp"
+                            android:layout_height="@dimen/dimen_40dp"
+                            android:padding="8dp"
+                            android:src="@mipmap/ic_lock" />
+
+                        <EditText
+                            android:id="@+id/edt_confirm_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/dimen_16sp"
+                            android:layout_marginStart="@dimen/dimen_15dp"
+                            android:layout_marginEnd="@dimen/dimen_15dp"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/confirm_password"
+                            android:inputType="textPassword" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_40dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_register"
+                        style="@style/AppTheme.RoundedCornerMaterialButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_60dp"
+                        android:layout_marginEnd="@dimen/dimen_20dp"
+                        android:layout_weight="2"
+                        android:onClick="onClickRegister"
+                        android:text="@string/string_sign_up"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/dimen_18dp"
+                        app:cornerRadius="@dimen/dimen_20dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_skip"
+                        style="@style/AppTheme.RoundedCornerMaterialButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_20dp"
+                        android:layout_marginEnd="@dimen/dimen_60dp"
+                        android:layout_weight="2"
+                        android:onClick="onClickSkip"
+                        android:text="@string/string_skip"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/dimen_18dp"
+                        app:cornerRadius="@dimen/dimen_20dp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_60dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="@dimen/dimen_60dp"
+                    android:layout_marginBottom="@dimen/dimen_30dp"
+                    android:gravity="center"
+                    android:onClick="onClickLoginInstead"
+                    android:padding="@dimen/dimen_10dp"
+                    android:text="@string/string_sign_in_instead"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+        </ScrollView>
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -108,4 +290,4 @@
 
     </RelativeLayout>
 
-</ScrollView>
+</LinearLayout>
