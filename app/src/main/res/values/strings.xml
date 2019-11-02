@@ -88,5 +88,9 @@ By accessing or using the Service you agree to be bound by these Terms. If you d
     <string name="string_resource_price">Resource Price</string>
     <string name="string_phone">Phone</string>
     <string name="string_resource_encryption_password">PrEpSkOoL</string>
+    <string name="string_sign_up">Sign Up</string>
+    <string name="string_skip">Skip</string>
+    <string name="string_sign_in_instead"><font color='blue'>Already Have an account?</font> <b><font color='purple'>Sign In</font></b></string>
+    <string name="string_register_instead"><font color='blue'>New User?</font> <b><font color='purple'>Create Account</font></b></string>
 
 </resources>
