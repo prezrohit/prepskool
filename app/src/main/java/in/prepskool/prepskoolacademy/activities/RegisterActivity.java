@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import javax.inject.Inject;
 
@@ -47,6 +48,10 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.string_register);
+        setSupportActionBar(toolbar);
 
         edtName = findViewById(R.id.edt_name);
         edtPhone = findViewById(R.id.edt_phone);
@@ -163,5 +168,9 @@ public class RegisterActivity extends AppCompatActivity {
     public void onClickLoginInstead(View view) {
         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
         finish();
+    }
+
+    public void onClickSkip(View view) {
+        Toast.makeText(this, "Skip", Toast.LENGTH_SHORT).show();
     }
 }
