@@ -171,6 +171,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void onClickSkip(View view) {
-        Toast.makeText(this, "Skip", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, HomeActivity.class));
+        finish();
     }
 }
