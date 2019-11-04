@@ -102,7 +102,7 @@ public class PaymentActivity extends AppCompatActivity {
                 .setMerchantId("6782572")
                 .setAmount(amount)
                 .setPhone(number)
-                .setIsDebug(true)
+                .setIsDebug(false)
                 .setTxnId("txn_ps")
                 .setProductName("prepskool")
                 .setFirstName(name)
