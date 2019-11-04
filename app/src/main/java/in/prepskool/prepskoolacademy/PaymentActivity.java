@@ -40,9 +40,10 @@ public class PaymentActivity extends AppCompatActivity {
     private AppSharedPreferences appSharedPreferences;
 
     private String amount;
-    private String resourceName;
     private String link;
     private String slug;
+    private String resourceName;
+    private String transactionId;
 
     private static final String TAG = "PaymentActivity";
 
@@ -79,7 +80,7 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     public void startPayment(View view) {
-        String name = "prepskool";
+        String name = appSharedPreferences.getName();
         String email = appSharedPreferences.getEmail();
         String number = appSharedPreferences.getPhone();
 
@@ -92,18 +93,19 @@ public class PaymentActivity extends AppCompatActivity {
             Log.d(TAG, "startPayment: " + number);
 
         } else {
+            transactionId = "txn_id-" + System.currentTimeMillis();
             initPaymentHandler(name, email, amount, number);
         }
     }
 
     private void initPaymentHandler(String name, String email, String amount, String number) {
         PayUmoneySdkInitializer.PaymentParam.Builder builder = new PayUmoneySdkInitializer.PaymentParam.Builder();
-        builder.setKey("ve3teDmQ")
-                .setMerchantId("6782572")
+        builder.setKey("3osEr6BM")
+                .setMerchantId("6634466")
                 .setAmount(amount)
                 .setPhone(number)
                 .setIsDebug(false)
-                .setTxnId("txn_ps")
+                .setTxnId(transactionId)
                 .setProductName("prepskool")
                 .setFirstName(name)
                 .setEmail(email)
@@ -118,7 +120,7 @@ public class PaymentActivity extends AppCompatActivity {
         try {
             PayUmoneySdkInitializer.PaymentParam paymentParam = builder.build();
 
-            String hashSequence = "ve3teDmQ|txn_ps|" + amount + "|prepskool|" + name + "|" + email + "|" + "" + "|" + "" + "|" + "" + "|" + "" + "|" + "" + "||||||ZCT4YegoGu";
+            String hashSequence = "3osEr6BM|" + transactionId + "|" + amount + "|prepskool|" + name + "|" + email + "|" + "" + "|" + "" + "|" + "" + "|" + "" + "|" + "" + "||||||EvBjxtd03M";
             String serverCalculatedHash = calculateHash("SHA-512", hashSequence);
             paymentParam.setMerchantHash(serverCalculatedHash);
             PayUmoneyFlowManager.startPayUMoneyFlow(paymentParam, PaymentActivity.this, R.style.AppTheme_default, false);
