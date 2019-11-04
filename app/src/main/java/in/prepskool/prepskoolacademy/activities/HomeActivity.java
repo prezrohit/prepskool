@@ -150,7 +150,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -298,9 +297,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         headerList.add(new NavigationMenu(NCERT_BOOK, "NCERT Book", R.drawable.ic_ncert_book));
         headerList.add(new NavigationMenu(SAVED_FILES,"Saved Files", R.drawable.ic_saved_files_black));
-        headerList.add(new NavigationMenu(CBSE,"CBSE", R.mipmap.ic_cbse));
-        headerList.add(new NavigationMenu(ICSE,"ICSE", R.mipmap.ic_cicse));
-        headerList.add(new NavigationMenu(DELHI,"DELHI", R.mipmap.ic_delhi));
+        //headerList.add(new NavigationMenu(CBSE,"CBSE", R.mipmap.ic_cbse));
+        //headerList.add(new NavigationMenu(ICSE,"ICSE", R.mipmap.ic_cicse));
+        //headerList.add(new NavigationMenu(DELHI,"DELHI", R.mipmap.ic_delhi));
         headerList.add(new NavigationMenu(ONLINE_TEST,"Online Test", R.drawable.ic_online_test));
         headerList.add(new NavigationMenu(RATE_APP,"Rate App", R.drawable.ic_rate));
         headerList.add(new NavigationMenu(SHARE,"Share", R.drawable.ic_menu_share));
@@ -311,25 +310,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         childList.put(headerList.get(1).getMenuId(), null);
 
-        ArrayList<NavigationMenu> arrayList = new ArrayList<>();
+        /*ArrayList<NavigationMenu> arrayList = new ArrayList<>();
         arrayList.add(new NavigationMenu(NCERT_NOTES, "NCERT Notes", R.mipmap.ic_pdf));
         arrayList.add(new NavigationMenu(TOPPER_ANSWERS, "Topper Answer Sheet", R.mipmap.ic_pdf));
-        arrayList.add(new NavigationMenu(CHAPTER_WISE_QUES, "Chapter Wise Questions", R.mipmap.ic_pdf));
+        arrayList.add(new NavigationMenu(CHAPTER_WISE_QUES, "Chapter Wise Questions", R.mipmap.ic_pdf));*/
 
-        childList.put(headerList.get(2).getMenuId(), arrayList);
+        childList.put(headerList.get(2).getMenuId(), null);
 
-        ArrayList<NavigationMenu> arrayList1 = new ArrayList<>();
+        /*ArrayList<NavigationMenu> arrayList1 = new ArrayList<>();
         arrayList1.add(new NavigationMenu(PAST_YEAR_PAPER, "Past Year Papers", R.mipmap.ic_pdf));
         arrayList1.add(new NavigationMenu(MARKING_SCHEME, "Marking Scheme", R.mipmap.ic_pdf));
-        arrayList1.add(new NavigationMenu(SAMPLE_PAPER, "Sample Papers", R.mipmap.ic_pdf));
+        arrayList1.add(new NavigationMenu(SAMPLE_PAPER, "Sample Papers", R.mipmap.ic_pdf));*/
 
-        childList.put(headerList.get(3).getMenuId(), arrayList1);
-        childList.put(headerList.get(4).getMenuId(), arrayList1);
+        childList.put(headerList.get(3).getMenuId(), null);
+        childList.put(headerList.get(4).getMenuId(), null);
         childList.put(headerList.get(5).getMenuId(), null);
         childList.put(headerList.get(6).getMenuId(), null);
-        childList.put(headerList.get(7).getMenuId(), null);
-        childList.put(headerList.get(8).getMenuId(), null);
-        childList.put(headerList.get(9).getMenuId(), null);
     }
 
     private void populateExpandableList() {
@@ -402,10 +398,68 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 return false;
             }
         });
+    }
+    //endregion
 
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+    private void getHomeResponse(ApiInterface apiInterface) {
+        progressBar.setVisibility(View.VISIBLE);
+        AppSharedPreferences appSharedPreferences = new AppSharedPreferences(this);
+        Call<HomeResponse> call = apiInterface.getHomeResponse(ApiHeaders.BEARER + appSharedPreferences.getToken());
+        call.enqueue(new Callback<HomeResponse>() {
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, 
+            public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {
+                progressBar.setVisibility(View.GONE);
+                Log.d(TAG, "onResponse: " + response.code());
+                Log.d(TAG, "onResponse: " + response.isSuccessful());
+
+                if (response.isSuccessful()) {
+                    HomeResponse homeResponse = response.body();
+                    Ncert ncert = homeResponse.getNcert();
+                    Board board = homeResponse.getBoard();
+                    PracticePaper practicePaper = homeResponse.getPracticePaper();
+                    ArrayList<SectionedHome> homeArrayList = new ArrayList<>();
+
+                    SectionedHome sectionedHome = new SectionedHome();
+                    sectionedHome.generateListByNcert(0, ncert.getLabel(), ncert.getNcertDataList());
+                    homeArrayList.add(sectionedHome);
+
+                    SectionedHome sectionedHome1 = new SectionedHome();
+                    sectionedHome1.generateListByPracticePaper(1, practicePaper.getLabel(), practicePaper.getPracticePaperDataList());
+                    homeArrayList.add(sectionedHome1);
+
+                    SectionedHome sectionedHome2 = new SectionedHome();
+                    sectionedHome2.generateListByBoard(2, board.getLabel(), board.getBoardDataList());
+                    homeArrayList.add(sectionedHome2);
+
+                    Log.d(TAG, "board data list size: " + board.getBoardDataList().size());
+
+                    HomeSectionRecyclerViewAdapter homeSectionRecyclerViewAdapter = new HomeSectionRecyclerViewAdapter(HomeActivity.this,
+                            homeArrayList);
+                    rvCategories.setAdapter(homeSectionRecyclerViewAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<HomeResponse> call, @NonNull Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
+            }
+        });
+    }
+}
+
+
+
+
+
+
+
+
+
+
+/*expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
                 int childPosition, long id) {
 
                 drawer.closeDrawers();
@@ -486,53 +540,4 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 }
                 return false;
             }
-        });
-    }
-    //endregion
-
-    private void getHomeResponse(ApiInterface apiInterface) {
-        progressBar.setVisibility(View.VISIBLE);
-        AppSharedPreferences appSharedPreferences = new AppSharedPreferences(this);
-        Call<HomeResponse> call = apiInterface.getHomeResponse(ApiHeaders.BEARER + appSharedPreferences.getToken());
-        call.enqueue(new Callback<HomeResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "onResponse: " + response.code());
-                Log.d(TAG, "onResponse: " + response.isSuccessful());
-
-                if (response.isSuccessful()) {
-                    HomeResponse homeResponse = response.body();
-                    Ncert ncert = homeResponse.getNcert();
-                    Board board = homeResponse.getBoard();
-                    PracticePaper practicePaper = homeResponse.getPracticePaper();
-                    ArrayList<SectionedHome> homeArrayList = new ArrayList<>();
-
-                    SectionedHome sectionedHome = new SectionedHome();
-                    sectionedHome.generateListByNcert(0, ncert.getLabel(), ncert.getNcertDataList());
-                    homeArrayList.add(sectionedHome);
-
-                    SectionedHome sectionedHome1 = new SectionedHome();
-                    sectionedHome1.generateListByPracticePaper(1, practicePaper.getLabel(), practicePaper.getPracticePaperDataList());
-                    homeArrayList.add(sectionedHome1);
-
-                    SectionedHome sectionedHome2 = new SectionedHome();
-                    sectionedHome2.generateListByBoard(2, board.getLabel(), board.getBoardDataList());
-                    homeArrayList.add(sectionedHome2);
-
-                    Log.d(TAG, "board data list size: " + board.getBoardDataList().size());
-
-                    HomeSectionRecyclerViewAdapter homeSectionRecyclerViewAdapter = new HomeSectionRecyclerViewAdapter(HomeActivity.this,
-                            homeArrayList);
-                    rvCategories.setAdapter(homeSectionRecyclerViewAdapter);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<HomeResponse> call, @NonNull Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
-            }
-        });
-    }
-}
+        });*/

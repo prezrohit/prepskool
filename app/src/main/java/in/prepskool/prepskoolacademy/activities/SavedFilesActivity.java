@@ -56,7 +56,9 @@ public class SavedFilesActivity extends AppCompatActivity {
         File directory = new File(path);
         final File[] files = directory.listFiles();
 
-        if (files.length < 1)
+        // TODO: Payment Activity Toolbar name
+
+        if (files == null || files.length < 1)
             tvNoFiles.setVisibility(View.VISIBLE);
 
         else {
