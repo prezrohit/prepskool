@@ -139,7 +139,6 @@ public class RegisterActivity extends AppCompatActivity {
                             AppSharedPreferences appSharedPreferences = new AppSharedPreferences(RegisterActivity.this);
                             appSharedPreferences.setPhone(registerResponse.getUser().getPhone());
                             appSharedPreferences.setName(registerResponse.getUser().getName());
-                            appSharedPreferences.setToken(registerResponse.getToken());
                             appSharedPreferences.setEmail(email);
                             startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
                             finish();

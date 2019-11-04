@@ -94,7 +94,6 @@ public class LoginActivity extends AppCompatActivity {
                         if (loginResponse.getStatus().equals(SUCCESS)) {
                             AppSharedPreferences appSharedPreferences = new AppSharedPreferences(LoginActivity.this);
                             appSharedPreferences.setEmail(email);
-                            appSharedPreferences.setToken(loginResponse.getToken());
                             appSharedPreferences.setName(loginResponse.getUser().getName());
                             appSharedPreferences.setPhone(loginResponse.getUser().getPhone());
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));

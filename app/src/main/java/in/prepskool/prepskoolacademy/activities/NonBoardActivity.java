@@ -123,7 +123,7 @@ public class NonBoardActivity extends AppCompatActivity {
     private void getNonBoardSubjects(ApiInterface apiInterface, int standardId) {
         AppSharedPreferences appSharedPreferences = new AppSharedPreferences(this);
         progressBar.setVisibility(View.VISIBLE);
-        Call<SubjectResponse> call = apiInterface.getSubjects(ApiHeaders.BEARER + appSharedPreferences.getToken(), standardId);
+        Call<SubjectResponse> call = apiInterface.getSubjects(standardId);
         call.enqueue(new Callback<SubjectResponse>() {
             @Override
             public void onResponse(@NonNull Call<SubjectResponse> call, @NonNull Response<SubjectResponse> response) {

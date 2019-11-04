@@ -404,7 +404,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void getHomeResponse(ApiInterface apiInterface) {
         progressBar.setVisibility(View.VISIBLE);
         AppSharedPreferences appSharedPreferences = new AppSharedPreferences(this);
-        Call<HomeResponse> call = apiInterface.getHomeResponse(ApiHeaders.BEARER + appSharedPreferences.getToken());
+        Call<HomeResponse> call = apiInterface.getHomeResponse();
         call.enqueue(new Callback<HomeResponse>() {
             @Override
             public void onResponse(@NonNull Call<HomeResponse> call, @NonNull Response<HomeResponse> response) {

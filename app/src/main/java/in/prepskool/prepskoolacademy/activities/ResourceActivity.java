@@ -137,7 +137,7 @@ public class ResourceActivity extends AppCompatActivity {
             Log.d(TAG, "resourceTypeID: " + resourceTypeId);
             Log.d(TAG, "boardId: " + boardId);
             Log.d(TAG, "homeItemId: " + homeItemId);
-            call = apiInterface.getBoardResources(ApiHeaders.BEARER + appSharedPreferences.getToken(), homeItemId, standardId, subjectId, resourceTypeId);
+            call = apiInterface.getBoardResources(homeItemId, standardId, subjectId, resourceTypeId);
             call.enqueue(new Callback<ResourceResponse>() {
 
                 @Override
@@ -170,7 +170,7 @@ public class ResourceActivity extends AppCompatActivity {
             });
 
         } else {
-            call = apiInterface.getOtherResources(ApiHeaders.BEARER + appSharedPreferences.getToken(), homeItemId, standardId, subjectId);
+            call = apiInterface.getOtherResources(homeItemId, standardId, subjectId);
             call.enqueue(new Callback<ResourceResponse>() {
                 @Override
                 public void onResponse(@NonNull Call<ResourceResponse> call, @NonNull Response<ResourceResponse> response) {

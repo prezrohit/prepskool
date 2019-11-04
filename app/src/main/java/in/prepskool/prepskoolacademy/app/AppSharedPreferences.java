@@ -6,10 +6,12 @@ import android.content.SharedPreferences;
 public class AppSharedPreferences {
 
     private SharedPreferences sharedPreferences;
+
     private static String KEY_NAME = "name";
     private static String KEY_EMAIL = "email";
-    private static String KEY_TOKEN = "token";
     private static String KEY_PHONE = "phone";
+    private static String KEY_HAS_SKIPPED = "has_skipped";
+    private static String KEY_FIREBASE_TOKEN = "firebase_token";
 
     private SharedPreferences.Editor editor;
 
@@ -47,17 +49,27 @@ public class AppSharedPreferences {
         return sharedPreferences.getString(KEY_PHONE, null);
     }
 
-    public void setToken(String token) {
-        editor.putString(KEY_TOKEN, token);
+    public void setFirebaseToken(String firebaseToken) {
+        editor.putString(KEY_FIREBASE_TOKEN, firebaseToken);
         editor.apply();
     }
 
-    public String getToken() {
-        return sharedPreferences.getString(KEY_TOKEN, null);
+    public String getFirebaseToken() {
+        return sharedPreferences.getString(KEY_FIREBASE_TOKEN, null);
+    }
+
+    public void setHasSkipped(boolean hasSkipped) {
+        editor.putBoolean(KEY_HAS_SKIPPED, hasSkipped);
+        editor.apply();
+    }
+
+    public boolean hasSkipped() {
+        return sharedPreferences.getBoolean(KEY_HAS_SKIPPED, false);
     }
 
     public void clear() {
         editor.clear();
         editor.apply();
     }
+
 }

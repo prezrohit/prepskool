@@ -25,39 +25,32 @@ import retrofit2.http.Path;
 public interface ApiInterface {
 
 
-    @Headers({"Accept: application/json"})
     @GET("resources/{board_id}/{standard_id}/{subject_id}/{resource_type_id}")
-    Call<ResourceResponse> getBoardResources(@Header("Authorization") String auth, @Path("board_id") int categoryId, @Path("standard_id") int standardId, @Path("subject_id") int subjectId, @Path("resource_type_id") int resourceTypeId);
+    Call<ResourceResponse> getBoardResources(@Path("board_id") int categoryId, @Path("standard_id") int standardId, @Path("subject_id") int subjectId, @Path("resource_type_id") int resourceTypeId);
 
 
-    @Headers({"Accept: application/json"})
     @GET("resources/{resource_type_id}/{standard_id}/{subject_id}")
-    Call<ResourceResponse> getOtherResources(@Header("Authorization") String auth, @Path("resource_type_id") int resourceTypeId, @Path("standard_id") int standardId, @Path("subject_id") int subjectId);
+    Call<ResourceResponse> getOtherResources(@Path("resource_type_id") int resourceTypeId, @Path("standard_id") int standardId, @Path("subject_id") int subjectId);
 
 
-    @Headers({"Accept: application/json"})
     @GET("resourceTypes/{standard_id}/{subject_id}")
-    Call<ResourceTypeResponse> getResourceTypes(@Header("Authorization") String auth, @Path("standard_id") int standardId, @Path("subject_id") int subjectId);
+    Call<ResourceTypeResponse> getResourceTypes(@Path("standard_id") int standardId, @Path("subject_id") int subjectId);
 
 
-    @Headers({"Accept: application/json"})
     @GET("subjects/{standard_id}")
-    Call<SubjectResponse> getSubjects(@Header("Authorization") String auth, @Path("standard_id") int standardId);
+    Call<SubjectResponse> getSubjects(@Path("standard_id") int standardId);
 
 
-    @Headers({"Accept: application/json"})
     @GET("subjects/{standard_id}")
-    Call<StreamResponse> getStreams(@Header("Authorization") String auth, @Path("standard_id") int standardId);
+    Call<StreamResponse> getStreams(@Path("standard_id") int standardId);
 
 
-    @Headers({"Accept: application/json"})
     @GET("standards")
-    Call<StandardResponse> getStandards(@Header("Authorization") String auth);
+    Call<StandardResponse> getStandards();
 
 
-    @Headers({"Accept: application/json"})
     @GET("home")
-    Call<HomeResponse> getHomeResponse(@Header("Authorization") String auth);
+    Call<HomeResponse> getHomeResponse();
 
 
     @POST("login")
