@@ -98,6 +98,7 @@ public class ResourceActivity extends AppCompatActivity {
         MobileAds.initialize(this, getString(R.string.app_id));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Choose a Resource");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

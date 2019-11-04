@@ -14,6 +14,7 @@ public class NotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notification);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Notifications");
         setSupportActionBar(toolbar);
     }
 }

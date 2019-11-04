@@ -39,7 +39,7 @@ public class SavedFilesActivity extends AppCompatActivity {
         TextView tvNoFiles = findViewById(R.id.tv_no_data_downloads);
         tvNoFiles.setVisibility(View.GONE);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.saved_files);
+        toolbar.setTitle(R.string.string_saved_resources);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -55,10 +55,6 @@ public class SavedFilesActivity extends AppCompatActivity {
 
         File directory = new File(path);
         final File[] files = directory.listFiles();
-
-        // TODO: Payment Activity Toolbar name
-
-        // TODO: Order of Ads in Resource Activity
 
         if (files == null || files.length < 1)
             tvNoFiles.setVisibility(View.VISIBLE);

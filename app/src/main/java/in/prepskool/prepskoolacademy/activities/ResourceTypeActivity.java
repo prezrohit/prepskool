@@ -58,6 +58,7 @@ public class ResourceTypeActivity extends AppCompatActivity {
         final int subjectId = getIntent().getIntExtra("subject_id", -1);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Choose a Resource Type");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
