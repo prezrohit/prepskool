@@ -58,6 +58,8 @@ public class SavedFilesActivity extends AppCompatActivity {
 
         // TODO: Payment Activity Toolbar name
 
+        // TODO: Order of Ads in Resource Activity
+
         if (files == null || files.length < 1)
             tvNoFiles.setVisibility(View.VISIBLE);
 
