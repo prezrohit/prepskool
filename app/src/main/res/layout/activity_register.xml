@@ -35,7 +35,6 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/lbl_register_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -233,7 +232,6 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_register"
                         style="@style/AppTheme.RoundedCornerMaterialButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -248,7 +246,6 @@
                         app:cornerRadius="@dimen/dimen_20dp" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_skip"
                         style="@style/AppTheme.RoundedCornerMaterialButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
