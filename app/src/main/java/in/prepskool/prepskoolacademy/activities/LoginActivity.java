@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject errorBody = new JSONObject(response.errorBody().string());
                             String errorMessage = errorBody.getString("message");
                             Log.d(TAG, "onResponseError: " + errorMessage);
-                            Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_LONG).show();
 
                         } catch (IOException | JSONException e) {
                             e.printStackTrace();

@@ -13,6 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 import javax.inject.Inject;
 
 import in.prepskool.prepskoolacademy.R;
@@ -133,24 +138,27 @@ public class RegisterActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     Log.d(TAG, "onResponse: " + response.isSuccessful());
                     Log.d(TAG, "onResponse: " + response.code());
-                    RegisterResponse registerResponse = response.body();
                     if (response.isSuccessful()) {
-                        if (registerResponse.getStatus().equals(SUCCESS)) {
-                            AppSharedPreferences appSharedPreferences = new AppSharedPreferences(RegisterActivity.this);
-                            appSharedPreferences.setPhone(registerResponse.getUser().getPhone());
-                            appSharedPreferences.setName(registerResponse.getUser().getName());
-                            appSharedPreferences.setEmail(email);
-                            startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
-                            finish();
-
-                        } else {
-                            Log.d(TAG, "onResponse: status error");
-                            Toast.makeText(RegisterActivity.this, "status error", Toast.LENGTH_SHORT).show();
-                        }
+                        RegisterResponse registerResponse = response.body();
+                        assert registerResponse != null : "Login Response is Empty";
+                        AppSharedPreferences appSharedPreferences = new AppSharedPreferences(RegisterActivity.this);
+                        appSharedPreferences.setPhone(registerResponse.getUser().getPhone());
+                        appSharedPreferences.setName(registerResponse.getUser().getName());
+                        appSharedPreferences.setEmail(email);
+                        startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
+                        finish();
 
                     } else {
-                        Log.d(TAG, "onResponse: response not successful");
-                        Toast.makeText(RegisterActivity.this, "response not successful", Toast.LENGTH_SHORT).show();
+                        try {
+                            assert response.errorBody() != null : "Error is Empty";
+                            JSONObject errorBody = new JSONObject(response.errorBody().string());
+                            String errorMessage = errorBody.getJSONArray("message").getString(0);
+                            Log.d(TAG, "onResponseError: " + errorMessage);
+                            Toast.makeText(RegisterActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+
+                        } catch (IOException | JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 
