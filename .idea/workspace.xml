@@ -76,13 +76,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b138a9a4-3b6b-468f-9ccf-9de3c68e7c83" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -93,7 +89,7 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="7bb5e4877ce5" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Redmi_5_API_27" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -111,8 +107,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/LoginActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="41">
-              <caret line="120" selection-start-line="120" selection-end-line="120" />
+            <state relative-caret-position="-130">
+              <caret line="63" column="25" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -208,7 +204,87 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="PrepskoolAcademy" type="58d84e3e:PackageViewProjectNode" />
+              <item name="app" type="616d4139:PackageViewModuleNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Non-Source Files'; set:Project Non-Source Files; class com.jetbrains.cidr.lang.search.scopes.ProjectSourcesScopeProvider$NonSourceFilesScope">
+          <expand>
+            <path>
+              <item name="PrepskoolAcademy" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="~/workspace/AndroidStudioProjects/PrepskoolAcademy" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="pdfjs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PrepskoolAcademy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PrepskoolAcademy" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="pdfjs" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DEBUGGABLE_DEVICE" value="itel-itel_a22-033742085B002165" />
@@ -467,7 +543,14 @@
       <option name="project" value="LOCAL" />
       <updated>1570443754855</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="workspace changes">
+      <created>1572952147626</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1572952147626</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TodoView">
@@ -481,9 +564,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1308" height="741" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49399656" weight="0.23028392" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49399656" visible="true" weight="0.22979398" />
       <window_info id="DB Browser" order="1" weight="0.32980332" />
       <window_info id="Captures" order="2" sideWeight="0.50600344" side_tool="true" weight="0.2324159" />
       <window_info id="Structure" order="3" side_tool="true" weight="0.32874617" />
@@ -496,10 +578,10 @@
       <window_info anchor="bottom" id="Version Control" order="0" weight="0.6429752" />
       <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49526814" weight="0.70413226" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.3289256" />
-      <window_info anchor="bottom" id="Terminal" order="3" weight="0.3289256" />
+      <window_info anchor="bottom" id="Terminal" order="3" visible="true" weight="0.3289256" />
       <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.5031546" side_tool="true" weight="0.8" />
       <window_info anchor="bottom" id="Build" order="5" sideWeight="0.4960568" weight="0.29917356" />
-      <window_info anchor="bottom" id="Android Profiler" order="6" weight="0.3298969" />
+      <window_info anchor="bottom" id="Android Profiler" order="6" show_stripe_button="false" weight="0.3298969" />
       <window_info anchor="bottom" id="Run" order="7" weight="0.3289256" />
       <window_info anchor="bottom" id="Debug" order="8" sideWeight="0.49684542" weight="0.8" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.32561985" />
@@ -572,7 +654,8 @@
     <MESSAGE value="Future Build" />
     <MESSAGE value="Test Payment Complete" />
     <MESSAGE value="Basic Functions Complete" />
-    <option name="LAST_COMMIT_MESSAGE" value="Basic Functions Complete" />
+    <MESSAGE value="workspace changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="workspace changes" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/retrofit_model/ResourceResponse.java">
@@ -644,7 +727,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="833">
           <caret line="61" column="19" lean-forward="true" selection-start-line="61" selection-start-column="19" selection-end-line="61" selection-end-column="19" />
@@ -657,6 +739,7 @@
           </folding>
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider editor-type-id="android-manifest" />
@@ -763,12 +846,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_payment.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
           <caret line="28" column="47" selection-start-line="28" selection-start-column="47" selection-end-line="28" selection-end-column="47" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/adapter/SavedFilesAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -782,23 +865,23 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/toolbar.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="4" lean-forward="true" selection-start-line="7" selection-start-column="4" selection-end-line="19" selection-end-column="54" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/../../Android SDK/Sdk/sources/android-28/android/app/ProgressDialog.java" />
     <entry file="file://$USER_HOME$/AndroidStudio/DeviceExplorer/xiaomi-redmi_5-7bb5e4877ce5/data/data/in.prepskool.prepskoolacademy/shared_prefs/PrepskoolAcademy.xml" />
     <entry file="file://$PROJECT_DIR$/../../Android SDK/Sdk/sources/android-28/java/io/File.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_saved_files.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="166">
           <caret line="22" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$USER_HOME$/AndroidStudio/DeviceExplorer/asus-asus_x01bda-JCAAGF0493877GE/data/data/in.prepskool.prepskoolacademy/shared_prefs/PrepskoolAcademy.xml" />
     <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
@@ -901,7 +984,6 @@
     </entry>
     <entry file="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/191a9591556fc3799fc0738d6cddfb63/jetified-plug-n-play-1.4.4/jars/classes.jar!/com/payumoney/sdkui/ui/widgets/PrefixEditText.class" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml">
-      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
@@ -910,6 +992,7 @@
           </folding>
         </state>
       </provider>
+      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
@@ -940,8 +1023,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/in/prepskool/prepskoolacademy/activities/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="41">
-          <caret line="120" selection-start-line="120" selection-end-line="120" />
+        <state relative-caret-position="-130">
+          <caret line="63" column="25" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="25" />
         </state>
       </provider>
     </entry>
