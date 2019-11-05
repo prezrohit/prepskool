@@ -34,7 +34,8 @@ import retrofit2.Retrofit;
 
 public class LoginActivity extends AppCompatActivity {
 
-    @Inject Retrofit retrofit;
+    @Inject
+    Retrofit retrofit;
 
     private EditText edtEmail;
     private EditText edtPassword;
@@ -99,18 +100,10 @@ public class LoginActivity extends AppCompatActivity {
                         assert loginResponse != null : "Login Response is Empty";
                         AppSharedPreferences appSharedPreferences = new AppSharedPreferences(LoginActivity.this);
                         appSharedPreferences.setEmail(email);
-                        appSharedPreferences.setToken(loginResponse.getToken());
                         appSharedPreferences.setName(loginResponse.getUser().getName());
                         appSharedPreferences.setPhone(loginResponse.getUser().getPhone());
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         finish();
-                        if (loginResponse.getStatus().equals(SUCCESS)) {
-                            AppSharedPreferences appSharedPreferences = new AppSharedPreferences(LoginActivity.this);
-                            appSharedPreferences.setEmail(email);
-                            appSharedPreferences.setName(loginResponse.getUser().getName());
-                            appSharedPreferences.setPhone(loginResponse.getUser().getPhone());
-                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                            finish();
 
                     } else {
                         try {
@@ -134,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
+
     }
 
     public void onClickCreateAccount(View view) {
