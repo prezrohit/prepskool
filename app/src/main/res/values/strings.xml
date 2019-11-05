@@ -56,7 +56,7 @@ By accessing or using the Service you agree to be bound by these Terms. If you d
     <string name="string_resource_encryption_password">PrEpSkOoL</string>
     <string name="string_sign_up">Sign Up</string>
     <string name="string_skip">Skip</string>
-    <string name="string_sign_in_instead"> <b></b></string>
-    <string name="string_register_instead"> <b></b></string>
+    <string name="string_sign_in_instead"><font color='blue'>Already have an Account?</font> <font color='purple'><b>Sign In</b></font></string>
+    <string name="string_register_instead"><font color='blue'>New User? </font><font color='purple'><b>Create an Account</b></font></string>
 
 </resources>
