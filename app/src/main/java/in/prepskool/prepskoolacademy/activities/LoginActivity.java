@@ -13,6 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 import javax.inject.Inject;
 
 import in.prepskool.prepskoolacademy.app.AppSharedPreferences;
@@ -89,8 +94,16 @@ public class LoginActivity extends AppCompatActivity {
                 public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                     progressBar.setVisibility(View.GONE);
                     Log.d(TAG, "onResponse: " + response.code());
-                    LoginResponse loginResponse = response.body();
                     if (response.isSuccessful()) {
+                        LoginResponse loginResponse = response.body();
+                        assert loginResponse != null : "Login Response is Empty";
+                        AppSharedPreferences appSharedPreferences = new AppSharedPreferences(LoginActivity.this);
+                        appSharedPreferences.setEmail(email);
+                        appSharedPreferences.setToken(loginResponse.getToken());
+                        appSharedPreferences.setName(loginResponse.getUser().getName());
+                        appSharedPreferences.setPhone(loginResponse.getUser().getPhone());
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        finish();
                         if (loginResponse.getStatus().equals(SUCCESS)) {
                             AppSharedPreferences appSharedPreferences = new AppSharedPreferences(LoginActivity.this);
                             appSharedPreferences.setEmail(email);
@@ -99,14 +112,17 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                             finish();
 
-                        } else {
-                            Log.d(TAG, "onResponse: status error");
-                            Toast.makeText(LoginActivity.this, "status error", Toast.LENGTH_SHORT).show();
-                        }
-
                     } else {
-                        Log.d(TAG, "onResponse: response not successful");
-                        Toast.makeText(LoginActivity.this, "response not successful", Toast.LENGTH_SHORT).show();
+                        try {
+                            assert response.errorBody() != null : "Error is Empty";
+                            JSONObject errorBody = new JSONObject(response.errorBody().string());
+                            String errorMessage = errorBody.getString("message");
+                            Log.d(TAG, "onResponseError: " + errorMessage);
+                            Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+
+                        } catch (IOException | JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 

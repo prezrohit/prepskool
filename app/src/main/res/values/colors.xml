@@ -2,23 +2,14 @@
 <resources>
     <color name="colorPrimary">#ff9900</color>
     <color name="colorPrimaryDark">#ff9900</color>
-    <color name="green_aw">#00574B</color>
     <color name="colorAccent">#ffca28</color>
-    <color name="floating_action_button">#7599ed</color>
     <color name="white">#ffffff</color>
     <color name="transparent">#80ffffff</color>
-    <color name="navigationdrawer_background">#80deea</color>
     <color name="black">#000000</color>
-    <color name="green">#5acad6</color>
-    <color name="light_yellow">#fdd835</color>
     <color name="orange">#ff7043</color>
     <color name="red">#d32f2f</color>
     <color name="blue">#29b6f6</color>
-    <color name="sub_title">#607d8b</color>
-    <color name="title">#102027</color>
-    <color name="app_background">#f2f2f2</color>
 
-    <color name="black_overlay">#66000000</color>
 </resources>
 
 <!--29b6f6-->

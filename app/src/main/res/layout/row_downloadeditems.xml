@@ -33,7 +33,6 @@
                 android:hint="Link"/>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnView"
                 android:layout_width="130dp"
                 android:layout_height="30dp"
                 android:text="View PDF"
