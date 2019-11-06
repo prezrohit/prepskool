@@ -49,6 +49,11 @@ public class StandardActivity extends AppCompatActivity {
     private RecyclerView rvStandard;
     private ArrayList<Standard> standardsList;
 
+    private ArrayList<Standard> practicePapersList;
+
+    private int boardId;
+    private int homeItemId;
+
     private static final String TAG = "StandardActivity";
 
     @Override
@@ -57,8 +62,10 @@ public class StandardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_standard);
 
         final String homeItemName = getIntent().getStringExtra("home_item_name");
-        final int boardId = getIntent().getIntExtra("board_id", -1);
-        final int homeItemId = getIntent().getIntExtra("home_item_id", -1);
+        boardId = getIntent().getIntExtra("board_id", -1);
+        homeItemId = getIntent().getIntExtra("home_item_id", -1);
+
+        practicePapersList = new ArrayList<>();
 
         MobileAds.initialize(this, getString(R.string.app_id));
 
@@ -102,18 +109,29 @@ public class StandardActivity extends AppCompatActivity {
                 } else {
                     Log.d(TAG, "The interstitial wasn't loaded yet.");
 
-                    int standardId = standardsList.get(position).getId();
+                    String standardName;
+                    int standardId;
                     Intent intent;
+
+                    if (boardId == -1 && (homeItemId == 7 || homeItemId == 3 || homeItemId == 9)) {
+                        standardId = practicePapersList.get(position).getId();
+                        standardName = practicePapersList.get(position).getName();
+
+                    } else {
+                        standardId = standardsList.get(position).getId();
+                        standardName = standardsList.get(position).getName();
+                    }
+
                     if (standardId == 6 || standardId == 7) {                // 6 for 11th class and 7 for 12th class
                         intent = new Intent(StandardActivity.this, StreamActivity.class);
 
                     } else {
                         intent = new Intent(StandardActivity.this, NonBoardActivity.class);
                     }
-                    Log.d(TAG, "standard id: " + standardId);
+
                     intent.putExtra("standard_id", standardId);
                     intent.putExtra("home_item_name", homeItemName);
-                    intent.putExtra("standard_name", standardsList.get(position).getName());
+                    intent.putExtra("standard_name", standardName);
                     intent.putExtra("board_id", boardId);
                     intent.putExtra("home_item_id", homeItemId);
                     startActivity(intent);
@@ -122,7 +140,6 @@ public class StandardActivity extends AppCompatActivity {
 
             @Override
             public void onLongClick(View view, int position) {
-                Toast.makeText(StandardActivity.this, "long", Toast.LENGTH_SHORT).show();
             }
         }));
     }
@@ -143,14 +160,43 @@ public class StandardActivity extends AppCompatActivity {
                 Log.d(TAG, "onResponse: " + response.message());
 
                 if (response.isSuccessful()) {
-                    standardsList = response.body().getStandardsList();
-                    StandardAdapter standardAdapter = new StandardAdapter(StandardActivity.this, standardsList);
-                    rvStandard.setLayoutManager(new GridLayoutManager(StandardActivity.this, 3));
-                    rvStandard.setAdapter(standardAdapter);
+                    assert response.body() != null : "Server Response is Empty";
+                    if (boardId == -1 && homeItemId == 9) {
+                        for (Standard standard : response.body().getStandardsList()) {
+                            if (standard.getId() == 5 || standard.getId() == 7) {
+                                practicePapersList.add(standard);
+                            }
+                        }
+
+                        StandardAdapter standardAdapter = new StandardAdapter(StandardActivity.this, practicePapersList);
+                        rvStandard.setLayoutManager(new GridLayoutManager(StandardActivity.this, 3));
+                        rvStandard.setAdapter(standardAdapter);
+
+                    } else if (boardId == -1 && (homeItemId == 7 || homeItemId == 3)) {
+                        for (Standard standard : response.body().getStandardsList()) {
+                            if (standard.getId() == 5 || standard.getId() == 6 || standard.getId() == 7) {
+                                practicePapersList.add(standard);
+                            }
+                        }
+
+                        StandardAdapter standardAdapter = new StandardAdapter(StandardActivity.this, practicePapersList);
+                        rvStandard.setLayoutManager(new GridLayoutManager(StandardActivity.this, 3));
+                        rvStandard.setAdapter(standardAdapter);
+
+                    } else {
+                        standardsList = response.body().getStandardsList();
+                        StandardAdapter standardAdapter = new StandardAdapter(StandardActivity.this, standardsList);
+                        rvStandard.setLayoutManager(new GridLayoutManager(StandardActivity.this, 3));
+                        rvStandard.setAdapter(standardAdapter);
+                    }
 
                     mAdView.loadAd(adRequest);
                     mInterstitialAd.loadAd(adRequest);
-                }
+
+                } else {
+                    Toast.makeText(StandardActivity.this, "Error Communicating with Server", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onResponse: Error Communicating with Server");
+                } 
             }
 
             @Override
