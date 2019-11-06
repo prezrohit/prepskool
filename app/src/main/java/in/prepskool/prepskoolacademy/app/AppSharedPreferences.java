@@ -7,6 +7,7 @@ public class AppSharedPreferences {
 
     private SharedPreferences sharedPreferences;
 
+    private static String KEY_ID = "id";
     private static String KEY_NAME = "name";
     private static String KEY_EMAIL = "email";
     private static String KEY_PHONE = "phone";
@@ -20,6 +21,15 @@ public class AppSharedPreferences {
         sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         editor.apply();
+    }
+
+    public void setId(String id) {
+        editor.putString(KEY_ID, id);
+        editor.apply();
+    }
+
+    public String getId() {
+        return sharedPreferences.getString(KEY_ID, null);
     }
 
     public void setName(String name) {

@@ -33,11 +33,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -52,6 +55,8 @@ import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
 import in.prepskool.prepskoolacademy.retrofit_model.Board;
 import in.prepskool.prepskoolacademy.retrofit_model.HomeResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.Ncert;
+import in.prepskool.prepskoolacademy.retrofit_model.NotificationToken;
+import in.prepskool.prepskoolacademy.retrofit_model.NotificationTokenResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.PracticePaper;
 import in.prepskool.prepskoolacademy.retrofit_model.SectionedHome;
 import in.prepskool.prepskoolacademy.services.CheckNetworkService;
@@ -109,15 +114,31 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         setToolbar();
 
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+                    Log.d(TAG, "getInstanceId failed: ", task.getException());
+                    return;
+                }
+
+                assert task.getResult() != null : "Firebase Result is Empty";
+                String token = task.getResult().getToken();
+                Log.v( TAG, "Token: " + token);
+                publishToken(token);
+            }
+        });
+
         FirebaseMessaging.getInstance().subscribeToTopic("prepskool")
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        String msg = "Successfull";
                         if (!task.isSuccessful()) {
-                            msg = "Failed";
+                            Log.d(TAG, "Firebase Subscription Failure: " + task.getException());
+
+                        } else {
+                            Log.d(TAG, "Firebase Subscription Success: ");
                         }
-                        Log.d(TAG, msg);
                     }
                 });
 
@@ -167,6 +188,37 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 setToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+    }
+
+    private void publishToken(String token) {
+        AppSharedPreferences sharedPreferences = new AppSharedPreferences(this);
+        String userId = sharedPreferences.getId();
+        String oldToken = sharedPreferences.getFirebaseToken();
+
+        if (Objects.equals(oldToken, token)) {
+            sharedPreferences.setFirebaseToken(token);
+        }
+
+        NotificationToken notificationToken = new NotificationToken(oldToken, token, userId, "android");
+
+        ((PrepskoolApplication) getApplication()).getTokenComponent().inject(this);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        Call<NotificationTokenResponse> call = apiInterface.publishToken(notificationToken);
+        call.enqueue(new Callback<NotificationTokenResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<NotificationTokenResponse> call, @NonNull Response<NotificationTokenResponse> response) {
+                Log.d(TAG, "Notification Response Code: " + response.code());
+                if (response.isSuccessful()) {
+                    assert response.body() != null : "Notification Response is Empty";
+                    Log.d(TAG, "onResponse: " + response.body().getStatus());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NotificationTokenResponse> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
+            }
+        });
     }
 
     private Toolbar setToolbar() {

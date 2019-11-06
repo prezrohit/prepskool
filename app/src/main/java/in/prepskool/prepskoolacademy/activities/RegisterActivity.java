@@ -24,7 +24,6 @@ import in.prepskool.prepskoolacademy.R;
 import in.prepskool.prepskoolacademy.app.AppSharedPreferences;
 import in.prepskool.prepskoolacademy.app.PrepskoolApplication;
 import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
-import in.prepskool.prepskoolacademy.retrofit_model.LoginResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.Register;
 import in.prepskool.prepskoolacademy.retrofit_model.RegisterResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.User;
@@ -141,9 +140,11 @@ public class RegisterActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         RegisterResponse registerResponse = response.body();
                         assert registerResponse != null : "Login Response is Empty";
+                        User user = registerResponse.getUser();
                         AppSharedPreferences appSharedPreferences = new AppSharedPreferences(RegisterActivity.this);
-                        appSharedPreferences.setPhone(registerResponse.getUser().getPhone());
-                        appSharedPreferences.setName(registerResponse.getUser().getName());
+                        appSharedPreferences.setId(user.getId());
+                        appSharedPreferences.setPhone(user.getPhone());
+                        appSharedPreferences.setName(user.getName());
                         appSharedPreferences.setEmail(email);
                         startActivity(new Intent(RegisterActivity.this, HomeActivity.class));
                         finish();
