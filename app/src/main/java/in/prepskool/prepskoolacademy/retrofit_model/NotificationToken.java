@@ -15,4 +15,11 @@ public class NotificationToken {
 
     @SerializedName("type")
     private String type;
+
+    public NotificationToken(String oldToken, String token, String userId, String type) {
+        this.oldToken = oldToken;
+        this.token = token;
+        this.userId = userId;
+        this.type = type;
+    }
 }

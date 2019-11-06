@@ -40,6 +40,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -54,6 +55,8 @@ import in.prepskool.prepskoolacademy.retrofit.ApiInterface;
 import in.prepskool.prepskoolacademy.retrofit_model.Board;
 import in.prepskool.prepskoolacademy.retrofit_model.HomeResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.Ncert;
+import in.prepskool.prepskoolacademy.retrofit_model.NotificationToken;
+import in.prepskool.prepskoolacademy.retrofit_model.NotificationTokenResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.PracticePaper;
 import in.prepskool.prepskoolacademy.retrofit_model.SectionedHome;
 import in.prepskool.prepskoolacademy.services.CheckNetworkService;
@@ -121,7 +124,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                 assert task.getResult() != null : "Firebase Result is Empty";
                 String token = task.getResult().getToken();
-                Log.v( TAG, "Token" + token);
+                Log.v( TAG, "Token: " + token);
                 publishToken(token);
             }
         });
@@ -134,7 +137,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                             Log.d(TAG, "Firebase Subscription Failure: " + task.getException());
 
                         } else {
-                            Log.d(TAG, "Firebase Subscription Success: " + task.getException());
+                            Log.d(TAG, "Firebase Subscription Success: ");
                         }
                     }
                 });
@@ -188,6 +191,34 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void publishToken(String token) {
+        AppSharedPreferences sharedPreferences = new AppSharedPreferences(this);
+        String userId = sharedPreferences.getId();
+        String oldToken = sharedPreferences.getFirebaseToken();
+
+        if (Objects.equals(oldToken, token)) {
+            sharedPreferences.setFirebaseToken(token);
+        }
+
+        NotificationToken notificationToken = new NotificationToken(oldToken, token, userId, "android");
+
+        ((PrepskoolApplication) getApplication()).getTokenComponent().inject(this);
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        Call<NotificationTokenResponse> call = apiInterface.publishToken(notificationToken);
+        call.enqueue(new Callback<NotificationTokenResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<NotificationTokenResponse> call, @NonNull Response<NotificationTokenResponse> response) {
+                Log.d(TAG, "Notification Response Code: " + response.code());
+                if (response.isSuccessful()) {
+                    assert response.body() != null : "Notification Response is Empty";
+                    Log.d(TAG, "onResponse: " + response.body().getStatus());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<NotificationTokenResponse> call, @NonNull Throwable t) {
+                Log.d(TAG, "onFailure: " + t.getLocalizedMessage());
+            }
+        });
     }
 
     private Toolbar setToolbar() {

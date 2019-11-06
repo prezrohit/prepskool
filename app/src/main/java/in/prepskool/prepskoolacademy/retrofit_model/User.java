@@ -1,13 +1,13 @@
 package in.prepskool.prepskoolacademy.retrofit_model;
 
 public class User {
-    private int id;
+    private String id;
     private String name;
     private String email;
     private String role;
     private String phone;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

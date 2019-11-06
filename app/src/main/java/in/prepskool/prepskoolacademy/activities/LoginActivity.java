@@ -98,10 +98,12 @@ public class LoginActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         LoginResponse loginResponse = response.body();
                         assert loginResponse != null : "Login Response is Empty";
+                        User user = loginResponse.getUser();
                         AppSharedPreferences appSharedPreferences = new AppSharedPreferences(LoginActivity.this);
+                        appSharedPreferences.setId(user.getId());
                         appSharedPreferences.setEmail(email);
-                        appSharedPreferences.setName(loginResponse.getUser().getName());
-                        appSharedPreferences.setPhone(loginResponse.getUser().getPhone());
+                        appSharedPreferences.setName(user.getName());
+                        appSharedPreferences.setPhone(user.getPhone());
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         finish();
 
