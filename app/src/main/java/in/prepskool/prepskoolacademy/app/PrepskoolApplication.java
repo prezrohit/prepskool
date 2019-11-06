@@ -8,6 +8,7 @@ import in.prepskool.prepskoolacademy.components.BoardComponent;
 import in.prepskool.prepskoolacademy.components.DaggerBoardComponent;
 import in.prepskool.prepskoolacademy.components.DaggerHomeComponent;
 import in.prepskool.prepskoolacademy.components.DaggerLoginComponent;
+import in.prepskool.prepskoolacademy.components.DaggerNotificationTokenComponent;
 import in.prepskool.prepskoolacademy.components.DaggerPaymentComponent;
 import in.prepskool.prepskoolacademy.components.DaggerRegisterComponent;
 import in.prepskool.prepskoolacademy.components.DaggerResourceComponent;
@@ -17,6 +18,7 @@ import in.prepskool.prepskoolacademy.components.DaggerStreamComponent;
 import in.prepskool.prepskoolacademy.components.DaggerSubjectComponent;
 import in.prepskool.prepskoolacademy.components.HomeComponent;
 import in.prepskool.prepskoolacademy.components.LoginComponent;
+import in.prepskool.prepskoolacademy.components.NotificationTokenComponent;
 import in.prepskool.prepskoolacademy.components.PaymentComponent;
 import in.prepskool.prepskoolacademy.components.RegisterComponent;
 import in.prepskool.prepskoolacademy.components.ResourceComponent;
@@ -30,6 +32,7 @@ import in.prepskool.prepskoolacademy.utils.Endpoints;
 public class PrepskoolApplication extends Application {
 
     private ResourceTypeComponent resourceTypeComponent;
+    private NotificationTokenComponent tokenComponent;
     private RegisterComponent registerComponent;
     private StandardComponent standardComponent;
     private ResourceComponent resourceComponent;
@@ -45,6 +48,10 @@ public class PrepskoolApplication extends Application {
         super.onCreate();
 
         resourceTypeComponent = DaggerResourceTypeComponent.builder()
+                .apiClient(new ApiClient(Endpoints.BASE_URL))
+                .build();
+
+        tokenComponent = DaggerNotificationTokenComponent.builder()
                 .apiClient(new ApiClient(Endpoints.BASE_URL))
                 .build();
 
@@ -85,52 +92,46 @@ public class PrepskoolApplication extends Application {
                 .build();
     }
 
-    @Inject
     public ResourceTypeComponent getResourceTypeComponent() {
         return resourceTypeComponent;
     }
 
-    @Inject
+    public NotificationTokenComponent getTokenComponent() {
+        return tokenComponent;
+    }
+
     public StandardComponent getStandardComponent() {
         return standardComponent;
     }
 
-    @Inject
     public RegisterComponent getRegisterComponent() {
         return registerComponent;
     }
 
-    @Inject
     public ResourceComponent getResourceComponent() {
         return resourceComponent;
     }
 
-    @Inject
     public PaymentComponent getPaymentComponent() {
         return paymentComponent;
     }
 
-    @Inject
     public SubjectComponent getSubjectComponent() {
         return subjectComponent;
     }
 
-    @Inject
     public StreamComponent getStreamComponent() {
         return streamComponent;
     }
 
-    @Inject
     public LoginComponent getLoginComponent() {
         return loginComponent;
     }
 
-    @Inject
     public BoardComponent getBoardComponent() {
         return boardComponent;
     }
 
-    @Inject
     public HomeComponent getHomeComponent() {
         return homeComponent;
     }

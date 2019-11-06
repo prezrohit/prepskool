@@ -3,6 +3,8 @@ package in.prepskool.prepskoolacademy.retrofit;
 import in.prepskool.prepskoolacademy.retrofit_model.HomeResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.Login;
 import in.prepskool.prepskoolacademy.retrofit_model.LoginResponse;
+import in.prepskool.prepskoolacademy.retrofit_model.NotificationToken;
+import in.prepskool.prepskoolacademy.retrofit_model.NotificationTokenResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.Register;
 import in.prepskool.prepskoolacademy.retrofit_model.RegisterResponse;
 import in.prepskool.prepskoolacademy.retrofit_model.PaymentParams;
@@ -35,6 +37,10 @@ public interface ApiInterface {
 
     @GET("resourceTypes/{standard_id}/{subject_id}")
     Call<ResourceTypeResponse> getResourceTypes(@Path("standard_id") int standardId, @Path("subject_id") int subjectId);
+
+
+    @POST("notifications/token")
+    Call<NotificationTokenResponse> publishToken(@Body NotificationToken token);
 
 
     @GET("subjects/{standard_id}")

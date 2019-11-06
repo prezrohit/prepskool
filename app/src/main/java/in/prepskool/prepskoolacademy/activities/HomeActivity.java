@@ -33,6 +33,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.File;
@@ -109,15 +111,31 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         setToolbar();
 
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+                    Log.d(TAG, "getInstanceId failed: ", task.getException());
+                    return;
+                }
+
+                assert task.getResult() != null : "Firebase Result is Empty";
+                String token = task.getResult().getToken();
+                Log.v( TAG, "Token" + token);
+                publishToken(token);
+            }
+        });
+
         FirebaseMessaging.getInstance().subscribeToTopic("prepskool")
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        String msg = "Successfull";
                         if (!task.isSuccessful()) {
-                            msg = "Failed";
+                            Log.d(TAG, "Firebase Subscription Failure: " + task.getException());
+
+                        } else {
+                            Log.d(TAG, "Firebase Subscription Success: " + task.getException());
                         }
-                        Log.d(TAG, msg);
                     }
                 });
 
@@ -167,6 +185,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 setToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+    }
+
+    private void publishToken(String token) {
     }
 
     private Toolbar setToolbar() {
